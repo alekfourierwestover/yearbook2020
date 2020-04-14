@@ -6,6 +6,7 @@ Yearbook for BHS 2020 :(
 - Joy: send message
 - Ziyong: registration page (image input/upload) => work with Leon
 - David: main.html
+- Andrew: Front end
 
 ### brainstorming
 
