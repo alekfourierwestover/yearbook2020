@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Yearbook 2020</title>
+    <script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js')}}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}">
+    <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}" charset="utf-8"></script>
+    <script src="{{ url_for('static', filename='notify.js')}}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" >
+  </head>
+  <body>
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>
+
