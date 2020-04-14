@@ -7,6 +7,7 @@ Yearbook for BHS 2020 :(
 - Ziyong: registration page (image input/upload) => work with Leon
 - David: main.html
 - Alek: database stuff
+- Andrew: Front end
 
 ### brainstorming
 
