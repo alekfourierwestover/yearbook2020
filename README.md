@@ -1,7 +1,9 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
-#TODO
+# TODO
+- Leon: Login/registration
+- Joy: send message
 
 ###brainstorming
 
@@ -37,5 +39,3 @@ later:
 message DB
 message sending interface
 later: privacy (accept new account requests)
-### Leon
- -Login/registration
