@@ -37,7 +37,19 @@ def handle_login():
 @app.route("/register", methods=("POST",))
 def handle_register():
     # request.form["key"] extracts a value from the js form
-    return ""
+    with open("register.json", "r") as f:
+        x = json.load(f)
+        x.append({"name": request.form["name"], "password": request.form["password"], "email": request.form["email"], "bio": request.form["bio"]})
+        print(x)
+        with open("register.json", "w") as f:
+            json.dump(x, f, indent = 4)
+        return "Thanks " + request.form["username"]
+
+@app.route("/getProfiles", methods=("GET,"))
+def getProfiles():
+    with open("register.json", "r") as f:
+        data = json.load(f)
+    return jsonify(data)
 
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
@@ -62,5 +74,3 @@ def handle_edit_profile():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
-
-

@@ -44,3 +44,8 @@ message DB
 message sending interface
 later: privacy (accept new account requests)
 
+### registration information
+- name (first and last without spaces) => username
+- password (make sure not too intense)
+- personal email
+- description/bio
