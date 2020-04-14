@@ -4,6 +4,7 @@ Yearbook for BHS 2020 :(
 # TODO
 - Leon: Login/registration
 - Joy: send message
+- Ziyong: registration page (image input/upload) => work with Leon
 
 ###brainstorming
 
