@@ -7,7 +7,7 @@ Yearbook for BHS 2020 :(
 - Ziyong: registration page (image input/upload) => work with Leon
 - David: main.html
 
-###brainstorming
+### brainstorming
 
 account DB
 account interface
