@@ -6,6 +6,7 @@ Yearbook for BHS 2020 :(
 - Joy: send message
 - Ziyong: registration page (image input/upload) => work with Leon
 - David: main.html
+- Alek: database stuff
 
 ### brainstorming
 
@@ -19,7 +20,7 @@ account personal information -- where you're going to college
   - main.html shows a list of people you can click on people to view their profile and
   send them a message
   - sendmessage.html (view someone's profile and send them a message optionally)
-  - mymessages.html  (view messages that you have received)
+  - mymessages.html (view messages that you have received)
   - sentmessages.html (view messages that you have written)
 
 ## back end big picture:
