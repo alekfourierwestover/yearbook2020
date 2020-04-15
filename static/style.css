@@ -1,4 +1,21 @@
-body {
-  background-color: red;
-  color: green;
+.container {
+  padding: 1%;
 }
+
+body {
+  background-color: #dfe8e1;
+  color: #000000;
+  font-size: 110%;
+}
+
+#register-form-div {
+  width: 50%;
+  border-color: #00ffff; 
+  border-style: solid;
+  padding: 20px;
+}
+
+#register-form input {
+  float: right;
+}
+
