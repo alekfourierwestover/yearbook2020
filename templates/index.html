@@ -1,4 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>login / register account</h1>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='leon.css')}}">
+</head>
+
+<body>
+	<div class="loginbox">
+
+		<hi>Login Here </hi>
+
+		<form>
+			<p>Username</p>
+			<input type="text" name="" placeholder="Enter Username">
+			<p>Password</p>
+			<input type="password" name="" placeholder="Enter Password">
+			<input type="submit" name="" value="Login">
+		</form>
+	</div>
+</body>
 {% endblock %}
