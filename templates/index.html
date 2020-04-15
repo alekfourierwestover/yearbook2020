@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='leon.css')}}" type="text/css" >
+{% endblock %}
+
 {% block content %}
 <h1>login / register account</h1>
 <div id="register-form-div">

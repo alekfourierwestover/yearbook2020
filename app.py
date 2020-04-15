@@ -37,7 +37,6 @@ def handle_login():
 @app.route("/register", methods=("POST",))
 def handle_register():
     # request.form["key"] extracts a value from the js form
-    __import__('ipdb').set_trace()
     with open("register.json", "r") as f:
         x = json.load(f)
         x.append({
