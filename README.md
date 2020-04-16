@@ -1,7 +1,6 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
-<<<<<<< HEAD
 # TODO
 - Leon: Login/registration
 - Joy: send message
@@ -10,8 +9,6 @@ Yearbook for BHS 2020 :(
 - Alek: database stuff
 - Andrew: Front end and make it look cute
 
-=======
->>>>>>> 912b39ca1711456400a538969834552962ff395e
 ### brainstorming
 
 account DB
