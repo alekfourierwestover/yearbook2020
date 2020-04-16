@@ -80,27 +80,27 @@ def getProfiles():
 
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
-    #what to do after submit
-    #make a new json file
-    #for every user, have all the messages
-    #{"alek": {ziyong: "blah", Joy : "blah"}}
-    # request.form["key"] extracts a value from the js form
     with open("messages.json", "r") as f:
-        data = json.load(f)
-        try:
-            data[request.form.get("send to")][request.form.get("from")].append(request.form.get("message"))
-        except:
-            data[request.form.get("send to")][request.form.get("from")] = [request.form.get("message")]
+        x = json.load(f)
+        user_name = request.form["from"]
 
-    with open("messages.json", "w") as f:
-        json.dump(data, f, indent =4)
-
-    return redirect(url_for("serve_main"))
+        x[user_name] = {
+            "name": user_name,
+            "email": request.form["from"],
+            "password": request.form["from"],  # UM THIS IS A SUPER HUGE SECURITY ISSUE
+            "bio": request.form["from"]
+        }
+        with open("messages.json", "w") as f:
+            json.dump(x, f, indent = 4)
+        # return "Thanks " + user_name
+        return redirect(url_for("serve_main"))
 
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
-    return ""
+    with open("messages.json", "r") as f:
+        data = json.load(f)
+    return jsonify(data)
 
 @app.route("/view_sent_messages")
 def handle_view_sent_messages():

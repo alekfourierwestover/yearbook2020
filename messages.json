@@ -1,19 +1,13 @@
 {
-    "Alek": {
-        "Joy": [
-            "ejwbfjkewf",
-            "bfkewjb fkew"
-        ],
-        "Ziyong": [
-            "heyyy",
-            "hi",
-            "Hi"
-        ]
+    "Ziyong": {
+        "recipient": "Ziyong",
+        "sender": "Alek",
+        "message": "whats up"
     },
-    "Ziyong": {},
-    "Joy": {
-        "Ziyong": [
-            "bruh"
-        ]
+    "Joysdd": {
+        "name": "Joysdd",
+        "email": "Joysdd",
+        "password": "Joysdd",
+        "bio": "Joysdd"
     }
 }
