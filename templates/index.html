@@ -5,8 +5,20 @@
 
 {% block content %}
 <h1>login / register account</h1>
+
+
 <div id="register-form-div">
-<form action="register" method="post" id="register-form" enctype="multipart/form-data">
+	<form action="register" method="post" id="register-form" enctype="multipart/form-data">
+		<p>Name</p>
+		<input type="text" value="name" name="name" id="name" placeholder="Enter Name">
+		<p>Input your (belmontschools) email </p>
+		<input type="email" name="email" id="email" value="email@belmontschools.net" placeholder = "Enter Email">
+		<p>Input your password </p>
+		<input type="password" name="password" id="password" value="" placeholder = "Enter Password">
+
+
+
+<!--
   <label>Input your name</label>
   <input type="text" value="name" name="name" id="name"/><br>
   <label>Input your (belmontschools) email</label>
@@ -21,6 +33,10 @@
   <input type="file" value="profilepic" name="profilepic" id="profilepic" accept="image/*"/><br><br><br>
   <input type="submit" value="submit" name="submit" id="submit"/>
   <br>
-</form>
+-->
+
+
+	</form>
+
 </div>
 {% endblock %}
