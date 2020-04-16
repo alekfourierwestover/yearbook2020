@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
+from pandas as pd
 import json
 
 app = Flask(__name__)
@@ -22,7 +23,6 @@ def serve_mymessages():
 
 @app.route("/sendmessages")
 def serve_sendmessages():
-    #serves website
     return render_template("sendmessages.html")
 
 @app.route("/sentmessages")
@@ -33,7 +33,20 @@ def serve_sentmessages():
 @app.route("/login", methods=("POST",))
 def handle_login():
     # request.form["key"] extracts a value from the js form
-    return ""
+    with open("user.json", "r") as f:
+        data = json.load(f)
+        email = request.args.get("email")
+        password = request.args.get("password")
+
+        try:
+            if password == data[email]["password"]:
+                return redirect(url_for("serve_main"))
+            else:
+                return "Your email and password do not match. Please try again!"
+        except:
+                return "There is no such account. Try making an account!"
+
+
 
 @app.route("/register", methods=("POST",))
 def handle_register():
@@ -58,25 +71,11 @@ def getProfiles():
         data = json.load(f)
     return jsonify(data)
 
+
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
-    #what to do after submit
-    #make a new json file
-    #for every user, have all the messages
-    #{"alek": {ziyong: "blah", Joy : "blah"}}
     # request.form["key"] extracts a value from the js form
-    with open("messages.json", "r") as f:
-        data = json.load(f)
-        try:
-            data[request.form.get("send to")][request.form.get("from")].append(request.form.get("message"))
-        except:
-            data[request.form.get("send to")][request.form.get("from")] = [request.form.get("message")]
-
-    with open("messages.json", "w") as f:
-        json.dump(data, f, indent =4)
-
-    return redirect(url_for("serve_main"))
-
+    return ""
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
@@ -86,6 +85,7 @@ def handle_view_my_messages():
 def handle_view_sent_messages():
     return ""
 
+# returns name and bio
 @app.route("/view_profile")
 def handle_view_profile():
     return ""
