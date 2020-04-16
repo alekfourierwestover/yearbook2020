@@ -81,18 +81,16 @@ def getProfiles():
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
     with open("messages.json", "r") as f:
-        x = json.load(f)
-        user_name = request.form["from"]
+        data = json.load(f)
+        try:
+            data[request.form.get("send to")][request.form.get("from")].append(request.form.get("message"))
+        except:
+            data[request.form.get("send to")][request.form.get("from")] = [request.form.get("message")]
+    with open("messages.json", "w") as f:
+        json.dump(data, f, indent=4)
 
-        x[user_name] = {
-            "sender": user_name,
-            "recipient": request.form["send to"],
-            "message": request.form["message"]
-        }
-        with open("messages.json", "w") as f:
-            json.dump(x, f, indent = 4)
-        # return "Thanks " + user_name
-        return redirect(url_for("serve_main"))
+    return redirect(url_for("serve_main"))
+
 
 
 @app.route("/view_my_messages", methods=("GET",))

@@ -1,12 +1,23 @@
 {
-    "Giver": {
-        "sender": "Giver",
-        "recipient": "Recipient",
-        "message": "Pls"
+    "Alek": {
+        "Joy": [
+            "ejwbfjkewf",
+            "bfkewjb fkew"
+        ],
+        "Ziyong": [
+            "heyyy",
+            "hi",
+            "Hi"
+        ]
     },
     "Ziyong": {
-        "sender": "Ziyong",
-        "recipient": "Joy",
-        "message": "yolo"
+        "Alek": [
+            "test2"
+        ]
+    },
+    "Joy": {
+        "Ziyong": [
+            "bruh"
+        ]
     }
 }
