@@ -1,8 +1,18 @@
+
+/*
 .container {
   padding: 1%;
 }
 
+body {
+  background-image: url("loginBg.png");
+  background-color: #dfe8e1;
+  color: #000000;
+  font-size: 110%;
+}
+*/
 
+/*
 body { 
    background-color: white;
    color: green; 
@@ -11,7 +21,9 @@ body {
    background-position: center; 
    font-family: sans-serif; 
  } 
+*/
 
+/*
 .register-form-div {
 	width: 320px;
 	height: 420px; 
@@ -24,7 +36,8 @@ body {
 	box-sizing: border-box; 
 	padding: 70px 30px;
 }
-
+*/
+/*
 
 .register-form input {
   float: right;
@@ -52,3 +65,4 @@ body {
 	color: #fff; 
 	font-size: 16px;  
 }
+*/
