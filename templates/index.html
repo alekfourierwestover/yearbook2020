@@ -5,23 +5,53 @@
 
 {% block content %}
 
-<h1>login / register account</h1>
-<div id="register-form-div">
+<div class="jumbotron">
+    <h2 class="display-60">Sign Up</h2>
+</div>
+
+
+<div id="register-form-div" class="bg-light">
 <form action="register" method="post" id="register-form" enctype="multipart/form-data">
-  <label>Input your name</label>
-  <input type="text" value="name" name="name" id="name"/><br>
-  <label>Input your (belmontschools) email</label>
-  <input type="email" name="email" id="email" value="email@belmontschools.net"><br>
-  <label>(<b style="color: red;">DO NOT USE A PASSWORD THAT <br>YOU USE FOR OTHER SITES</b>)</label><br>
-  <label>Input your password </label>
-  <input type="password" name="password" id="password" value=""><br><br>
-  <label>Enter bio here:</label>
-  <textarea rows="4" cols="50" name="bio" form="register-form">I am a generic student at BHS graduating in 2020.</textarea><br>
-  <br>
+
+  <!--Name-->
+  <div class="form-group">
+    <label>Full Name</label>
+    <input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Andrew Naumann II">
+  </div>
+
+  <!--Email-->
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" class="form-control" name="email" id="email" namearia-describedby="emailHelp" placeholder="example: gbob20@belmontschools.net">
+  </div>
+
+  <!--Password-->
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+  </div>
+
+  <!--Bio-->
+  <div class="form-group">
+    <label>Enter Bio</label>
+    <textarea class="form-control" name="bio" form="register-form" id="biography" rows="3" placeholder="I am a generic student at BHS graduating in 2020."></textarea>
+  </div>
+
+  <!--Select profile pick-->
   <label for="img">Select profile picture:</label>
   <input type="file" value="profilepic" name="profilepic" id="profilepic" accept="image/*"/><br><br><br>
   <input type="submit" value="submit" name="submit" id="submit"/>
   <br>
 </form>
+
+<form>
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
 </div>
 {% endblock %}
