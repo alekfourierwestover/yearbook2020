@@ -16,6 +16,13 @@ body {
   padding: 20px;
 }
 
+#login-form-div {
+  width: 40%;
+  border-color: #000fff; 
+  border-style: solid;
+  padding: 20px;
+}
+
 #register-form input {
   float: right;
 }
