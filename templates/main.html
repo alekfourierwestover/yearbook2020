@@ -1,13 +1,48 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
+
+<h1>main</h1>
+
+<div id="faces">
+
+</div>
+
+<script type="text/javascript">
+  let pfp_path= "{{url_for('static', filename='pfps')}}";
+
+  $.get("/getProfiles", function(data){
+      let currentRow = $("<div class='row'></div>");
+      let ct = 0;
+      for(let i in data){
+        if(ct%4 == 0 && ct != 0){
+          $("#faces").append(currentRow);
+          currentRow = $("<div class='row'></div>");
+        }
+        let currentCard = $("<div class='col-sm face-card'></div>");
+        currentCard.append($(`<h2>${data[i].name}</p>`));
+        currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
+        currentCard.append($(`<img width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
+        // $(currentRow).append($(`<div class="col-sm"><p>bio: ${data[i].bio}</p><p>name: ${data[i].name}</p> <p>${data[i].name}</p><img width=500px src="${pfp_path}/${data[i].name}.png"></img></div>`)); 
+        $(currentRow).append(currentCard);
+        console.log(currentRow);
+        ct++;
+      }
+      while(ct % 4 != 0){
+        ct++;
+        $(currentRow).append($("<div class='row'></div>"));
+      }
+      $("#faces").append(currentRow);
+  });
+</script>
+
+>>>>>>> 43d66846a325898cc9ad766614a61c5976c866e8
 
 <h1>LET'S GET IT </h1>
 	<div id = "container">
 	<div id= "left"> 
 		<h2>Search by college </h2>
-		<input type="text" value="Bunker Hill" name="text" id="name"/><br>
+		<input type="text" value="Bunker Hill" name="text" id="college"/><br>
 		<input type="submit" value="submit" name="submit" id="submit"/>
 	</div>
 
