@@ -1,13 +1,12 @@
 {
-    "Ziyong": {
-        "recipient": "Ziyong",
-        "sender": "Alek",
-        "message": "whats up"
+    "Giver": {
+        "sender": "Giver",
+        "recipient": "Recipient",
+        "message": "Pls"
     },
-    "Joysdd": {
-        "name": "Joysdd",
-        "email": "Joysdd",
-        "password": "Joysdd",
-        "bio": "Joysdd"
+    "Ziyong": {
+        "sender": "Ziyong",
+        "recipient": "Joy",
+        "message": "yolo"
     }
 }

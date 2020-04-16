@@ -12,15 +12,9 @@
 
   $.get("/view_my_messages", function(data){
       for(let i in data){
-        $("#messages").append(`<p>message: ${data[i].Ziyong}</p>`);
+        $("#messages").append(`<p>recipient: ${data[i].recipient}</p><p>message: ${data[i].message}</p>`);
       }
   });
 
-  $.get("/getProfiles", function(data){
-      for(let i in data){
-        $("#messages").append(`<p>name: name </p>`);
-
-      }
-  });
 </script>
 {% endblock %}

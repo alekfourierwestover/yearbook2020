@@ -85,10 +85,9 @@ def handle_send_message():
         user_name = request.form["from"]
 
         x[user_name] = {
-            "name": user_name,
-            "email": request.form["from"],
-            "password": request.form["from"],  # UM THIS IS A SUPER HUGE SECURITY ISSUE
-            "bio": request.form["from"]
+            "sender": user_name,
+            "recipient": request.form["send to"],
+            "message": request.form["message"]
         }
         with open("messages.json", "w") as f:
             json.dump(x, f, indent = 4)
