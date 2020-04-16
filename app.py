@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from pandas as pd
+
 import json
 
 app = Flask(__name__)
@@ -23,6 +23,7 @@ def serve_mymessages():
 
 @app.route("/sendmessages")
 def serve_sendmessages():
+    #serves website
     return render_template("sendmessages.html")
 
 @app.route("/sentmessages")
@@ -74,8 +75,23 @@ def getProfiles():
 
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
+    #what to do after submit
+    #make a new json file
+    #for every user, have all the messages
+    #{"alek": {ziyong: "blah", Joy : "blah"}}
     # request.form["key"] extracts a value from the js form
-    return ""
+    with open("messages.json", "r") as f:
+        data = json.load(f)
+        try:
+            data[request.form.get("send to")][request.form.get("from")].append(request.form.get("message"))
+        except:
+            data[request.form.get("send to")][request.form.get("from")] = [request.form.get("message")]
+
+    with open("messages.json", "w") as f:
+        json.dump(data, f, indent =4)
+
+    return redirect(url_for("serve_main"))
+
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
