@@ -17,5 +17,12 @@
         "password": "asdf",
         "bio": "I am a generic student at BHS graduating in 2020.",
         "profilepic": "e1.JPG"
+    },
+    {
+        "name": "asedfa",
+        "email": "f@foiag",
+        "password": "",
+        "bio": "I am a generic student at BHS graduating in 2020.",
+        "profilepic": "b''"
     }
 ]
