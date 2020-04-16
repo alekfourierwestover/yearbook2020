@@ -21,10 +21,10 @@
         let currentCard = $("<div class='col-sm face-card'></div>");
         currentCard.append($(`<h2>${data[i].name}</p>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
+        let link = `/sendmessages?sendto=${data[i].name}`;
         currentCard.append($(`<img width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
-        // $(currentRow).append($(`<div class="col-sm"><p>bio: ${data[i].bio}</p><p>name: ${data[i].name}</p> <p>${data[i].name}</p><img width=500px src="${pfp_path}/${data[i].name}.png"></img></div>`)); 
+        currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
-        console.log(currentRow);
         ct++;
       }
       while(ct % 4 != 0){

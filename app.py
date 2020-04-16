@@ -1,7 +1,15 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask_login import LoginManager, UserMixin, current_user, login_user
 import json
 
 app = Flask(__name__)
+login = LoginManager(app)
+
+@login.user_loader
+def load_user(id):
+    with open("users.json", "r") as f:
+        data = json.load(f)
+        return jsonify(data[id])
 
 # website page routes
 @app.route("/")
