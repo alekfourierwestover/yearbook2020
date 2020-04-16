@@ -34,5 +34,17 @@
         "email": "email@belmontschools.net",
         "password": "",
         "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "Andrew": {
+        "name": "Andrew",
+        "email": "email@belmontschools.net",
+        "password": "",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "Andrew Naumann": {
+        "name": "Andrew Naumann",
+        "email": "anaumann20@belmontschools.net",
+        "password": "Antti123",
+        "bio": "I am a generic student at BHS graduating in 2020."
     }
 }

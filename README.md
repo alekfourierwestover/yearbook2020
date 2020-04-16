@@ -7,7 +7,10 @@ Yearbook for BHS 2020 :(
 - Ziyong: registration page (image input/upload) => work with Leon
 - David: main.html
 - Alek: database stuff
-- Andrew: Front end
+- Andrew: Front end and make it look cute
+
+# PLEASE READ! DONT MISS THIS! THE CODE WONT WORK UNTIL YOU DO THIS! VERY IMPORTANT!
+- Since Andrew is using react js for the front end, please install node js from the internet. It is crucial!
 
 ### brainstorming
 
