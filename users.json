@@ -35,7 +35,7 @@
         "password": "",
         "bio": "I am a generic student at BHS graduating in 2020."
     },
-<<<<<<< HEAD
+
     "Andrew": {
         "name": "Andrew",
         "email": "email@belmontschools.net",
@@ -46,12 +46,10 @@
         "name": "Andrew Naumann",
         "email": "anaumann20@belmontschools.net",
         "password": "Antti123",
-=======
     "nauman": {
         "name": "nauman",
         "email": "email@belmontschools.net",
         "password": "joe",
->>>>>>> 912b39ca1711456400a538969834552962ff395e
         "bio": "I am a generic student at BHS graduating in 2020."
     }
 }
