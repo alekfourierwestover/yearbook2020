@@ -11,8 +11,15 @@
   let pfp_path= "{{url_for('static', filename='pfps')}}";
 
   $.get("/getProfiles", function(data){
+      let currentRow = "<div class='face-row'></div>";
       for(let i in data){
-        $("#faces").append(`<p>bio: ${data[i].bio}</p><p>name: ${data[i].name}</p> <p>${data[i].name}</p><img width=500px src="${pfp_path}/${data[i].name}.png"></img>`);
+        if(i%4 == 3){
+          // write out the old row,
+          $("#faces").append(currentRow);
+          // create a new row
+          currentRow = "<div class='face-row'></div>";
+        }
+        $(currentRow).append(`<p>bio: ${data[i].bio}</p><p>name: ${data[i].name}</p> <p>${data[i].name}</p><img width=500px src="${pfp_path}/${data[i].name}.png"></img>`);
       }
   });
 </script>
