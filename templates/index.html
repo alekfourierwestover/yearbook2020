@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='leon.css')}}" type="text/css" >
+{% endblock %}
+
+{% block content %}
+<h1>login / register account</h1>
+<div id="register-form-div">
+<form action="register" method="post" id="register-form" enctype="multipart/form-data">
+  <label>Input your name</label>
+  <input type="text" value="name" name="name" id="name"/><br>
+  <label>Input your (belmontschools) email</label>
+  <input type="email" name="email" id="email" value="email@belmontschools.net"><br>
+  <label>(<b style="color: red;">DO NOT USE A PASSWORD THAT <br>YOU USE FOR OTHER SITES</b>)</label><br>
+  <label>Input your password </label>
+  <input type="password" name="password" id="password" value=""><br><br>
+  <label>Enter bio here:</label>
+  <textarea rows="4" cols="50" name="bio" form="register-form">I am a generic student at BHS graduating in 2020.</textarea><br>
+  <br>
+  <label for="img">Select profile picture:</label>
+  <input type="file" value="profilepic" name="profilepic" id="profilepic" accept="image/*"/><br><br><br>
+  <input type="submit" value="submit" name="submit" id="submit"/>
+  <br>
+</form>
+</div>
+{% endblock %}
