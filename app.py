@@ -39,13 +39,19 @@ def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("register.json", "r") as f:
         x = json.load(f)
-        x.append({"name": request.form["name"], "password": request.form["password"], "email": request.form["email"], "bio": request.form["bio"]})
-        print(x)
+        img_stream = request.files.get("profilepic").stream
+        x.append({
+            "name": request.form["name"], 
+            "email": request.form["email"], 
+            "password": request.form["password"],  # UM THIS IS A SUPER HUGE SECURITY ISSUE 
+            "bio": request.form["bio"],
+            "profilepic": str(img_stream.read())
+        })
         with open("register.json", "w") as f:
             json.dump(x, f, indent = 4)
-        return "Thanks " + request.form["username"]
+        return "Thanks " + request.form["name"]
 
-@app.route("/getProfiles", methods=("GET,"))
+@app.route("/getProfiles", methods=("GET",))
 def getProfiles():
     with open("register.json", "r") as f:
         data = json.load(f)

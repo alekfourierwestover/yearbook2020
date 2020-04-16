@@ -1,4 +1,5 @@
 [
+<<<<<<< HEAD
   {
     "name": "ZiyongCui",
     "password": "1234",
@@ -6,4 +7,25 @@
     "bio": "Hey! I am very excited for this website"
   }
 
+=======
+    {
+        "name": "ZiyongCui",
+        "password": "1234",
+        "email": "cuiziyong@gmail.com",
+        "bio": "Hey! I am very excited for this website"
+    },
+    {
+        "name": "name",
+        "password": "alek",
+        "email": "email@belmontschools.net",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    {
+        "name": "name",
+        "email": "email@belmontschools.net",
+        "password": "asdf",
+        "bio": "I am a generic student at BHS graduating in 2020.",
+        "profilepic": "e1.JPG"
+    }
+>>>>>>> 29a35d75e449cb3a3ff94c42ad1ffb8d87d25500
 ]
