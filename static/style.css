@@ -51,6 +51,7 @@ img {
     max-height: 100%;
 }
 
+<<<<<<< HEAD
 .bar {
     box-shadow: 0px 20px 50px grey;
 }
@@ -82,3 +83,9 @@ a:hover{
     display: inline;
     padding: 10px;
 }
+=======
+.face-card {
+  border-style: solid;
+  border-color: black;
+}
+>>>>>>> 912b39ca1711456400a538969834552962ff395e
