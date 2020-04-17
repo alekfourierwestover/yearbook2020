@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>send messages</h1>
+<div class="card">
+<h1>SEND MESSAGES</h1>
+</div>
+<br>
+
 <body>
+<div class="card">
   <form action="send_message" method="post">
     <label>From:</label>
     <input type="text" name="from"/>
@@ -12,5 +17,6 @@
     <input type="text" name ="message"/>
     <input type="submit" value="submit">
   </form>
+  </div>
 </body>
 {% endblock %}

@@ -1,12 +1,47 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='search_bar.css')}}" type="text/css" >
+<script src="{{url_for('static', filename='search_bar.js')}}" charset="utf-8"></script>
+<link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+{% endblock %}
+
 {% block content %}
-
-<h1>main</h1>
-
-<div id="faces">
+<div class="card">
+  <br>
+  <img alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+<div style="clear: right">
+  <h1 style="font-size: 70px">CONGRATULATIONS!</h1>
+  <h1 style="font-size: 30px">BELMONT HIGH SCHOOL CLASS of 2020</h1>
+</div>
 
 </div>
+
+  <div class="search-container">
+    <div class="search-box">
+      <div class="search-icon"><i class="fa fa-search search-icon"></i></div>
+      <input type="text" placeholder="Search" id="search" autocomplete="off">
+      <svg class="search-border" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" viewBox="0 0 671 111" style="enable-background:new 0 0 671 111;"
+       xml:space="preserve">
+          <path class="border" d="M335.5,108.5h-280c-29.3,0-53-23.7-53-53v0c0-29.3,23.7-53,53-53h280"/>
+          <path class="border" d="M335.5,108.5h280c29.3,0,53-23.7,53-53v0c0-29.3-23.7-53-53-53h-280"/>
+        </svg>
+      <div class="go-icon"><i class="fa fa-arrow-right" onclick="search_name()"></i></div>
+    </div>
+    <br>
+    <br>
+
+  </div>
+
+<div class="card">
+  <br>
+  <div id="faces">
+
+  </div>
+</div>
+
 
 <script type="text/javascript">
   let pfp_path= "{{url_for('static', filename='pfps')}}";
@@ -23,7 +58,9 @@
         currentCard.append($(`<h2>${data[i].name}</p>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
         let link = `/sendmessages?sendto=${data[i].name}`;
-        currentCard.append($(`<img width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
+        // concern: what if id has spaces in it...
+        // also injections in general...
+        currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
         currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
@@ -34,33 +71,54 @@
       }
       $("#faces").append(currentRow);
   });
+
+function search_name(){
+  let name = $("#search").val();
+  if(name){
+    let img_elt = document.getElementById("img_"+name);
+    if(img_elt)
+      img_elt.scrollIntoView();
+  }
+}
+
+document.getElementById("search").addEventListener("keyup", function(event){
+  if(event.keyCode=== 13){
+    event.preventDefault();
+    search_name();
+  }
+});
+
 </script>
+<br>
+<br>
+<br>
 
-<h1>LET'S GET IT </h1>
-	<div id = "container">
-	<div id= "left"> 
-		<h2>Search by college </h2>
-		<input type="text" value="Bunker Hill" name="text" id="college"/><br>
-		<input type="submit" value="submit" name="submit" id="submit"/>
-	</div>
-
-	<div id= "right"> 
-		<h2>Search by name </h2>
-		<input type="text" value="Muhammed Ali" name="text" id="name"/><br>
-		<input type="submit" value="submit" name="submit" id="submit"/>
-	</div>
+<footer id="footer">
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a>Alek Westover</a>
+  </div>
+</footer>
 
 
-	<div id = "center">
-		<h4>GO!!!</h4>
-		<div id = "picturediv">
-			<p> Our school mascot </p>
-			<img src="{{url_for('static', filename='dan.jpg')}}" alt="bro"/>
-		</div>
-		
-	</div>
+<!--<h1>LET'S GET IT </h1>
+  <div id = "container">
+  <div id= "left">
+    <h2>Search by college </h2>
+    <input type="text" value="Bunker Hill" name="text" id="college"/><br>
+    <input type="submit" value="submit" name="submit" id="submit"/>
+  </div>
+  <div id= "right">
+    <h2>Search by name </h2>
+    <input type="text" value="Muhammed Ali" name="text" id="name"/><br>
+    <input type="submit" value="submit" name="submit" id="submit"/>
+  </div>
+  <div id = "center">
+    <h4>GO!!!</h4>
+    <div id = "picturediv">
+      <p> Our school mascot </p>
+      <img src="{{url_for('static', filename='dan.jpg')}}" alt="bro"/>
+    </div>
+  </div>
+  </div>-->
 
-	</div>
-
-	
 {% endblock %}

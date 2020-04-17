@@ -2,25 +2,47 @@
   padding: 1%;
 }
 
+@font-face {
+  font-family: BernardMTCondensed;
+  src: url(BernardMTCondensed.ttf);
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+  font-family: BernardMTCondensed;
+  letter-spacing: 0.045em;
+}
+
 body {
   background-image: url("loginBg.png");
-  background-color: #dfe8e1;
   color: #000000;
+  background-color: #dfe8e1;
   font-size: 150%;
+  font-family: 'Nunito', sans-serif;
+  font-size: small;
+}
+
+#navba {
+  box-shadow: 0 0px 10px rgba(0,0,0,1);
 }
 
 #register-form-div {
-  width: 50%;
-  border-color: #640e0e; 
-  border-style: solid;
+  width: 70%;
+  border-radius: 0.5em;
   padding: 20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+#register-form-div .form-group {
+  padding-bottom: 50px;
 }
 
 #login-form-div {
-  width: 40%;
-  border-color: #000fff; 
-  border-style: solid;
+  width: 70%;
+  border-radius: 0.5em;
   padding: 20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
 }
 
 #register-form input {
@@ -34,7 +56,7 @@ body {
 
 #left {
     float:left;
-    width:200px;
+    width:10px;
 }
 
 #center {
@@ -56,4 +78,20 @@ body {
 img {
     max-width: 100%;
     max-height: 100%;
+}
+
+#footer{
+  /*background-color: #95524c;*/
+  color: #FFFFFF;
+}
+
+.card{
+    position: relative;
+    background-image: url("loginBgAlt.png");
+    color: black;
+    border-radius: 25px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+
 }
