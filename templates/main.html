@@ -9,9 +9,17 @@
 {% endblock %}
 
 {% block content %}
-<h1>Main</h1>
+<div class="card">
+	<br>
+	<img alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+<div style="clear: right">
+	<h1 style="font-size: 70px">CONGRATULATIONS!</h1>
+	<h1 style="font-size: 30px">BELMONT HIGH SCHOOL CLASS of 2020</h1>
+</div>
 
-	<div class="container">
+</div>
+
+	<div class="search-container">
 		<div class="search-box">
 			<div class="search-icon"><i class="fa fa-search search-icon"></i></div>
       <input type="text" placeholder="Search" id="search" autocomplete="off">
@@ -28,6 +36,7 @@
 	</div>
 
 <div class="card">
+	<br>
 	<div id="faces">
 
 	</div>
@@ -84,7 +93,7 @@ document.getElementById("search").addEventListener("keyup", function(event){
 <br>
 <br>
 
-<footer class="page-footer font-small">
+<footer id="footer">
   <div class="footer-copyright text-center py-3">© 2020 Copyright:
     <a>Alek Westover</a>
   </div>
