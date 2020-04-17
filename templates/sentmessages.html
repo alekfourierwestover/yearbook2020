@@ -14,7 +14,6 @@
 
 <script type="text/javascript">
   var name = "hi";
-  let pfp_path= "{{url_for('static', filename='pfps')}}";
 
   $.get("/view_my_messages", function(data){
     for(sender in data["Alek"])
@@ -22,9 +21,6 @@
       {
         $("#messages").append(`<p>name: ${JSON.stringify(data["Alek"])}</p><p>message: ${data["Alek"][sender][message]}</p>`)
       }
-
-
-
   });
 
 </script>
