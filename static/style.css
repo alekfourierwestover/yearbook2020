@@ -14,9 +14,8 @@ h1 {
   letter-spacing: 0.045em;
 }
 
-
 body {
-  background-image: url("rug.JPG");
+  background-image: url("loginBg.png");
   color: #000000;
   background-color: #dfe8e1;
   font-size: 150%;
