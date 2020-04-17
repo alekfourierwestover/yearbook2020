@@ -163,7 +163,7 @@ h2 {
   -o-transition: stroke-dashoffset 650ms cubic-bezier(0.755, 0.150, 0.205, 1.000);
 }
 #search {
-  font-family: 'Montserrat Alternates', sans-serif;
+  /*font-family: 'Montserrat Alternates', sans-serif;*/
   position: absolute;
   top: 0;
   left: 0;
