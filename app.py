@@ -12,6 +12,7 @@ def load_user(id):
         return jsonify(data[id])
 
 # website page routes
+@app.route("/index")
 @app.route("/")
 def serve_index():
     return render_template("index.html")
@@ -41,20 +42,18 @@ def serve_sentmessages():
 @app.route("/login", methods=("POST",))
 def handle_login():
     # request.form["key"] extracts a value from the js form
-    with open("user.json", "r") as f:
+    with open("users.json", "r") as f:
         data = json.load(f)
-        email = request.args.get("email")
-        password = request.args.get("password")
+        name = request.form.get("name")
+        password = request.form.get("password")
 
         try:
-            if password == data[email]["password"]:
+            if password == data[name]["password"]:
                 return redirect(url_for("serve_main"))
             else:
-                return "Your email and password do not match. Please try again!"
+                return redirect(url_for("serve_index", error="password_wrong"))
         except:
-                return "There is no such account. Try making an account!"
-
-
+            return redirect(url_for("serve_index", error="user_not_found"))
 
 @app.route("/register", methods=("POST",))
 def handle_register():
