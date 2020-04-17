@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>main</h1>
+
+<div id="faces">
+
+</div>
+
+<script type="text/javascript">
+  let pfp_path= "{{url_for('static', filename='pfps')}}";
+
+  $.get("/getProfiles", function(data){
+      let currentRow = $("<div class='row'></div>");
+      let ct = 0;
+      for(let i in data){
+        if(ct%4 == 0 && ct != 0){
+          $("#faces").append(currentRow);
+          currentRow = $("<div class='row'></div>");
+        }
+        let currentCard = $("<div class='col-sm face-card'></div>");
+        currentCard.append($(`<h2>${data[i].name}</p>`));
+        currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
+        let link = `/sendmessages?sendto=${data[i].name}`;
+        currentCard.append($(`<img width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
+        currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
+        $(currentRow).append(currentCard);
+        ct++;
+      }
+      while(ct % 4 != 0){
+        ct++;
+        $(currentRow).append($("<div class='row'></div>"));
+      }
+      $("#faces").append(currentRow);
+  });
+</script>
+
+
+<h1>LET'S GET IT </h1>
+	<div id = "container">
+	<div id= "left"> 
+		<h2>Search by college </h2>
+		<input type="text" value="Bunker Hill" name="text" id="college"/><br>
+		<input type="submit" value="submit" name="submit" id="submit"/>
+	</div>
+
+	<div id= "right"> 
+		<h2>Search by name </h2>
+		<input type="text" value="Muhammed Ali" name="text" id="name"/><br>
+		<input type="submit" value="submit" name="submit" id="submit"/>
+	</div>
+
+
+	<div id = "center">
+		<h4>GO!!!</h4>
+		<div id = "picturediv">
+			<p> Our school mascot </p>
+			<img src="{{url_for('static', filename='dan.jpg')}}" alt="bro"/>
+		</div>
+		
+	</div>
+
+	</div>
+	
+{% endblock %}

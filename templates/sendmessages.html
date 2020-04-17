@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>send messages</h1>
+<body>
+  <form action="send_message" method="post">
+    <label>From:</label>
+    <input type="text" name="from"/>
+    <label>Send To:</label>
+		<input type="text" name="send to"/>
+		<br>
+		<label>Message:</label>
+    <input type="text" name ="message"/>
+    <input type="submit" value="submit">
+  </form>
+</body>
+{% endblock %}

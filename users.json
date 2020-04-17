@@ -1,0 +1,38 @@
+{
+    "ziyong": {
+        "name": "ziyong",
+        "email": "email@belmontschools.net",
+        "password": "hmm",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "Alek": {
+        "name": "Alek",
+        "email": "email@belmontschools.net",
+        "password": "asdf",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "joy": {
+        "name": "joy",
+        "email": "email@belmontschools.net",
+        "password": "asdf",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "david": {
+        "name": "david",
+        "email": "david@belmontschools.net",
+        "password": "asdfasdf",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "leon": {
+        "name": "leon",
+        "email": "email@belmontschools.net",
+        "password": "",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "bobby": {
+        "name": "bobby",
+        "email": "email@belmontschools.net",
+        "password": "",
+        "bio": "I am a generic student at BHS graduating in 2020."
+    }
+}

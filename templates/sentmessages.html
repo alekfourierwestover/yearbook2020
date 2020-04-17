@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>sent messages</h1>
+<div id="messages">
+
+</div>
+
+
+<script type="text/javascript">
+  var name = "hi";
+  let pfp_path= "{{url_for('static', filename='pfps')}}";
+
+  $.get("/view_my_messages", function(data){
+    for(sender in data["Alek"])
+      for (message in data["Alek"][sender])
+      {
+        $("#messages").append(`<p>name: ${JSON.stringify(data["Alek"])}</p><p>message: ${data["Alek"][sender][message]}</p>`)
+      }
+
+
+
+  });
+
+</script>
+{% endblock %}
