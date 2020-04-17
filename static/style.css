@@ -3,28 +3,34 @@
 }
 
 body {
-  background-image: url("loginBg.png");
+
+  background-image: url("rug.JPG");
   background-color: #dfe8e1;
-  color: #000000;
   font-size: 150%;
+  font-family: 'Nunito', sans-serif;
+  font-size: small;
+}
+
+#navba {
+  box-shadow: 0 0px 10px rgba(0,0,0,1);
 }
 
 #register-form-div {
-  width: 50%;
-  border-color: #ff0000;
-  border-style: solid;
+  width: 70%;
+  border-radius: 0.5em;
   padding: 20px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+}
+
+#register-form-div .form-group {
+  padding-bottom: 50px;
 }
 
 #login-form-div {
-  width: 40%;
-  border-color: #ffffff;
-  border-style: solid;
+  width: 70%;
+  border-radius: 0.5em;
   padding: 20px;
-}
-
-.form-group label{
-    font-size: 1em;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
 }
 
 #register-form input {
@@ -38,7 +44,7 @@ body {
 
 #left {
     float:left;
-    width:200px;
+    width:10px;
 }
 
 #center {
