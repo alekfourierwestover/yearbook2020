@@ -66,6 +66,7 @@ def handle_register():
         with open(f"static/pfps/{user_name}.png", "wb") as f: # make sure usernames dont have werid stuff
             f.write(img_stream.read())
 
+
         x[user_name] = {
             "name": user_name,
             "email": request.form["email"],

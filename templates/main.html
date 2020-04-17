@@ -45,7 +45,7 @@
         let link = `/sendmessages?sendto=${data[i].name}`;
         // concern: what if id has spaces in it...
         // also injections in general...
-        currentCard.append($(`<img id="img_${data[i].name}" width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
+        currentCard.append($(`<img id="img_${data[i].name}" width=500px height=250px src="${pfp_path}/${data[i].name}.png"></img>`));
         currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
