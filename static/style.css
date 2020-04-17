@@ -11,9 +11,8 @@ body {
 
 #register-form-div {
   width: 50%;
-  border-color: #640e0e; 
-  border-style: solid;
-  padding: 20px;
+  border-color: #ffffff; 
+  padding: 60px;
 }
 
 #login-form-div {
