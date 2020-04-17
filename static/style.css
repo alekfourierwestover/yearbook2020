@@ -2,9 +2,14 @@
   padding: 1%;
 }
 
-body {
+h1 {
+  color: white;
+}
 
-  background-image: url("loginBg.png");
+
+body {
+  background-image: url("rug.JPG");
+  color: white;
   background-color: #dfe8e1;
   font-size: 150%;
   font-family: 'Nunito', sans-serif;
@@ -70,4 +75,15 @@ img {
 
 #footer{
   background-color: #95524c;
+}
+
+.card{
+    position: relative;
+    background-image: url("loginBgAlt.png");
+    color: black;
+    border-radius: 25px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-left: 10px;
+
 }

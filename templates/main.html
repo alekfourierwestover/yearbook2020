@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>main</h1>
+<h1>Main</h1>
 
 	<div class="container">
 		<div class="search-box">
@@ -27,8 +27,10 @@
 
 	</div>
 
-<div id="faces">
+<div class="card">
+	<div id="faces">
 
+	</div>
 </div>
 
 
@@ -49,7 +51,7 @@
         let link = `/sendmessages?sendto=${data[i].name}`;
         // concern: what if id has spaces in it...
         // also injections in general...
-        currentCard.append($(`<img id="img_${data[i].name}" width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
+        currentCard.append($(`<img id="img_${data[i].name}" width=250px height=250px src="${pfp_path}/${data[i].name}.png"></img>`));
         currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
