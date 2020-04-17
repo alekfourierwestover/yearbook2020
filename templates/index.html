@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block head %}
-<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" >
+<link href="style.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block content %}
@@ -58,7 +58,7 @@
 
           </div>
         </div>
-        <div class="col-md-4 bg-light">
+        <div class="col-md-4 bg-light font-small">
             <div id="login-form-div">
               <form action="login" method="post" id="login-form" enctype="multipart/form-data">
 
