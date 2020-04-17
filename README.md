@@ -1,6 +1,10 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
+
+
+
+
 # TODO
 - Leon: Login/registration
 - Joy: send message
@@ -88,5 +92,3 @@ later: privacy (accept new account requests)
 - {andrew} mymessages.html form style
 - {ziyong} grid main.html (make it look like a yearbook)
 - {ziyong} base.html / style.css (header, footer, other stuff?)
-
-
