@@ -9,6 +9,14 @@
     <h2 class="display-60">Sign Up</h2>
 </div>
 
+<script charset="utf-8">
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  if(urlParams.get("error")){
+    alert(urlParams.get("error"));
+  }
+</script>
+
 
 <div id="register-form-div" class="bg-light">
 <form action="register" method="post" id="register-form" enctype="multipart/form-data">
