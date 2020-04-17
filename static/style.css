@@ -11,16 +11,20 @@ body {
 
 #register-form-div {
   width: 50%;
-  border-color: #640e0e;
+  border-color: #ffffff00;
   border-style: solid;
   padding: 20px;
 }
 
 #login-form-div {
   width: 40%;
-  border-color: #000fff;
+  border-color: #1019a0;
   border-style: solid;
   padding: 20px;
+}
+
+.form-group label{
+    font-size: 1em;
 }
 
 #register-form input {
