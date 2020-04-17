@@ -3,8 +3,6 @@
 {% block content %}
 
 <script charset="utf-8">
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
   if(urlParams.get("error")){
     alert(urlParams.get("error"));
   }

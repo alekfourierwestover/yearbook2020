@@ -5,18 +5,38 @@
 </div>
 <br>
 
-<body>
 <div class="card">
-  <form action="send_message" method="post">
-    <label>From:</label>
-    <input type="text" name="from"/>
-    <label>Send To:</label>
-		<input type="text" name="send to"/>
-		<br>
 		<label>Message:</label>
-    <input type="text" name ="message"/>
-    <input type="submit" value="submit">
-  </form>
-  </div>
-</body>
+    <textarea name="message" id="message" rows="10" placeholder="Nice knowing you! I hope you will find happiness and success in life."></textarea>
+    <button onclick="send_message()" class="btn btn-lg">Sign Yearbook</button>
+</div>
+
+<div id="sendto_person_profile" class="card">
+  
+</div>
+
+<script charset="utf-8">
+  $.get("/view_profile", {"name": urlParams.get("sendto")}, function(data){
+
+      let currentCard = $("<div class='col-sm face-card'></div>");
+      currentCard.append($(`<h2>${data.name}</p>`));
+      currentCard.append($(`<p>bio: ${data.bio}</p>`));
+      currentCard.append($(`<img id="img_${data.name}" alt="profile picture missing" src="${pfp_path}/${data.name}.png" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+      $("#sendto_person_profile").append(currentCard);
+
+  });
+
+  function send_message(){
+    $.post("/send_message", {
+    "sendto": urlParams.get("sendto"), 
+    "name": urlParams.get("name"), 
+    "password": urlParams.get("password"),
+    "message": $("#message").val()
+    }, (data)=>{
+      window.location.href = data;
+    });
+  }
+
+</script>
+
 {% endblock %}

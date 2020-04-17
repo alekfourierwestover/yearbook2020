@@ -44,8 +44,9 @@
 
 
 <script type="text/javascript">
-  let pfp_path= "{{url_for('static', filename='pfps')}}";
 
+  let user_name = urlParams.get("name");
+  let user_pwd = urlParams.get("password");
   $.get("/getProfiles", function(data){
       let currentRow = $("<div class='row'></div>");
       let ct = 0;
@@ -57,17 +58,18 @@
         let currentCard = $("<div class='col-sm face-card'></div>");
         currentCard.append($(`<h2>${data[i].name}</p>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
-        let link = `/sendmessages?sendto=${data[i].name}`;
+        let link = `/sendmessages?sendto=${data[i].name}&name=${user_name}&password=${user_pwd}`;
         // concern: what if id has spaces in it...
         // also injections in general...
         currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+        currentCard.append($(`<br><br>`));
         currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
       }
       while(ct % 4 != 0){
         ct++;
-        $(currentRow).append($("<div class='row'></div>"));
+        $(currentRow).append($("<div class='col-sm face-card'></div>"));
       }
       $("#faces").append(currentRow);
   });
