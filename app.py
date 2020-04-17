@@ -1,9 +1,18 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask_login import LoginManager, UserMixin, current_user, login_user
 import json
 
 app = Flask(__name__)
+login = LoginManager(app)
+
+@login.user_loader
+def load_user(id):
+    with open("users.json", "r") as f:
+        data = json.load(f)
+        return jsonify(data[id])
 
 # website page routes
+@app.route("/index")
 @app.route("/")
 def serve_index():
     return render_template("index.html")
@@ -33,20 +42,18 @@ def serve_sentmessages():
 @app.route("/login", methods=("POST",))
 def handle_login():
     # request.form["key"] extracts a value from the js form
-    with open("user.json", "r") as f:
+    with open("users.json", "r") as f:
         data = json.load(f)
-        email = request.args.get("email")
-        password = request.args.get("password")
+        name = request.form.get("name")
+        password = request.form.get("password")
 
         try:
-            if password == data[email]["password"]:
+            if password == data[name]["password"]:
                 return redirect(url_for("serve_main"))
             else:
-                return "Your email and password do not match. Please try again!"
+                return redirect(url_for("serve_index", error="password_wrong"))
         except:
-                return "There is no such account. Try making an account!"
-
-
+            return redirect(url_for("serve_index", error="user_not_found"))
 
 @app.route("/register", methods=("POST",))
 def handle_register():
@@ -80,27 +87,24 @@ def getProfiles():
 
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
-    #what to do after submit
-    #make a new json file
-    #for every user, have all the messages
-    #{"alek": {ziyong: "blah", Joy : "blah"}}
-    # request.form["key"] extracts a value from the js form
     with open("messages.json", "r") as f:
         data = json.load(f)
         try:
             data[request.form.get("send to")][request.form.get("from")].append(request.form.get("message"))
         except:
             data[request.form.get("send to")][request.form.get("from")] = [request.form.get("message")]
-
     with open("messages.json", "w") as f:
-        json.dump(data, f, indent =4)
+        json.dump(data, f, indent=4)
 
     return redirect(url_for("serve_main"))
 
 
+
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
-    return ""
+    with open("messages.json", "r") as f:
+        data = json.load(f)
+    return jsonify(data)
 
 @app.route("/view_sent_messages")
 def handle_view_sent_messages():
