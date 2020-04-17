@@ -11,9 +11,7 @@
 	<div class="container">
 		<div class="search-box">
 			<div class="search-icon"><i class="fa fa-search search-icon"></i></div>
-			<form action="" class="search-form">
-				<input type="text" placeholder="Search" id="search" autocomplete="off">
-			</form>
+      <input type="text" placeholder="Search" id="search" autocomplete="off">
 			<svg class="search-border" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" viewBox="0 0 671 111" style="enable-background:new 0 0 671 111;"
 			 xml:space="preserve">
           <path class="border" d="M335.5,108.5h-280c-29.3,0-53-23.7-53-53v0c0-29.3,23.7-53,53-53h280"/>
@@ -45,7 +43,9 @@
         currentCard.append($(`<h2>${data[i].name}</p>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
         let link = `/sendmessages?sendto=${data[i].name}`;
-        currentCard.append($(`<img width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
+        // concern: what if id has spaces in it...
+        // also injections in general...
+        currentCard.append($(`<img id="img_${data[i].name}" width=500px src="${pfp_path}/${data[i].name}.png"></img>`));
         currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
@@ -56,6 +56,23 @@
       }
       $("#faces").append(currentRow);
   });
+
+function search_name(){
+  let name = $("#search").val();
+  if(name){
+    let img_elt = document.getElementById("img_"+name);
+    if(img_elt)
+      img_elt.scrollIntoView();
+  }
+}
+
+document.getElementById("search").addEventListener("keyup", function(event){
+  if(event.keyCode=== 13){
+    event.preventDefault();
+    search_name();
+  }
+});
+
 </script>
 <br>
 <br>
