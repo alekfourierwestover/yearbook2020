@@ -11,13 +11,14 @@ body {
 
 #register-form-div {
   width: 50%;
-  border-color: #ffffff; 
-  padding: 60px;
+  border-color: #640e0e;
+  border-style: solid;
+  padding: 20px;
 }
 
 #login-form-div {
   width: 40%;
-  border-color: #000fff; 
+  border-color: #000fff;
   border-style: solid;
   padding: 20px;
 }
@@ -55,4 +56,8 @@ body {
 img {
     max-width: 100%;
     max-height: 100%;
+}
+
+#footer{
+  background-color: #95524c;
 }

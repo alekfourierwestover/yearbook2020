@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='search_bar.css')}}" type="text/css" >
+<script src="{{url_for('static', filename='search_bar.js')}}" charset="utf-8"></script>
+{% endblock %}
+
 {% block content %}
 <h1>main</h1>
+
+	<div class="container">
+		<div class="search-box">
+			<div class="search-icon"><i class="fa fa-search search-icon"></i></div>
+			<form action="" class="search-form">
+				<input type="text" placeholder="Search" id="search" autocomplete="off">
+			</form>
+			<svg class="search-border" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" viewBox="0 0 671 111" style="enable-background:new 0 0 671 111;"
+			 xml:space="preserve">
+          <path class="border" d="M335.5,108.5h-280c-29.3,0-53-23.7-53-53v0c0-29.3,23.7-53,53-53h280"/>
+          <path class="border" d="M335.5,108.5h280c29.3,0,53-23.7,53-53v0c0-29.3-23.7-53-53-53h-280"/>
+        </svg>
+			<div class="go-icon"><i class="fa fa-arrow-right"></i></div>
+		</div>
+    <br>
+    <br>
+
+	</div>
 
 <div id="faces">
 
@@ -34,17 +57,29 @@
       $("#faces").append(currentRow);
   });
 </script>
+<br>
+<br>
+<br>
+
+<footer id="footer">
+  <div>
+    <br>
+    <h1><font color="b3e8ff">We're all in this together</font></h1>
+    <h2><font color="b3e8ff">Yearbook 1.0.0</font></h2>
+<br>
+</div>
+</footer>
 
 
-<h1>LET'S GET IT </h1>
+<!--<h1>LET'S GET IT </h1>
 	<div id = "container">
-	<div id= "left"> 
+	<div id= "left">
 		<h2>Search by college </h2>
 		<input type="text" value="Bunker Hill" name="text" id="college"/><br>
 		<input type="submit" value="submit" name="submit" id="submit"/>
 	</div>
 
-	<div id= "right"> 
+	<div id= "right">
 		<h2>Search by name </h2>
 		<input type="text" value="Muhammed Ali" name="text" id="name"/><br>
 		<input type="submit" value="submit" name="submit" id="submit"/>
@@ -57,9 +92,9 @@
 			<p> Our school mascot </p>
 			<img src="{{url_for('static', filename='dan.jpg')}}" alt="bro"/>
 		</div>
-		
-	</div>
 
 	</div>
-	
+
+	</div>-->
+
 {% endblock %}
