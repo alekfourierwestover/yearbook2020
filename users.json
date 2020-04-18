@@ -8,7 +8,7 @@
     "Alek": {
         "name": "Alek",
         "email": "email@belmontschools.net",
-        "password": "asdf",
+        "password": "Hello",
         "bio": "I am a generic student at BHS graduating in 2020."
     },
     "joy": {
@@ -34,6 +34,5 @@
         "email": "email@belmontschools.net",
         "password": "",
         "bio": "I am a generic student at BHS graduating in 2020."
-
     }
 }

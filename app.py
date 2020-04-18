@@ -30,6 +30,10 @@ def serve_sendmessages():
 def serve_sentmessages():
     return render_template("sentmessages.html")
 
+@app.route("/edit")
+def serve_edit():
+    return render_template("edit.html")
+
 # request routes
 @app.route("/login", methods=("POST",))
 def handle_login():
@@ -138,9 +142,17 @@ def handle_view_profile():
         print(data)
         return jsonify(data[user_name])
 
-@app.route("/edit_profile")
+@app.route("/edit_profile", methods=("POST", ))
 def handle_edit_profile():
-    return ""
+    user_name = request.args.get("name")
+    with open("users.json", "r") as f:
+        x = json.load(f)
+        user_name = request.form["name"]
+        user_password = request.form["new"]
+        x[user_name]["password"] = user_password
+    with open("users.json", "w") as f:
+        json.dump(x, f, indent = 4)
+    return redirect(url_for("serve_main"))
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
