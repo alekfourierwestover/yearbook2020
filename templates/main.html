@@ -41,7 +41,10 @@
 </div>
 
 <div class="card">
-  <a style="color: black; font-size:200%" href="/mymessages">my messages</a>
+	<ul style= "list-style-type: none">
+  <li style="display: inline"><a style="color: black; font-size:200%" href="/mymessages">my messages</a></li>
+	<li style="display: inline"><a style="color: black; font-size:200%" href="/map">see where everyone's going!</a></li>
+	<ul>
 </div>
 
 <div class="card">
@@ -110,27 +113,6 @@ document.getElementById("search").addEventListener("keyup", function(event){
   </div>
 </footer>
 
-
-<!--<h1>LET'S GET IT </h1>
-  <div id = "container">
-  <div id= "left">
-    <h2>Search by college </h2>
-    <input type="text" value="Bunker Hill" name="text" id="college"/><br>
-    <input type="submit" value="submit" name="submit" id="submit"/>
-  </div>
-  <div id= "right">
-    <h2>Search by name </h2>
-    <input type="text" value="Muhammed Ali" name="text" id="name"/><br>
-    <input type="submit" value="submit" name="submit" id="submit"/>
-  </div>
-  <div id = "center">
-    <h4>GO!!!</h4>
-    <div id = "picturediv">
-      <p> Our school mascot </p>
-      <img src="{{url_for('static', filename='dan.jpg')}}" alt="bro"/>
-    </div>
-  </div>
-  </div>-->
 
   <iframe src="https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" width="640" height="480"></iframe>
 
