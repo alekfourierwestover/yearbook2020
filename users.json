@@ -2,7 +2,7 @@
     "ziyong": {
         "name": "ziyong",
         "email": "email@belmontschools.net",
-        "password": "hmm",
+        "password": "bro",
         "bio": "I am a generic student at BHS graduating in 2020."
     },
     "Alek": {
@@ -34,5 +34,11 @@
         "email": "email@belmontschools.net",
         "password": "",
         "bio": "I am a generic student at BHS graduating in 2020."
+    },
+    "bot": {
+        "name": "bot",
+        "email": "ziyong@ebeasdf",
+        "password": "bro",
+        "bio": "hjhjhjk"
     }
 }

@@ -2,28 +2,39 @@
 
 
 {% block content %}
-<h1>Displaying Alek's Messages</h1>
+<div id="myprofile">
 
-<div class = "comment">
+</div>
+
+<h1>messages:</h1>
+<div id="messages">
+
+</div>
+
 <script type="text/javascript">
-  var name = "Alek";
-  let pfp_path= "{{url_for('static', filename='pfps')}}";
 
-  $.get("/view_sent_messages", function(data){
-    for(let i = 0; i<data.length; i++) {
-    	let htmlElement = `<div class ="messages"><p>name: ${data[i]} <p></div>`;
-    	$("#messages").append(htmlElement)
-    }
+  let name = "ziyong";
+  $.get("/view_profile", {"name": name}, function(data){
+    let currentCard = $("<div class='col-sm face-card'></div>");
+    currentCard.append($(`<h2>${data.name}</p>`));
+    currentCard.append($(`<p>bio: ${data.bio}</p>`));
+    currentCard.append($(`<img id="img_${data.name}" alt="profile picture missing" src="${pfp_path}/${data.name}.png" width="75%" height="75%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+    $("#myprofile").append(currentCard);
   });
+
+
+$.get("/view_my_messages", {"name": name}, function(data){
+  for(let sender_person in data){
+    let currentCard = $("<div class='card'></div>");
+    currentCard.append($(`<h2>messages from ${sender_person}</h2>`));
+    for(let message in data[sender_person]){
+      currentCard.append($(`<p>message: ${data[sender_person][message]}</p>`));
+    }
+    $("#messages").append(currentCard);
+  }
+});
 </script>
-</div>
 
-<div class="card">
-<h1>MY MESSAGES</h1>
-<div class="messages">
-  </div
-
-</div>
 <br>
 
 
