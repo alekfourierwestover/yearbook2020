@@ -11,7 +11,11 @@
 {% block content %}
 <div class="card">
 	<br>
-	<img alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+  <div id="mauraders">
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+    <img alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+  </div>
 <div style="clear: right">
 	<h1 style="font-size: 70px">CONGRATULATIONS!</h1>
 	<h1 style="font-size: 30px">BELMONT HIGH SCHOOL CLASS of 2020</h1>

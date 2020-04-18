@@ -53,10 +53,12 @@ def handle_register():
         x = json.load(f)
         user_name = request.form["name"]
 
-        img_stream = request.files.get("profilepic").stream
-        with open(f"static/pfps/{user_name}.png", "wb") as f: # make sure usernames dont have werid stuff
-            f.write(img_stream.read())
-
+        try:
+            img_stream = request.files.get("profilepic").stream
+            with open(f"static/pfps/{user_name}.png", "wb") as f: # make sure usernames dont have werid stuff
+                f.write(img_stream.read())
+        except:
+            pass
 
         x[user_name] = {
             "name": user_name,

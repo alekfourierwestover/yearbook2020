@@ -100,3 +100,19 @@ img {
   color: black;
 }
 
+
+#left-maurader {
+  position: absolute;
+  left: 0px;
+}
+
+#right-maurader {
+  position: absolute;
+  right: 0px;
+  transform: scaleX(-1);
+}
+
+#mauraders {
+  height: 80px;
+}
+
