@@ -10,8 +10,16 @@
 
 {% block content %}
 <div class="card">
+<<<<<<< HEAD
   <br>
   <img alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+=======
+	<br>
+  <div id="mauraders">
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+  </div>
+>>>>>>> b47a99bd2a675957c2312368f578a99f33513c88
 <div style="clear: right">
   <h1 style="font-size: 70px">CONGRATULATIONS!</h1>
   <h1 style="font-size: 30px">BELMONT HIGH SCHOOL CLASS of 2020</h1>
@@ -19,9 +27,16 @@
 
 </div>
 
+<<<<<<< HEAD
   <div class="search-container">
     <div class="search-box">
       <div class="search-icon"><i class="fa fa-search search-icon"></i></div>
+=======
+<div class="card">
+	<div class="search-container">
+		<div class="search-box">
+			<div class="search-icon"><i class="fa fa-search search-icon"></i></div>
+>>>>>>> b47a99bd2a675957c2312368f578a99f33513c88
       <input type="text" placeholder="Search" id="search" autocomplete="off">
       <svg class="search-border" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" viewBox="0 0 671 111" style="enable-background:new 0 0 671 111;"
        xml:space="preserve">
@@ -32,8 +47,17 @@
     </div>
     <br>
     <br>
+<<<<<<< HEAD
 
   </div>
+=======
+	</div>
+</div>
+
+<div class="card">
+  <a style="color: black; font-size:200%" href="/mymessages">my messages</a>
+</div>
+>>>>>>> b47a99bd2a675957c2312368f578a99f33513c88
 
 <div class="card">
   <br>
@@ -44,8 +68,9 @@
 
 
 <script type="text/javascript">
-  let pfp_path= "{{url_for('static', filename='pfps')}}";
 
+  let user_name = urlParams.get("name");
+  let user_pwd = urlParams.get("password");
   $.get("/getProfiles", function(data){
       let currentRow = $("<div class='row'></div>");
       let ct = 0;
@@ -54,20 +79,21 @@
           $("#faces").append(currentRow);
           currentRow = $("<div class='row'></div>");
         }
-        let currentCard = $("<div class='col-sm face-card'></div>");
-        currentCard.append($(`<h2>${data[i].name}</p>`));
-        currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
-        let link = `/sendmessages?sendto=${data[i].name}`;
+        let link = `/sendmessages?sendto=${data[i].name}&name=${user_name}&password=${user_pwd}`;
+        let currentCard = $(`<div class='col-sm face-card' onclick='window.location.href="${link}"'></div>`);
         // concern: what if id has spaces in it...
         // also injections in general...
         currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+        currentCard.append($(`<h2>${data[i].name}</h2>`));
+        currentCard.append($(`<br><br>`));
+        currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
         currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
       }
       while(ct % 4 != 0){
         ct++;
-        $(currentRow).append($("<div class='row'></div>"));
+        $(currentRow).append($("<div class='col-sm face-card'></div>"));
       }
       $("#faces").append(currentRow);
   });
@@ -121,4 +147,10 @@ document.getElementById("search").addEventListener("keyup", function(event){
   </div>
   </div>-->
 
+<<<<<<< HEAD
 {% endblock %}
+=======
+  <iframe src="https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" width="640" height="480"></iframe>
+
+{% endblock %}
+>>>>>>> b47a99bd2a675957c2312368f578a99f33513c88

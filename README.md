@@ -1,11 +1,22 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
+# TODO 4/17/20
+- Leon: TBD
+- Joy: TBD
+- Ziyong: TBD
+
+- David: main.html, make it look pretty, checks if signed
+- Alek: Emails and Maps
+- Andrew: Send messages and My Messages
+
+- General To Do's
+  - Remove sent messages and add a check next to persons name if signed
+  - Make Font's readable and big enough
+  - Fix register
 
 
-
-
-# TODO
+# TODO OLD
 - Leon: Login/registration
 - Joy: send message
 - Ziyong: registration page (image input/upload) => work with Leon

@@ -1,15 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from flask_login import LoginManager, UserMixin, current_user, login_user
 import json
 
 app = Flask(__name__)
-login = LoginManager(app)
-
-@login.user_loader
-def load_user(id):
-    with open("users.json", "r") as f:
-        data = json.load(f)
-        return jsonify(data[id])
 
 # website page routes
 @app.route("/index")
@@ -46,10 +38,9 @@ def handle_login():
         data = json.load(f)
         name = request.form.get("name")
         password = request.form.get("password")
-
         try:
             if password == data[name]["password"]:
-                return redirect(url_for("serve_main"))
+                return redirect(url_for("serve_main", name=name, password=password))
             else:
                 return redirect(url_for("serve_index", error="password_wrong"))
         except:
@@ -62,10 +53,12 @@ def handle_register():
         x = json.load(f)
         user_name = request.form["name"]
 
-        img_stream = request.files.get("profilepic").stream
-        with open(f"static/pfps/{user_name}.png", "wb") as f: # make sure usernames dont have werid stuff
-            f.write(img_stream.read())
-
+        try:
+            img_stream = request.files.get("profilepic").stream
+            with open(f"static/pfps/{user_name}.png", "wb") as f: # make sure usernames dont have werid stuff
+                f.write(img_stream.read())
+        except:
+            pass
 
         x[user_name] = {
             "name": user_name,
@@ -85,20 +78,37 @@ def getProfiles():
         data = json.load(f)
     return jsonify(data)
 
-
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
     with open("messages.json", "r") as f:
-        data = json.load(f)
-        try:
-            data[request.form.get("send to")][request.form.get("from")].append(request.form.get("message"))
-        except:
-            data[request.form.get("send to")][request.form.get("from")] = [request.form.get("message")]
+        message_data = json.load(f)
+
+    with open("users.json", "r") as f:
+        user_data = json.load(f)
+
+    sent_from = request.form.get("name") 
+    password = request.form.get("password") 
+    send_to = request.form.get("sendto")
+    message = request.form.get("message")
+
+    if sent_from not in user_data.keys():
+        return url_for("serve_index", error="malicious_user")
+    if send_to not in user_data.keys():
+        return url_for("serve_index", error="malicious_user")
+    if user_data[sent_from]["password"] != password:
+        return url_for("serve_index", error="malicious_user")
+
+    if not send_to in message_data.keys():
+        message_data[send_to] = { sent_from: [message] }
+    elif sent_from not in message_data[send_to].keys():
+        message_data[send_to][sent_from] = [message]
+    else:
+        message_data[send_to][sent_from].append(message)
+
     with open("messages.json", "w") as f:
-        json.dump(data, f, indent=4)
+        json.dump(message_data, f, indent=4)
 
-    return redirect(url_for("serve_main"))
-
+    return url_for("serve_main", name=sent_from, password=password)
 
 
 @app.route("/view_my_messages", methods=("GET",))
@@ -122,12 +132,10 @@ def handle_view_sent_messages():
 @app.route("/view_profile", methods=("GET",))
 # returns name and bio
 def handle_view_profile():
-    try:
-        user_name = request.args.get("name")
-    except:
-        return "user not found"
+    user_name = request.args.get("name")
     with open("users.json", "r") as f:
         data = json.load(f)
+        print(data)
         return jsonify(data[user_name])
 
 @app.route("/edit_profile")

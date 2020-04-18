@@ -7,8 +7,6 @@
     <h2 class="display-60">Sign Up and Log In</h2>
 =======
 <script charset="utf-8">
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
   if(urlParams.get("error")){
     alert(urlParams.get("error"));
   }
@@ -129,7 +127,10 @@
           </div>
         </div>
         <div class="w-100"></div>
+
+        <img width="80%" src="{{url_for('static', filename='marauder.png')}}" alt="maurader"/>
     </div>
+
 </div>
 
 {% endblock %}
