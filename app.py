@@ -99,7 +99,7 @@ def handle_send_message():
     if not send_to in message_data.keys():
         message_data[send_to] = { sent_from: [message] }
     elif sent_from not in message_data[send_to].keys():
-        message_data[send_to][send_from] = [message]
+        message_data[send_to][sent_from] = [message]
     else:
         message_data[send_to][sent_from].append(message)
 
