@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="card">
+  <div id="mauraders">
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+  </div>
+<div style="clear: right">
+  <h1>Map</h1>
+</div>
+</div>
+<br>
+<div class="card" style="opacity: 100%">
+  <iframe 100000%" src="https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" <!--width="700.91" height="525.68" align="middle"--> scrolling="no" frameborder="0"></iframe>
+</div>
+
+{% endblock %}

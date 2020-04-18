@@ -22,7 +22,7 @@
   margin: 0;
 }*/
 a, a:visited, a:hover {
-  color: #FFFFFF/*inherit*/;
+  color: rgb(255, 255, 255)/*inherit*/;
   text-decoration: none;
 }
 main {
