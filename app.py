@@ -34,6 +34,10 @@ def serve_sentmessages():
 def serve_edit():
     return render_template("edit.html")
 
+@app.route("/map")
+def serve_map():
+    return render_template("map.html")
+
 # request routes
 @app.route("/login", methods=("POST",))
 def handle_login():
@@ -90,8 +94,8 @@ def handle_send_message():
     with open("users.json", "r") as f:
         user_data = json.load(f)
 
-    sent_from = request.form.get("name") 
-    password = request.form.get("password") 
+    sent_from = request.form.get("name")
+    password = request.form.get("password")
     send_to = request.form.get("sendto")
     message = request.form.get("message")
 

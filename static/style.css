@@ -80,9 +80,9 @@ img {
     max-height: 100%;
 }
 
-#footer{
-  /*background-color: #95524c;*/
-  color: #FFFFFF;
+footer{
+  background-color: #95524c;
+  color: #b3e8FF;
 }
 
 .card{
@@ -113,7 +113,7 @@ img {
 }
 
 #mauraders {
-  height: 1px;
+  align-items: center;
 }
 
 .face-card{
@@ -125,4 +125,10 @@ img {
   margin-top: 20px;
   margin-left: 10px;
   height: 500px;
+}
+
+li {
+  display: inline;
+  padding-left: 20px;
+  padding-right: 20px;
 }
