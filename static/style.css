@@ -115,3 +115,14 @@ img {
 #mauraders {
   height: 1px;
 }
+
+.face-card{
+  position: relative;
+  background-image: url("loginBgAlt.png");
+  color: black;
+  border-radius: 25px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+  height: 500px;
+}
