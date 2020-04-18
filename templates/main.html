@@ -44,12 +44,13 @@
   <a style="color: black; font-size:200%" href="/mymessages">my messages</a>
 </div>
 
-<div class="card">
+
   <br>
   <div id="faces">
 
+
   </div>
-</div>
+
 
 
 <script type="text/javascript">
@@ -68,11 +69,11 @@
         let currentCard = $(`<div class='col-sm face-card' onclick='window.location.href="${link}"'></div>`);
         // concern: what if id has spaces in it...
         // also injections in general...
-        currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+        currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
         currentCard.append($(`<h2>${data[i].name}</h2>`));
         currentCard.append($(`<br><br>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
-        currentCard.append($(`<a href="${link}">sign ${data[i].name}'s yearbook</a>`));
+        currentCard.append($(`<a style="color:red" href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
       }
