@@ -13,7 +13,7 @@ Yearbook for BHS 2020 :(
 - General To Do's
   - Remove sent messages and add a check next to persons name if signed
   - Make Font's readable and big enough
-  - 
+  - Fix register
 
 
 # TODO OLD
