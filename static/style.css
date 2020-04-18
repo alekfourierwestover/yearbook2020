@@ -103,16 +103,15 @@ img {
 
 #left-maurader {
   position: absolute;
-  left: 0px;
+  left: 90px;
 }
 
 #right-maurader {
   position: absolute;
-  right: 0px;
+  right: 90px;
   transform: scaleX(-1);
 }
 
 #mauraders {
-  height: 80px;
+  height: 1px;
 }
-
