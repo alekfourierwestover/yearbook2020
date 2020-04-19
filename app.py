@@ -26,13 +26,13 @@ def serve_sendmessages():
     #serves website
     return render_template("sendmessages.html")
 
-@app.route("/sentmessages")
-def serve_sentmessages():
-    return render_template("sentmessages.html")
-
 @app.route("/edit")
 def serve_edit():
     return render_template("edit.html")
+
+@app.route("/map")
+def serve_map():
+    return render_template("map.html")
 
 # request routes
 @app.route("/login", methods=("POST",))
@@ -90,8 +90,8 @@ def handle_send_message():
     with open("users.json", "r") as f:
         user_data = json.load(f)
 
-    sent_from = request.form.get("name") 
-    password = request.form.get("password") 
+    sent_from = request.form.get("name")
+    password = request.form.get("password")
     send_to = request.form.get("sendto")
     message = request.form.get("message")
 
@@ -117,21 +117,13 @@ def handle_send_message():
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
-    with open("messages.json", "r") as f:
-        data = json.load(f)
-    return jsonify(data)
-
-
-@app.route("/view_sent_messages", methods=("GET",))
-def handle_view_sent_messages():
-    # request.args.get("name")
     try:
-        user_name = request.args.get("name")
+        name = request.args.get("name")
+        with open("messages.json", "r") as f:
+            data = json.load(f)[name]
+        return jsonify(data)
     except:
-        return "user not found"
-    with open("users.json", "r") as f:
-        data = json.load(f)
-        return jsonify(data[user_name])
+        return "no messages"
 
 @app.route("/view_profile", methods=("GET",))
 # returns name and bio
@@ -139,7 +131,6 @@ def handle_view_profile():
     user_name = request.args.get("name")
     with open("users.json", "r") as f:
         data = json.load(f)
-        print(data)
         return jsonify(data[user_name])
 
 @app.route("/edit_profile", methods=("POST", ))
