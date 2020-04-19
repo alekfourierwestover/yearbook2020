@@ -32,8 +32,8 @@
     "bobby": {
         "name": "bobby",
         "email": "email@belmontschools.net",
-        "password": "",
-        "bio": "I am a generic student at BHS graduating in 2020."
+        "password": "asdf",
+        "bio": ""
     },
     "bot": {
         "name": "bot",
