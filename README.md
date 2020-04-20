@@ -1,6 +1,27 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
+#TODO 4/20/20
+- Alek: fix upload images/register; script injections and bad names; view yearbook msgs not just to Ziyong
+- Ziyong: checkmark next to name; sendMessages image ratio; general responsive web design
+- David: Maps (allow user to input college destination); general responsive web design
+- Leon: generate/hash password; fix bug for edit profile (notification w/ notify.js)
+- Andrew: sticky notes in myMessages; general responsive web design
+
+protection against accessing things when not signed in (hope: w/o username/password in url) (Ziyong, Alek ~ Tuesday 9-11pm zoom meeting)
+
+date: wednesday night (8pm)
+
+total end date: saturday 8pm (schedule call w/school ppl to show it off)
+release date: may 1st (college decision date)
+
+#Later
+- GoFundMe
+- heroku
+- convert json to database
+- expand to other schools
+
+
 # TODO 4/17/20
 - Leon: TBD
 - Joy: TBD
