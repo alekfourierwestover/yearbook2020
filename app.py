@@ -140,10 +140,25 @@ def handle_edit_profile():
         x = json.load(f)
         user_name = request.form["name"]
         user_password = request.form["new"]
+        user_quote = request.form["quote"]
         x[user_name]["password"] = user_password
-    with open("users.json", "w") as f:
-        json.dump(x, f, indent = 4)
-    return redirect(url_for("serve_main"))
+        x[user_name]["bio"] = user_quote
+
+    with open("users.json", "r") as f:
+        data = json.load(f)
+        name = request.form.get("name")
+        password = request.form.get("password")
+        try:
+            if password == data[name]["password"]:
+               with open("users.json", "w") as f:
+                    json.dump(x, f, indent = 4)
+                    return redirect(url_for("serve_main")) 
+            else:
+                return redirect(url_for("serve_index", error="password_wrong"))
+        except:
+            return redirect(url_for("serve_index", error="user_not_found"))
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
