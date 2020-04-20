@@ -71,19 +71,11 @@
           currentRow = $("<div class='row'></div>");
         }
         let link = `/sendmessages?sendto=${data[i].name}&name=${user_name}&password=${user_pwd}`;
-        let currentCard = $(`<div class='col-sm face-card' onclick='window.location.href="${link}"'></div>`);
+        let currentCard = $(`<div class='col-sm face-card' id="card_${data[i].name}" onclick='window.location.href="${link}"'></div>`);
         // concern: what if id has spaces in it...
         // also injections in general...
         currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
-        let sendName = data[i].name
-        $.get("/view_my_messages", function(data){
-          for (let sender in data){
-            if (data[sendName] == user_name){
-              currentCard.append($(`<h2>${sendName}&#x2713</h2>`));
-            }
-          }
-          currentCard.append($(`<h2>${data.Alek.Joy}</h2>`));
-        });
+        let sendName = data[i].name;
         currentCard.append($(`<h2>${sendName}</h2>`));
         currentCard.append($(`<br><br>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
@@ -96,6 +88,16 @@
         $(currentRow).append($("<div class='col-sm face-card'></div>"));
       }
       $("#faces").append(currentRow);
+  });
+
+  $.get("/view_all_messages", function(data){
+    for (let person in data){
+      if (Object.keys(data[person]).indexOf(user_name) != -1)
+      {
+        $("#card_" + person).append("<p>&#x2713</p>");
+      }
+    }
+
   });
 
 function search_name(){

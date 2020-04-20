@@ -125,6 +125,16 @@ def handle_view_my_messages():
     except:
         return "no messages"
 
+@app.route("/view_all_messages", methods=("GET",))
+def handle_view_all_messages():
+    try:
+        with open("messages.json", "r") as f:
+            data = json.load(f)
+        return jsonify(data)
+    except:
+        return "no messages"
+
+
 @app.route("/view_profile", methods=("GET",))
 # returns name and bio
 def handle_view_profile():
@@ -152,13 +162,13 @@ def handle_edit_profile():
             if password == data[name]["password"]:
                with open("users.json", "w") as f:
                     json.dump(x, f, indent = 4)
-                    return redirect(url_for("serve_main")) 
+                    return redirect(url_for("serve_main"))
             else:
                 return redirect(url_for("serve_index", error="password_wrong"))
         except:
             return redirect(url_for("serve_index", error="user_not_found"))
 
-    
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
