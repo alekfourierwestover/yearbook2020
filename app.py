@@ -1,7 +1,13 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 import json
+#  from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
+
+# seems to do the trick!!! just cant login multiple users on one device, which is good anyways!!!!
+@app.route("/getsession", methods=("GET",)) 
+def get_session():
+    return session["username"]
 
 # website page routes
 @app.route("/index")
@@ -42,6 +48,8 @@ def handle_login():
         data = json.load(f)
         name = request.form.get("name")
         password = request.form.get("password")
+        session["username"] = name
+
         try:
             if password == data[name]["password"]:
                 return redirect(url_for("serve_main", name=name, password=password))
@@ -59,7 +67,7 @@ def handle_register():
 
         try:
             img_stream = request.files.get("profilepic").stream
-            with open(f"static/pfps/{user_name}.png", "wb") as f: # make sure usernames dont have werid stuff
+            with open(f"static/pfps/{user_name}.png", "wb") as f: # TODO: make sure usernames dont have werid stuff
                 f.write(img_stream.read())
         except:
             pass
@@ -159,6 +167,11 @@ def handle_edit_profile():
             return redirect(url_for("serve_index", error="user_not_found"))
 
     
-
 if __name__ == "__main__":
+    app.secret_key = 'super secret key'
     app.run(debug=True, host='0.0.0.0')
+
+    # ok so looks like session is a dictionary that is stored client side as a cookie
+    # testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding
+
+
