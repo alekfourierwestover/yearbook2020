@@ -75,12 +75,16 @@
         // concern: what if id has spaces in it...
         // also injections in general...
         currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
-        if (user_name == "ziyong"){
-          currentCard.append($(`<h2>${data[i].name}&#x2713</h2>`));
-        }
-        else {
-          currentCard.append($(`<h2>${data[i].name}</h2>`));
-        }
+        let sendName = data[i].name
+        $.get("/view_my_messages", function(data){
+          for (let sender in data){
+            if (data[sendName] == user_name){
+              currentCard.append($(`<h2>${sendName}&#x2713</h2>`));
+            }
+          }
+          currentCard.append($(`<h2>${data.Alek.Joy}</h2>`));
+        });
+        currentCard.append($(`<h2>${sendName}</h2>`));
         currentCard.append($(`<br><br>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
         currentCard.append($(`<a style="color:red" href="${link}">sign ${data[i].name}'s yearbook</a>`));
