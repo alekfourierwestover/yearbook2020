@@ -3,15 +3,16 @@
 
 {% block content %}
 <div id="myprofile">
-  
+
 </div>
 
 <h1>messages:</h1>
 <div id="messages">
-  
+
 </div>
 
 <script type="text/javascript">
+
   let name = "ziyong";
   $.get("/view_profile", {"name": name}, function(data){
     let currentCard = $("<div class='col-sm face-card'></div>");
@@ -20,6 +21,7 @@
     currentCard.append($(`<img id="img_${data.name}" alt="profile picture missing" src="${pfp_path}/${data.name}.png" width="75%" height="75%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
     $("#myprofile").append(currentCard);
   });
+
 
 $.get("/view_my_messages", {"name": name}, function(data){
   let allCards = $("<ul id='stick'></ul>");
