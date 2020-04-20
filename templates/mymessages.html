@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" >
 
 {% block content %}
 <div id="myprofile">
@@ -24,8 +24,9 @@
 
 
 $.get("/view_my_messages", {"name": name}, function(data){
+  let allCards = $("<ul id='stick'></ul>");
   for(let sender_person in data){
-    let currentCard = $("<div class='card'></div>");
+    let currentCard = $("<li></li>");
     currentCard.append($(`<h2>messages from ${sender_person}</h2>`));
     for(let message in data[sender_person]){
       currentCard.append($(`<p>message: ${data[sender_person][message]}</p>`));
@@ -36,6 +37,27 @@ $.get("/view_my_messages", {"name": name}, function(data){
 </script>
 
 <br>
+
+<ul id="stick">
+  <li>
+      <a href="#">
+        <h2>From Andrew</h2>
+        <p>You suck!</p>
+      </a>
+  </li>
+  <li>
+      <a href="#">
+        <h2>From MIT</h2>
+        <p>You have been accepted</p>
+      </a>
+  </li>
+  <li>
+      <a href="#">
+        <h2>Middlesex community college</h2>
+        <p>U suck! denied!!</p>
+      </a>
+  </li>
+<ul>
 
 
 {% endblock %}
