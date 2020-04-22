@@ -1,68 +1,20 @@
 {
-    "ziyong": {
-        "name": "ziyong",
-        "email": "email@belmontschools.net",
-        "password": "",
-        "bio": "hiiii"
+    "ddbbf78c-e2b0-5931-8b0f-4e6ca2b75c3e": {
+        "name": "alek",
+        "email": "alek@belmontschools.net",
+        "password": "$5$rounds=535000$npVjEegsnyT3oVs5$9weCJ7CNShKG2cOuR87.tbkzlc03Y2uh7WbgRuGnNY6",
+        "bio": "hey, this is gonna be lit"
     },
-    "Alek": {
-        "name": "Alek",
-        "email": "email@belmontschools.net",
-        "password": "trump",
-        "bio": "I am a generic student at BHS graduating in 2020."
-    },
-    "joy": {
+    "7d946e48-e0e4-5bb2-b842-11cf5d55dfa5": {
         "name": "joy",
-        "email": "j@belmontschools.net",
-        "password": "wejkfbekw",
-        "bio": "I am a generic student at BHS graduating in 2020."
+        "email": "joy@belmontschools.net",
+        "password": "$5$rounds=535000$ev/HL8uprpQgXnWm$UCwk7H5KqTsXZO88w0D5PQu6Nmrqi2N7N.vmHkHlWc2",
+        "bio": "joy"
     },
-    "david": {
-        "name": "david",
-        "email": "david@belmontschools.net",
-        "password": "asdfasdf",
-        "bio": "I am a generic student at BHS graduating in 2020."
-    },
-    "leon": {
-        "name": "leon",
-        "email": "email@belmontschools.net",
-        "password": "",
-        "bio": "I am a generic student at BHS graduating in 2020."
-    },
-    "bobby": {
-        "name": "bobby",
-        "email": "email@belmontschools.net",
-        "password": "asdf",
-        "bio": ""
-    },
-    "bot": {
-        "name": "bot",
-        "email": "ziyong@ebeasdf",
-        "password": "bro",
-        "bio": "hjhjhjk"
-    },
-    "asdf": {
-        "name": "asdf",
-        "email": "joy@belmont",
-        "password": "wejkfbekw",
-        "bio": ""
-    },
-    "bruhbruhbruh": {
-        "name": "bruhbruhbruh",
-        "email": "joy@belmony.com",
-        "password": "wejkfbekw",
-        "bio": ""
-    },
-    "bruh": {
-        "name": "bruh",
-        "email": "joy@belmont",
-        "password": "wejkfbekw",
-        "bio": "bruh"
-    },
-    "ayyy": {
-        "name": "ayyy",
-        "email": "joy@belmont",
-        "password": "wejkfbekw",
-        "bio": ""
+    "524dfc55-aacb-53f3-9dad-bc994037ae42": {
+        "name": "andrew",
+        "email": "andrew@belmontschools.net",
+        "password": "$5$rounds=535000$opZ/oXLCiREVk..s$gO.pV.GfCfrAzWc28i0Ya4JXcI97zej/kCTq2ppyN34",
+        "bio": "andrew"
     }
 }

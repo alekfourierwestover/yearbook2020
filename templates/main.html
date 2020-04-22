@@ -56,29 +56,22 @@
 
   </div>
 
-
-
 <script type="text/javascript">
 
-  let user_name = urlParams.get("name");
-  let user_pwd = urlParams.get("password");
   $.get("/getProfiles", function(data){
       let currentRow = $("<div class='row'></div>");
       let ct = 0;
-      for(let i in data){
+      for(let uuid in data){
         if(ct%4 == 0 && ct != 0){
           $("#faces").append(currentRow);
           currentRow = $("<div class='row'></div>");
         }
-        let link = `/sendmessages?sendto=${data[i].name}&name=${user_name}&password=${user_pwd}`;
-        let currentCard = $(`<div class='col-sm face-card' id="card_${data[i].name}" onclick='window.location.href="${link}"'></div>`);
-        // concern: what if id has spaces in it...
-        // also injections in general...
-        currentCard.append($(`<img id="img_${data[i].name}" alt="profile picture missing" src="${pfp_path}/${data[i].name}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
-        let sendName = data[i].name;
-        currentCard.append($(`<h2 id="my${sendName}">${sendName}</h2>`));
-        currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
-        currentCard.append($(`<a style="color:red" href="${link}">sign ${data[i].name}'s yearbook</a>`));
+        let link = `/sendmessages?sendto=${uuid}`;
+        let currentCard = $(`<div class='col-sm face-card' id="card_${uuid}" onclick='window.location.href="${link}"'></div>`);
+        currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+        let username = JSON.stringify(data[uuid].name); 
+        currentCard.append($(`<h2 id="my${uuid}">${username}</h2>`));
+        currentCard.append($(`<p>bio: ${JSON.stringify(data[uuid].bio)}</p>`));
         $(currentRow).append(currentCard);
         ct++;
       }
@@ -89,15 +82,15 @@
       $("#faces").append(currentRow);
   });
 
+$.get("/get_uuid", function(username){
   $.get("/view_all_messages", function(data){
     for (let person in data){
-      if (Object.keys(data[person]).indexOf(user_name) != -1)
-      {
+      if (Object.keys(data[person]).indexOf(user_name) != -1) {
         $("#my" + person).append("<p>&#x2713</p>");
       }
     }
-
   });
+});
 
 function search_name(){
   let name = $("#search").val();
@@ -119,14 +112,5 @@ document.getElementById("search").addEventListener("keyup", function(event){
 <br>
 <br>
 <br>
-
-<!-- <footer id="footer">
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a>Alek Westover</a>
-  </div>
-</footer>
-
-
-<iframe src="https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" width="640" height="480"></iframe> -->
 
 {% endblock %}

@@ -15,6 +15,8 @@ date: wednesday night (8pm)
 total end date: saturday 8pm (schedule call w/school ppl to show it off)
 release date: may 1st (college decision date)
 
+check: can hack js with single quotes? wrap everything in try/catch statements
+
 #Later
 - GoFundMe
 - heroku
