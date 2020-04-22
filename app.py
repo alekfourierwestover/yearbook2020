@@ -1,58 +1,89 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 import json
-#  from passlib.hash import sha256_crypt
+from passlib.hash import sha256_crypt
+import uuid
+# session is a dictionary that is stored client side as a cookie
+# (testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding, and ofc heroku!)
 
 app = Flask(__name__)
 
-# seems to do the trick!!! just cant login multiple users on one device, which is good anyways!!!!
-@app.route("/getsession", methods=("GET",))
-def get_session():
-    return session["username"]
+def safestr(bad_txt):
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, bad_txt))
 
-# website page routes
+# seems to do the trick!!! just cant login multiple users on one device, which is good anyways!!!!
+@app.route("/get_username", methods=("GET",))
+def get_username():
+    return session.get("username")
+
+@app.route("/get_uuid", methods=("GET",))
+def get_uuid():
+    return session.get("uuid")
+
+# website page routes, note: you must be logged in to view this
 @app.route("/index")
 @app.route("/")
 def serve_index():
-    return render_template("index.html")
-
-@app.route("/base")
-def serve_base():
-    return render_template("base.html")
+    if session.get("loggedin"):
+        return redirect(url_for("serve_main"))
+    else:
+        return render_template("index.html")
 
 @app.route("/main")
 def serve_main():
-    return render_template("main.html")
+    if session.get("loggedin"):
+        return render_template("main.html")
+    else:
+        return redirect(url_for("serve_index"))
 
 @app.route("/mymessages")
 def serve_mymessages():
-    return render_template("mymessages.html")
+    if session.get("loggedin"):
+        return render_template("mymessages.html")
+    else:
+        return redirect(url_for("serve_index"))
 
 @app.route("/sendmessages")
 def serve_sendmessages():
-    #serves website
-    return render_template("sendmessages.html")
+    if session.get("loggedin"):
+        return render_template("sendmessages.html")
+    else:
+        return redirect(url_for("serve_index"))
 
 @app.route("/edit")
 def serve_edit():
-    return render_template("edit.html")
+    if session.get("loggedin"):
+        return render_template("edit.html")
+    else:
+        return redirect(url_for("serve_index"))
 
 @app.route("/map")
 def serve_map():
-    return render_template("map.html")
+    if session.get("loggedin"):
+        return render_template("map.html")
+    else:
+        return redirect(url_for("serve_index"))
 
 # request routes
+@app.route("/logout", methods=("POST",))
+def handle_logout():
+    session["loggedin"] = False
+    session["username"] = ""
+    session["uuid"] = ""
+    return redirect(url_for("serve_index"))
+
 @app.route("/login", methods=("POST",))
 def handle_login():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         data = json.load(f)
-        name = request.form.get("name")
-        password = request.form.get("password")
-        session["username"] = name
-
+        user_name = request.form.get("name")
+        safe_user_name = safestr(user_name)
         try:
-            if password == data[name]["password"]:
-                return redirect(url_for("serve_main", name=name, password=password))
+            if sha256_crypt.verify(request.form.get("password"), data[safe_user_name]["password"]):
+                session["username"] = user_name
+                session["uuid"] = safe_user_name
+                session["loggedin"] = True
+                return redirect(url_for("serve_main"))
             else:
                 return redirect(url_for("serve_index", error="password_wrong"))
         except:
@@ -63,24 +94,28 @@ def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         x = json.load(f)
-        user_name = request.form["name"].lower()
+        user_name = request.form["name"]
+        safe_user_name = safestr(user_name)
+        session["username"] = user_name
+        session["uuid"] = safe_user_name
+        session["loggedin"] = True
 
         try:
             img_stream = request.files.get("profilepic").stream
-            with open(f"static/pfps/{user_name}.png", "wb") as f: # TODO: make sure usernames dont have werid stuff
+            with open(f"static/pfps/{safe_user_name}.png", "wb") as f:
                 f.write(img_stream.read())
         except:
             pass
 
-        x[user_name] = {
+        x[safe_user_name] = {
             "name": user_name,
             "email": request.form["email"],
-            "password": request.form["password"],  # UM THIS IS A SUPER HUGE SECURITY ISSUE
+            "password": sha256_crypt.hash(request.form["password"]),
+            "institution": request.form["institution"],
             "bio": request.form["bio"]
         }
         with open("users.json", "w") as f:
             json.dump(x, f, indent = 4)
-        # return "Thanks " + user_name
 
         return redirect(url_for("serve_main"))
 
@@ -98,16 +133,15 @@ def handle_send_message():
     with open("users.json", "r") as f:
         user_data = json.load(f)
 
-    sent_from = request.form.get("name")
-    password = request.form.get("password")
+    sent_from = session.get("username")
+    sent_from_uuid = session.get("uuid")
     send_to = request.form.get("sendto")
     message = request.form.get("message")
 
-    if sent_from not in user_data.keys():
-        return url_for("serve_index", error="malicious_user")
     if send_to not in user_data.keys():
-        return url_for("serve_index", error="malicious_user")
-    if user_data[sent_from]["password"] != password:
+        session["loggedin"] = False
+        session["username"] = ""
+        session["uuid"] = ""
         return url_for("serve_index", error="malicious_user")
 
     if not send_to in message_data.keys():
@@ -120,15 +154,14 @@ def handle_send_message():
     with open("messages.json", "w") as f:
         json.dump(message_data, f, indent=4)
 
-    return url_for("serve_main", name=sent_from, password=password)
+    return url_for("serve_main")
 
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
     try:
-        name = request.args.get("name")
         with open("messages.json", "r") as f:
-            data = json.load(f)[name]
+            data = json.load(f)[session.get("uuid")]
         return jsonify(data)
     except:
         return "no messages"
@@ -142,72 +175,47 @@ def handle_view_all_messages():
     except:
         return "no messages"
 
-
 @app.route("/view_profile", methods=("GET",))
 # returns name and bio
 def handle_view_profile():
-    user_name = request.args.get("name")
     with open("users.json", "r") as f:
         data = json.load(f)
-        return jsonify(data[user_name])
+        return jsonify(data[request.args.get("uuid")])
 
-@app.route("/edit_profile", methods=("POST", ))
-def handle_edit_profile():
-
-    """
-    user_name = request.args.get("name")
-    with open("users.json", "r") as f:
-        x = json.load(f)
-        user_name = request.form["name"]
-        user_password = request.form["new"]
-        user_quote = request.form["quote"]
-        x[user_name]["password"] = user_password
-        x[user_name]["bio"] = user_quote
-    """
-
+@app.route("/edit_password", methods=("POST", ))
+def handle_edit_password():
     with open("users.json", "r") as f:
         data = json.load(f)
 
-        name = request.form.get("name").lower()
-        password = request.form.get("password")
-        #quote = request.form.get("quote")
-        new = request.form.get("new")
-
-        try:
-            if password == data[name]["password"]:
-                data[name]["password"] = new
-                #data[name]["bio"] = quote
-                with open("users.json", "w") as f:
-                    json.dump(data, f, indent = 4)
-                    return redirect(url_for("serve_main"))
-            else:
-                #$.notify("WRONG PASSWORD BRO")
-                return redirect(url_for("serve_index", error="password_wrong"))
-        except:
-            return redirect(url_for("serve_index", error="user_not_found"))
+    try:
+        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+            data[session.get("uuid")]["password"] = sha256_crypt.hash(request.form.get("newpassword"))
+            with open("users.json", "w") as f:
+                json.dump(data, f, indent = 4)
+                return redirect(url_for("serve_main"))
+        else:
+            session["loggedin"] = False
+            return redirect(url_for("serve_index", error="password_wrong"))
+    except:
+        return redirect(url_for("serve_index", error="error"))
 
 @app.route("/edit_quote", methods=("POST", ))
 def handle_edit_quote():
     with open("users.json", "r") as f:
         data = json.load(f)
-        name = request.form.get("name").lower()
-        password = request.form.get("password")
+    try:
         quote = request.form.get("quote")
-
-        try:
-            if password == data[name]["password"]:
-                data[name]["bio"] = quote
-                with open("users.json", "w") as f:
-                    json.dump(data, f, indent = 4)
-                    return redirect(url_for("serve_main"))
-            else:
-                return redirect(url_for("serve_index", error="password_wrong"))
-        except:
-            return redirect(url_for("serve_index", error="user_not_found"))
+        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+            data[session.get("uuid")]["bio"] = quote
+            with open("users.json", "w") as f:
+                json.dump(data, f, indent = 4)
+                return redirect(url_for("serve_main"))
+        else:
+            return redirect(url_for("serve_index", error="password_wrong"))
+    except:
+        return redirect(url_for("serve_index", error="user_not_found"))
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.run(debug=True, host='0.0.0.0')
 
-    # ok so looks like session is a dictionary that is stored client side as a cookie
-    # testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding

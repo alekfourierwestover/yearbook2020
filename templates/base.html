@@ -19,7 +19,7 @@
       const urlParams = new URLSearchParams(queryString);
       const pfp_path= "{{url_for('static', filename='pfps')}}";
     </script>
-    <nav id="navba" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="/main">Belmont High School Yearbook 2020</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -28,13 +28,18 @@
           <li><a class="nav-item" style="font-size:110%" href="/map">Maps</a></li>
 
           <li><a class="nav-item" style="font-size:110%" href="/edit">Edit Profile</a></li>
+          <li> <form action="logout" method="post"> <input type="submit" name="logout" id="logout" value="logout"> </form>
+          </li>
 
         </ul>
       </div>
     </nav>
-    <div class="container">
-      {% block content %}{% endblock %}
+    <div id="content" class="container">
+      <div id="content-inside">
+        {% block content %}{% endblock %}
+      </div>
     </div>
+
     <footer>
       <div class="footer-copyright text-center py-3">© 2020 Copyright:
         <a>Alek Westover</a>

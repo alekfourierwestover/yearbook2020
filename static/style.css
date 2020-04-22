@@ -1,3 +1,8 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 .container {
   padding: 1%;
 }
@@ -23,7 +28,7 @@ body {
   font-size: small;
 }
 
-#navba {
+#navbar {
   box-shadow: 0 0px 10px rgba(0,0,0,1);
 }
 
@@ -86,6 +91,16 @@ img {
 footer{
   background-color: #464646;
   color: rgb(255, 255, 255);
+  margin-top: -100px;
+  height: 100px;
+}
+
+#content {
+  min-height: 100%;
+}
+
+#content-inside {
+  padding-bottom: 100px;
 }
 
 .card{
@@ -160,13 +175,13 @@ li {
   overflow:hidden;
   padding:3em;
 }
-#stick li a{
+#stick li .sticky{
   text-decoration:none;
   color:#000;
   background:#ffc;
   display:block;
-  height:10em;
-  width:10em;
+  height:30em;
+  width:30em;
   padding:1em;
 }
 #stick li{
@@ -174,35 +189,36 @@ li {
   float: left;
 }
 
-#stick li a{
+#stick li .sticky{
   text-decoration:none;
   color:#000;
   background:#ffc;
   display:block;
-  height:10em;
-  width:10em;
+  height:30em;
+  width:30em;
   padding:1em;
   /* Safari+Chrome */
   box-shadow: 0px 5px 7px rgba(33,33,33,.2);
+  overflow: scroll;
 }
 
-#stick li:nth-child(even) a{
+#stick li:nth-child(even) .sticky{
   -webkit-transform:rotate(4deg);
   position:relative;
   top:5px;
 }
-#stick li:nth-child(3n) a{
+#stick li:nth-child(3n) .sticky{
   -webkit-transform:rotate(-3deg);
   position:relative;
   top:-5px;
 }
-#stick li:nth-child(5n) a{
+#stick li:nth-child(5n) .sticky{
   -webkit-transform:rotate(5deg);
   position:relative;
   top:-10px;
 }
 
-#sticky li a:hover,ul li a:focus{
+#sticky li .sticky:hover,ul li .sticky:focus{
   -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
   box-shadow:10px 10px 7px rgba(0,0,0,.7);
   -webkit-transform: scale(1.25);
