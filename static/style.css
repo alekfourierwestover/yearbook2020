@@ -61,7 +61,6 @@ body {
 
 #left {
     float:left;
-    width:10px;
 }
 
 #center {
@@ -72,7 +71,6 @@ body {
 
 #right {
     float:right;
-    width:200px;
 }
 
 #picturediv {

@@ -63,7 +63,7 @@ def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         x = json.load(f)
-        user_name = request.form["name"]
+        user_name = request.form["name"].lower()
 
         try:
             img_stream = request.files.get("profilepic").stream
@@ -153,6 +153,8 @@ def handle_view_profile():
 
 @app.route("/edit_profile", methods=("POST", ))
 def handle_edit_profile():
+
+    """
     user_name = request.args.get("name")
     with open("users.json", "r") as f:
         x = json.load(f)
@@ -161,15 +163,42 @@ def handle_edit_profile():
         user_quote = request.form["quote"]
         x[user_name]["password"] = user_password
         x[user_name]["bio"] = user_quote
+    """
 
     with open("users.json", "r") as f:
         data = json.load(f)
-        name = request.form.get("name")
+
+        name = request.form.get("name").lower()
         password = request.form.get("password")
+        #quote = request.form.get("quote")
+        new = request.form.get("new")
+
         try:
             if password == data[name]["password"]:
-               with open("users.json", "w") as f:
-                    json.dump(x, f, indent = 4)
+                data[name]["password"] = new
+                #data[name]["bio"] = quote
+                with open("users.json", "w") as f:
+                    json.dump(data, f, indent = 4)
+                    return redirect(url_for("serve_main"))
+            else:
+                #$.notify("WRONG PASSWORD BRO")
+                return redirect(url_for("serve_index", error="password_wrong"))
+        except:
+            return redirect(url_for("serve_index", error="user_not_found"))
+
+@app.route("/edit_quote", methods=("POST", ))
+def handle_edit_quote():
+    with open("users.json", "r") as f:
+        data = json.load(f)
+        name = request.form.get("name").lower()
+        password = request.form.get("password")
+        quote = request.form.get("quote")
+
+        try:
+            if password == data[name]["password"]:
+                data[name]["bio"] = quote
+                with open("users.json", "w") as f:
+                    json.dump(data, f, indent = 4)
                     return redirect(url_for("serve_main"))
             else:
                 return redirect(url_for("serve_index", error="password_wrong"))

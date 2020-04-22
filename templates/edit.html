@@ -3,33 +3,48 @@
 
 {% block content %}
 
-
-
 <div class="card">
 <h1> EDIT PROFILE </h1>
 </div>
 <br>
 <div class="card">
-<div id="edit_profile"><!--class="bg-light"-->
 
-	<form action="edit_profile" method="post" id="edit_form" enctype="multipart/form-data">
-	<label> Name </label>
-    <input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
-		<br>
-    <label> Password </label>
-    <input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
-		<br>
-    <label> New Password </label>
-    <input type="new" class="form-control" name="new" id="new" placeholder="New Password">
-    <input type="submit" value="submit" name="submit" id="submit" class="btn btn-primary form-control"/>
-		<br>
-		<br>
-		<label>Edit Quote</label>
-		<input type="text" class="form-control" name="quote" id="quote" rows="3" placeholder="Leon is the OG.">
-    <input type="submit" value="submit" name="submit" id="submit" class="btn btn-primary form-control"/>
-	</form>
+	<div id = "left">
+		<div id="edit_profile"><!--class="bg-light"-->
+			<form action="edit_profile" method="post" id="edit_form" enctype="multipart/form-data">
+				<label> Name </label>
+				<input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
+				<br>
+				<label> Password </label>
+				<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
+				<br>
+				<label> New Password </label>
+				<input type="new" class="form-control" name="new" id="new" placeholder="Leon">
+				<input type="submit" value="change password" name="submit" id="submit" class="btn btn-primary form-control"/>
 
+			</form>
+		</div>
+	</div>
 </div>
+
+<div class = "card">
+	<div id = "right">
+		<div id="edit_quote">	
+			<form action="edit_quote" method="post" id="edit_form" enctype="multipart/form-data">
+				<label> Name </label>
+				<input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
+				<br>
+				<label> Password </label>
+				<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
+				<br>
+				<label>Edit Quote</label>
+				<input type="text" class="form-control" name="quote" id="quote" rows="3" placeholder="Leon is the OG.">
+				<input type="submit" value="change quote" name="submit" id="submit" class="btn btn-primary form-control"/>
+			</form>
+		</div>
+
+	</div>
+
 <br>
 </div>
 {% endblock %}
