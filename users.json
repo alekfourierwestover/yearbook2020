@@ -36,5 +36,12 @@
         "password": "$5$rounds=535000$XE8Z50lGFiwFE4G0$R1nd23jLcfyhrpdgPURSV8od.AqyXAqK/31LQW2amyD",
         "institution": "Harvard University",
         "bio": "Lovely"
+    },
+    "9afa518a-c161-5d21-b501-4408174fccaa": {
+        "name": "David Leigh",
+        "email": "dleigh20@belmontschools.net",
+        "password": "$5$rounds=535000$3e..51gtzSIBWARj$FBKtZCpUM2eD5gp3fnp/Cj9e42fUPtHrlIvTl7PG8b3",
+        "institution": "Bunker Hill Community College",
+        "bio": "I am speed"
     }
 }
