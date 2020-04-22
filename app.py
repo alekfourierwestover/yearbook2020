@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for, s
 import json
 from passlib.hash import sha256_crypt
 import uuid
+# session is a dictionary that is stored client side as a cookie
+# (testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding, and ofc heroku!)
 
 app = Flask(__name__)
 
@@ -109,6 +111,7 @@ def handle_register():
             "name": user_name,
             "email": request.form["email"],
             "password": sha256_crypt.hash(request.form["password"]),
+            "institution": request.form["institution"],
             "bio": request.form["bio"]
         }
         with open("users.json", "w") as f:
@@ -179,20 +182,34 @@ def handle_view_profile():
         data = json.load(f)
         return jsonify(data[request.args.get("uuid")])
 
-@app.route("/edit_profile", methods=("POST", ))
-def handle_edit_profile():
+@app.route("/edit_password", methods=("POST", ))
+def handle_edit_password():
+    with open("users.json", "r") as f:
+        data = json.load(f)
+
     try:
-        with open("users.json", "r") as f:
-            data = json.load(f)
-            safe_user_name = session.get("uuid")
-
-        if sha256_crypt.verify(request.form["password"], data[safe_user_name]["password"]):
-            data[safe_user_name]["password"] = sha256_crypt.hash(request.form["newpassword"])
-            data[safe_user_name]["bio"] = request.form["quote"]
-
+        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+            data[session.get("uuid")]["password"] = sha256_crypt.hash(request.form.get("newpassword"))
             with open("users.json", "w") as f:
                 json.dump(data, f, indent = 4)
-            return redirect(url_for("serve_main"))
+                return redirect(url_for("serve_main"))
+        else:
+            session["loggedin"] = False
+            return redirect(url_for("serve_index", error="password_wrong"))
+    except:
+        return redirect(url_for("serve_index", error="error"))
+
+@app.route("/edit_quote", methods=("POST", ))
+def handle_edit_quote():
+    with open("users.json", "r") as f:
+        data = json.load(f)
+    try:
+        quote = request.form.get("quote")
+        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+            data[session.get("uuid")]["bio"] = quote
+            with open("users.json", "w") as f:
+                json.dump(data, f, indent = 4)
+                return redirect(url_for("serve_main"))
         else:
             return redirect(url_for("serve_index", error="password_wrong"))
     except:
@@ -201,7 +218,4 @@ def handle_edit_profile():
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.run(debug=True, host='0.0.0.0')
-
-    # ok so looks like session is a dictionary that is stored client side as a cookie
-    # testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding
 

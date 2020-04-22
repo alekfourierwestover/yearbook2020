@@ -22,5 +22,12 @@
         "email": "leon@belmont",
         "password": "$5$rounds=535000$VszZ5YxDE9xx1IE3$tRwnTopfKvmmRUUfS8nO8GYeKv6/ZdqgyXKidn3K2s4",
         "bio": ""
+    },
+    "756886b3-2033-583f-bd5a-a22f02fb5a6b": {
+        "name": "bob",
+        "email": "bob@gmai.com",
+        "password": "$5$rounds=535000$dpp2aTzQIROn4uVB$ttJkqhgIHWpRQsjs7VfTGHOU/BGvvwJ7c/8S6M92fh5",
+        "institution": "haaavad",
+        "bio": "bruhhh"
     }
 }
