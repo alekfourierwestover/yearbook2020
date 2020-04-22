@@ -8,24 +8,23 @@
 
 <h1>messages:</h1>
 <div id="messages">
+  <ul id="stick">
+    
+  </ul>
 
 </div>
 
 <script type="text/javascript">
 
-/*
-$.get("/get_username", function(username)){
-  $.get("/get_uuid", function(uuid)){
-    $.get("/view_profile", {"name": username}, function(data){
-      let currentCard = $("<div class='col-sm face-card'></div>");
-      currentCard.append($(`<h2>${JSON.stringify(data.name)}</p>`));
-      currentCard.append($(`<p>bio: ${data.bio}</p>`));
-      currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" width="75%" height="75%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
-      $("#myprofile").append(currentCard);
-    });
+$.get("/get_uuid", function(uuid){
+  $.get("/view_profile", {"uuid": uuid}, function(data){
+    let currentCard = $("<div class='col-sm face-card'></div>");
+    currentCard.append($(`<h2>${JSON.stringify(data.name)}</p>`));
+    currentCard.append($(`<p>bio: ${data.bio}</p>`));
+    currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" width="75%" height="75%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+    $("#myprofile").append(currentCard);
   });
 });
-*/
 
 $.get("/view_my_messages", function(data){
   if(data == "no messages"){
@@ -34,39 +33,17 @@ $.get("/view_my_messages", function(data){
   else{
     let allCards = $("<ul id='stick'></ul>");
     for(let sender_person in data){
-      let currentCard = $("<li></li>");
+      let currentCard = $("<div class='sticky'></div>");
       currentCard.append($(`<h2>messages from ${sender_person}</h2>`));
       for(let message in data[sender_person]){
         currentCard.append($(`<p>message: ${data[sender_person][message]}</p>`));
       }
-      $("#messages").append(currentCard);
+      let currentSticky = $("<li></li>");
+      currentSticky.append(currentCard);
+      $("#stick").append(currentSticky);
     }
   }
 });
 </script>
-
-<br>
-
-<ul id="stick">
-  <li>
-      <a href="#">
-        <h2>From Andrew</h2>
-        <p>You suck!</p>
-      </a>
-  </li>
-  <li>
-      <a href="#">
-        <h2>From MIT</h2>
-        <p>You have been accepted</p>
-      </a>
-  </li>
-  <li>
-      <a href="#">
-        <h2>Middlesex community college</h2>
-        <p>U suck! denied!!</p>
-      </a>
-  </li>
-<ul>
-
 
 {% endblock %}

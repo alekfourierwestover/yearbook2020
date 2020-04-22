@@ -15,7 +15,7 @@ def get_username():
 
 @app.route("/get_uuid", methods=("GET",))
 def get_uuid():
-    return safestr(session.get("username"))
+    return session.get("uuid")
 
 # website page routes, note: you must be logged in to view this
 @app.route("/index")
@@ -64,6 +64,9 @@ def serve_map():
 # request routes
 @app.route("/logout", methods=("POST",))
 def handle_logout():
+    session["loggedin"] = False
+    session["username"] = ""
+    session["uuid"] = ""
     return redirect(url_for("serve_index"))
 
 @app.route("/login", methods=("POST",))
@@ -71,11 +74,12 @@ def handle_login():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         data = json.load(f)
-        name = request.form.get("name")
-        safename = safestr(name)
+        user_name = request.form.get("name")
+        safe_user_name = safestr(user_name)
         try:
-            if sha256_crypt.verify(request.form.get("password"), data[safename]["password"]):
-                session["username"] = name
+            if sha256_crypt.verify(request.form.get("password"), data[safe_user_name]["password"]):
+                session["username"] = user_name
+                session["uuid"] = safe_user_name
                 session["loggedin"] = True
                 return redirect(url_for("serve_main"))
             else:
@@ -89,9 +93,10 @@ def handle_register():
     with open("users.json", "r") as f:
         x = json.load(f)
         user_name = request.form["name"]
-        session["username"] = user_name
-        session["loggedin"] = True
         safe_user_name = safestr(user_name)
+        session["username"] = user_name
+        session["uuid"] = safe_user_name
+        session["loggedin"] = True
 
         try:
             img_stream = request.files.get("profilepic").stream
@@ -126,13 +131,14 @@ def handle_send_message():
         user_data = json.load(f)
 
     sent_from = session.get("username")
-    sent_from_uuid = safestr(sent_from)
+    sent_from_uuid = session.get("uuid")
     send_to = request.form.get("sendto")
     message = request.form.get("message")
 
     if send_to not in user_data.keys():
         session["loggedin"] = False
         session["username"] = ""
+        session["uuid"] = ""
         return url_for("serve_index", error="malicious_user")
 
     if not send_to in message_data.keys():
@@ -152,7 +158,7 @@ def handle_send_message():
 def handle_view_my_messages():
     try:
         with open("messages.json", "r") as f:
-            data = json.load(f)[session.get("username")]
+            data = json.load(f)[session.get("uuid")]
         return jsonify(data)
     except:
         return "no messages"
@@ -171,17 +177,16 @@ def handle_view_all_messages():
 def handle_view_profile():
     with open("users.json", "r") as f:
         data = json.load(f)
-        return jsonify(data[request.args.get("name")])
+        return jsonify(data[request.args.get("uuid")])
 
 @app.route("/edit_profile", methods=("POST", ))
 def handle_edit_profile():
     try:
         with open("users.json", "r") as f:
             data = json.load(f)
-            user_name = session.get("username")
-            safe_user_name = safestr(user_name)
+            safe_user_name = session.get("uuid")
 
-        if sha256_crypt.verify(request.form["password"], data[safestr(user_name)]["password"]):
+        if sha256_crypt.verify(request.form["password"], data[safe_user_name]["password"]):
             data[safe_user_name]["password"] = sha256_crypt.hash(request.form["newpassword"])
             data[safe_user_name]["bio"] = request.form["quote"]
 

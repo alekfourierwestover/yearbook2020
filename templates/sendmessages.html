@@ -15,7 +15,7 @@
 
 <script charset="utf-8">
   let sendToUUID = urlParams.get("sendto");
-  $.get("/view_profile", {"name": sendToUUID}, function(data){
+  $.get("/view_profile", {"uuid": sendToUUID}, function(data){
       let currentCard = $("<div class='col-sm face-card'></div>");
       currentCard.append($(`<h2>${JSON.stringify(data.name)}</p>`));
       currentCard.append($(`<p>bio: ${data.bio}</p>`));
