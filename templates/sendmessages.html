@@ -27,8 +27,6 @@
   function send_message(){
     $.post("/send_message", {
     "sendto": urlParams.get("sendto"),
-    "name": urlParams.get("name"),
-    "password": urlParams.get("password"),
     "message": $("#message").val()
     }, (data)=>{
       window.location.href = data;

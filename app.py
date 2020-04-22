@@ -64,8 +64,6 @@ def serve_map():
 # request routes
 @app.route("/logout", methods=("POST",))
 def handle_logout():
-    session["loggedin"] = False
-    session["username"] = ""
     return redirect(url_for("serve_index"))
 
 @app.route("/login", methods=("POST",))
@@ -128,14 +126,13 @@ def handle_send_message():
         user_data = json.load(f)
 
     sent_from = session.get("username")
+    sent_from_uuid = safestr(sent_from)
     send_to = request.form.get("sendto")
     message = request.form.get("message")
 
-    if sent_from not in user_data.keys():
-        return url_for("serve_index", error="malicious_user")
     if send_to not in user_data.keys():
-        return url_for("serve_index", error="malicious_user")
-    if user_data[sent_from]["password"] != password:
+        session["loggedin"] = False
+        session["username"] = ""
         return url_for("serve_index", error="malicious_user")
 
     if not send_to in message_data.keys():
@@ -148,7 +145,7 @@ def handle_send_message():
     with open("messages.json", "w") as f:
         json.dump(message_data, f, indent=4)
 
-    return url_for("serve_main", name=sent_from, password=password)
+    return url_for("serve_main")
 
 
 @app.route("/view_my_messages", methods=("GET",))

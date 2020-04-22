@@ -85,7 +85,7 @@
 $.get("/get_uuid", function(username){
   $.get("/view_all_messages", function(data){
     for (let person in data){
-      if (Object.keys(data[person]).indexOf(user_name) != -1) {
+      if (Object.keys(data[person]).indexOf(username) != -1) {
         $("#my" + person).append("<p>&#x2713</p>");
       }
     }
