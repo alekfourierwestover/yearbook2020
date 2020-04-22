@@ -76,6 +76,7 @@ def handle_register():
             "name": user_name,
             "email": request.form["email"],
             "password": request.form["password"],  # UM THIS IS A SUPER HUGE SECURITY ISSUE
+            "institution": request.form["institution"],
             "bio": request.form["bio"]
         }
         with open("users.json", "w") as f:

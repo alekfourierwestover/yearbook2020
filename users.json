@@ -64,5 +64,12 @@
         "email": "joy@belmont",
         "password": "wejkfbekw",
         "bio": ""
+    },
+    "deiwei lai": {
+        "name": "deiwei lai",
+        "email": "dleigh20@belmontschools.net",
+        "password": "blah",
+        "institution": "UMass Amherst",
+        "bio": "Nice job"
     }
 }
