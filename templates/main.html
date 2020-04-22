@@ -78,7 +78,6 @@
         let sendName = data[i].name;
         currentCard.append($(`<h2 id="my${sendName}">${sendName}</h2>`));
         currentCard.append($(`<p>bio: ${data[i].bio}</p>`));
-        currentCard.append($(`<a style="color:red" href="${link}">sign ${data[i].name}'s yearbook</a>`));
         $(currentRow).append(currentCard);
         ct++;
       }

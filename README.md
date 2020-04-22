@@ -10,7 +10,7 @@ Yearbook for BHS 2020 :(
 
 protection against accessing things when not signed in (hope: w/o username/password in url) (Ziyong, Alek ~ Tuesday 9-11pm zoom meeting)
 
-date: wednesday night (8pm)
+date: wednesday night (9pm)
 
 total end date: saturday 8pm (schedule call w/school ppl to show it off)
 release date: may 1st (college decision date)
