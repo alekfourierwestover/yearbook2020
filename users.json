@@ -29,5 +29,12 @@
         "password": "$5$rounds=535000$dpp2aTzQIROn4uVB$ttJkqhgIHWpRQsjs7VfTGHOU/BGvvwJ7c/8S6M92fh5",
         "institution": "haaavad",
         "bio": "bruhhh"
+    },
+    "3517f2fa-78b2-5389-9fa6-f1c5b41a2920": {
+        "name": "Ziyong",
+        "email": "zcui20@belmontschools.net",
+        "password": "$5$rounds=535000$XE8Z50lGFiwFE4G0$R1nd23jLcfyhrpdgPURSV8od.AqyXAqK/31LQW2amyD",
+        "institution": "Harvard University",
+        "bio": "Lovely"
     }
 }

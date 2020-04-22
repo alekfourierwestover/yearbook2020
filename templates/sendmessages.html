@@ -19,7 +19,7 @@
       let currentCard = $("<div class='col-sm face-card'></div>");
       currentCard.append($(`<h2>${JSON.stringify(data.name)}</p>`));
       currentCard.append($(`<p>bio: ${data.bio}</p>`));
-      currentCard.append($(`<img id="img_${data.name}" alt="profile picture missing" src="${pfp_path}/${sendToUUID}.png"  width="45%" height="80%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+      currentCard.append($(`<img id="img_${data.name}" alt="profile picture missing" src="${pfp_path}/${sendToUUID}.png"  style="max-width:100%;max-height:80%;" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
       $("#sendto_person_profile").append(currentCard);
 
   });
