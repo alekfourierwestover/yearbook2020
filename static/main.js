@@ -59,10 +59,13 @@ function search_name(){
   }
 }
 
+/*
+//temporarily diable search bar
 document.getElementById("search").addEventListener("keyup", function(event){
   if(event.keyCode=== 13){
     event.preventDefault();
     search_name();
   }
 });
+*/
 
