@@ -86,7 +86,7 @@ $.get("/get_username", function(username){
   $.get("/view_all_messages", function(data){
     for (let person in data){
       if (Object.keys(data[person]).indexOf(username) != -1) {
-        $("#my" + person).append("<p>&#x2713</p>");
+        document.getElementById("my" + person).innerHTML += "&#x2713";
       }
     }
   });
