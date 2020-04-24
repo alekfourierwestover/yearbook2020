@@ -43,5 +43,12 @@
         "password": "$5$rounds=535000$3e..51gtzSIBWARj$FBKtZCpUM2eD5gp3fnp/Cj9e42fUPtHrlIvTl7PG8b3",
         "institution": "Bunker Hill Community College",
         "bio": "I am speed"
+    },
+    "23115c7c-65c3-58d3-9f5e-124a2bd9cf1c": {
+        "name": "leon2",
+        "email": "bob@belmontschools.net",
+        "password": "$5$rounds=535000$jwrFcAnVF9jYh6iU$gQrl6.UZ73jkHMeOQbHi3WWYvUfs.u9ljqF3zSIjGp3",
+        "institution": "bunker hill",
+        "bio": "waegoipe"
     }
 }
