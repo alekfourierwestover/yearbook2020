@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block uncontained_content %}
+  {% include "header.html" %}
+{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename='search_bar.css')}}" type="text/css" >
@@ -6,6 +9,9 @@
 <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
+<link rel="stylesheet" href="{{url_for('static', filename='main.css')}}" type="text/css" >
+
 {% endblock %}
 
 {% block content %}
@@ -21,7 +27,8 @@
 
 </div>
 
-
+<!-- temporarily disable search bar -->
+<!--
 <div class="card-search">
   <div class="search-container">
     <div class="search-box">
@@ -38,6 +45,7 @@
     <br>
   </div>
 </div>
+-->
 
 <!--
 <div class="card">
@@ -49,74 +57,14 @@
 </div>
 -->
 
-  <br>
-<div id="container">
-  <div id="dummy">
-    <div id="faces">
-    </div>
-  </div>
+<br>
+
+<div id="faces" class="row">
 </div>
 
-<script type="text/javascript">
-
-  $.get("/getProfiles", function(data){
-      let currentRow = $("<div class='row'></div>");
-      let ct = 0;
-      for(let uuid in data){
-        if(ct%4 == 0 && ct != 0){
-          $("#faces").append(currentRow);
-          currentRow = $("<div class='row'></div>");
-        }
-        let link = `/sendmessages?sendto=${uuid}`;
-        let currentCard = $(`<div class='col-sm face-card' id="card_${uuid}" onclick='window.location.href="${link}"'></div>`);
-        currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
-        let username = JSON.stringify(data[uuid].name);
-        currentCard.append($(`<h2 id="my${uuid}" style="font-size:2.5vw">${username}</h2>`));
-        currentCard.append($(`<p style="font-size:2vw">bio: ${JSON.stringify(data[uuid].bio)}</p>`));
-        $(currentRow).append(currentCard);
-        ct++;
-      }
-      while(ct % 4 != 0){
-        ct++;
-        $(currentRow).append($("<div class='col-sm face-card'></div>"));
-      }
-      $("#faces").append(currentRow);
-  });
-
-  var cw = $(".face-card").width();
-$(".face-card").css({
-    'height': cw + 'px'
-});
-
-$.get("/get_username", function(username){
-  $.get("/view_all_messages", function(data){
-    for (let person in data){
-      if (Object.keys(data[person]).indexOf(username) != -1) {
-        document.getElementById("my" + person).innerHTML += "&#x2713";
-      }
-    }
-  });
-});
-
-function search_name(){
-  let name = $("#search").val();
-  if(name){
-    let img_elt = document.getElementById("img_"+name);
-    if(img_elt)
-      img_elt.scrollIntoView();
-  }
-}
-
-document.getElementById("search").addEventListener("keyup", function(event){
-  if(event.keyCode=== 13){
-    event.preventDefault();
-    search_name();
-  }
-});
-
-</script>
 <br>
 <br>
 <br>
+<script src="{{url_for('static', filename='main.js')}}" charset="utf-8"></script>
 
 {% endblock %}

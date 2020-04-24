@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 
+{% block uncontained_content %}
+  {% include "header.html" %}
+{% endblock %}
 
 {% block content %}
+
+
 
 <script charset="utf-8">
   if(urlParams.get("error")){

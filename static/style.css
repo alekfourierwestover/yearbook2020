@@ -3,6 +3,11 @@ html, body {
   margin: 0;
 }
 
+a, a:visited, a:hover {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
 .container{
   padding: 1%;
 }
@@ -95,7 +100,8 @@ footer{
   background-color: #464646;
   color: rgb(255, 255, 255);
   margin-top: -100px;
-  height: 100px;
+  height: auto;
+  width: 100%;
 }
 
 #content {
@@ -147,8 +153,6 @@ footer{
   border: 1px;
 }
 
-
-
 .card-search{
   border-radius: 0.5em;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
@@ -185,85 +189,28 @@ footer{
 
 
 .face-card{
-  position: relative;
+  /* position: relative; */
+  justify-content: center;
   background-color:white;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   color: black;
   border-radius: 0.5em;
   padding: 2%;
-  margin-top: 2%;
-  margin-left: 1%;
-  width: 16vw;
-  height: 43vw;
+  margin-bottom: 1vh;
+  height: 43vh;
+  text-align: center;
+}
+
+.face-card img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 li {
   display: inline;
   padding-left: 20px;
   padding-right: 20px;
-}
-#stick h2{
-  font-size: 140%;
-  font-weight: bold;
-}
-#stick p{
-  font-size:100%;
-  font-weight:normal;
-}
-#stick,li{
-  list-style:none;
-}
-#stick{
-  overflow:hidden;
-  padding:3em;
-}
-#stick li .sticky{
-  text-decoration:none;
-  color:#000;
-  background:#ffc;
-  display:block;
-  height:30em;
-  width:30em;
-  padding:1em;
-}
-#stick li{
-  margin: 1em;
-  float: left;
+  color: white;
 }
 
-#stick li .sticky{
-  text-decoration:none;
-  color:#000;
-  background:#ffc;
-  display:block;
-  height:30em;
-  width:30em;
-  padding:1em;
-  /* Safari+Chrome */
-  box-shadow: 0px 5px 7px rgba(33,33,33,.2);
-  overflow: scroll;
-}
-
-#stick li:nth-child(even) .sticky{
-  -webkit-transform:rotate(4deg);
-  position:relative;
-  top:5px;
-}
-#stick li:nth-child(3n) .sticky{
-  -webkit-transform:rotate(-3deg);
-  position:relative;
-  top:-5px;
-}
-#stick li:nth-child(5n) .sticky{
-  -webkit-transform:rotate(5deg);
-  position:relative;
-  top:-10px;
-}
-
-#sticky li .sticky:hover,ul li .sticky:focus{
-  -webkit-box-shadow: 10px 10px 7px rgba(0,0,0,.7);
-  box-shadow:10px 10px 7px rgba(0,0,0,.7);
-  -webkit-transform: scale(1.25);
-  position:relative;
-  z-index:5;
-}

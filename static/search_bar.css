@@ -22,13 +22,11 @@
   margin: 0;
 }*/
 
-.search-icon{
-  width: 60vw;
-}
 a, a:visited, a:hover {
   color: rgb(255, 255, 255)/*inherit*/;
   text-decoration: none;
 }
+
 main {
   position: absolute;
   top: 0;
