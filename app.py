@@ -211,6 +211,7 @@ def handle_edit_quote():
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
+            session["loggedin"] = False
             return redirect(url_for("serve_index", error="password_wrong"))
     except:
         return redirect(url_for("serve_index", error="user_not_found"))
@@ -218,4 +219,3 @@ def handle_edit_quote():
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.run(debug=True, host='0.0.0.0')
-

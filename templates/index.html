@@ -9,7 +9,7 @@
 </script>
 
 <div class="container">
-<div class="col">
+    <div class="col">
   <div id="register-form-div" class="bg-light">
 
     <form action="register" method="post" id="register-form" enctype="multipart/form-data">
@@ -36,7 +36,7 @@
       </div>
       <div class="form-group">
         <label for="img">Select profile picture:</label>
-        <input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*"/><br><br><br>
+        <input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*"/>
       </div>
 
       <div class="form-group">
@@ -45,7 +45,10 @@
     </form>
   </div>
 </div>
-<br><br>
+</div>
+
+
+<div class="container">
 <div class="col font-small">
   <div id="login-form-div" class="bg-light">
     <form action="login" method="post" id="login-form" enctype="multipart/form-data">
@@ -62,14 +65,13 @@
       </div>
       <div class="form-group">
         <input type="submit" value="submit" name="submit" id="submit" class="btn btn-primary form-control"/>
-        <br>
       </div>
     </form>
   </div>
 </div>
+</div>
 <div class="w-100"></div>
 
 <img width="80%" src="{{url_for('static', filename='marauder.png')}}" alt="maurader"/>
-</div>
 
 {% endblock %}

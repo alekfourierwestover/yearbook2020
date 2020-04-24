@@ -7,6 +7,9 @@ Yearbook for BHS 2020 :(
 - Andrew: navbar (make it a drop down) (make separate file for navbar and import it to all sites); delete navbar on index
 - style is not consistently applied
 - David: users.json ==> users.csv (import pandas); make second login page; remove quotes around names; auto update map somehow
+- Madeline: heroku research / add confetti
+
+
 - sending verification code emails
 - changing json to database (and something about images)
 - put it onto heroku
