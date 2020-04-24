@@ -21,10 +21,6 @@
   padding: 0;
   margin: 0;
 }*/
-a, a:visited, a:hover {
-  color: rgb(255, 255, 255)/*inherit*/;
-  text-decoration: none;
-}
 main {
   position: absolute;
   top: 0;

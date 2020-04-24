@@ -15,8 +15,6 @@
     <script src="{{ url_for('static', filename='notify.js')}}" charset="utf-8"></script>
     <!-- <meta charset="UTF-8"> -->
 
-
-
     {% block head %}{% endblock %}
   </head>
   <body>
@@ -25,21 +23,9 @@
       const urlParams = new URLSearchParams(queryString);
       const pfp_path= "{{url_for('static', filename='pfps')}}";
     </script>
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/main">Belmont High School Yearbook 2020</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li><a class="nav-item" style="font-size:110%" href="/mymessages">My Messages</a></li>
 
-          <li><a class="nav-item" style="font-size:110%" href="/map">Map</a></li>
+    {% block uncontained_content %}{% endblock %}
 
-          <li><a class="nav-item" style="font-size:110%" href="/edit">Edit Profile</a></li>
-          <li> <form action="logout" method="post"> <input type="submit" name="logout" id="logout" value="logout"> </form>
-          </li>
-
-        </ul>
-      </div>
-    </nav>
     <div id="content" class="container">
       <div id="content-inside">
         {% block content %}{% endblock %}
@@ -47,7 +33,8 @@
     </div>
 
     <footer>
-      <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <div class="footer-copyright text-center py-3">
+        <p>© 2020 Copyright:</p>
         <a>Alek Westover</a>
         <p>2020STRONG</p>
       </div>
