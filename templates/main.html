@@ -12,12 +12,11 @@
 <div class="card">
   <br>
   <div id="mauraders">
-    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
-    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='marauder.png')}}"/>
   </div>
 <div style="clear: right">
-  <h1 style="font-size: 70px">CONGRATULATIONS!</h1>
-  <h1 style="font-size: 30px">BELMONT HIGH SCHOOL CLASS of 2020</h1>
+  <h1 id="congrats" style="font-size: 3vw">CONGRATULATIONS!<br> BELMONT HIGH SCHOOL CLASS of 2020</h1>
 </div>
 
 </div>
@@ -51,10 +50,12 @@
 -->
 
   <br>
-  <div id="faces">
-
-
+<div id="container">
+  <div id="dummy">
+    <div id="faces">
+    </div>
   </div>
+</div>
 
 <script type="text/javascript">
 
@@ -70,7 +71,7 @@
         let currentCard = $(`<div class='col-sm face-card' id="card_${uuid}" onclick='window.location.href="${link}"'></div>`);
         currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
         let username = JSON.stringify(data[uuid].name);
-        currentCard.append($(`<h2 id="my${uuid}">${username}</h2>`));
+        currentCard.append($(`<h2 id="my${uuid}" style="font-size: 2.5vw">${username}</h2>`));
         currentCard.append($(`<p>bio: ${JSON.stringify(data[uuid].bio)}</p>`));
         $(currentRow).append(currentCard);
         ct++;
@@ -81,6 +82,11 @@
       }
       $("#faces").append(currentRow);
   });
+
+  var cw = $(".face-card").width();
+$(".face-card").css({
+    'height': cw + 'px'
+});
 
 $.get("/get_username", function(username){
   $.get("/view_all_messages", function(data){

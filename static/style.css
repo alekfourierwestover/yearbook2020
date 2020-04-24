@@ -165,14 +165,19 @@ footer{
 
 #left-maurader {
   position: absolute;
-  left: 90px;
+  left: 6%;
+  max-width:57%;
+  height:57%;
 }
 
 #right-maurader {
   position: absolute;
-  right: 90px;
+  max-width:57%;
+  height:57%;
+  right: 6%;
   transform: scaleX(-1);
 }
+
 
 #mauraders {
   align-items: center;
@@ -184,10 +189,11 @@ footer{
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   color: black;
   border-radius: 0.5em;
-  padding: 20px;
-  margin-top: 20px;
-  margin-left: 10px;
-  height: 500px;
+  padding: 2%;
+  margin-top: 2%;
+  margin-left: 1%;
+  width: 16vw;
+  height: 43vw;
 }
 
 li {
