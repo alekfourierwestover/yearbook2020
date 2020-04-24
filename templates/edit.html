@@ -3,48 +3,76 @@
 
 {% block content %}
 
+<script charset="utf-8">
+  if(urlParams.get("error")){
+    $.notify(urlParams.get("error"));
+  }
+</script>
+
+
 <div class="card">
 <h1> EDIT PROFILE/SENIOR QUOTE</h1>
 </div>
 <br>
-<div class="card">
 
-	<div id = "left">
+<div class = "cardmadeline">
 		<div id="edit_password"><!--class="bg-light"-->
 			<form action="edit_password" method="post" id="edit_form" enctype="multipart/form-data">
+				<!--
+
 				<label> Name </label>
 				<input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
-				<br>
+
+				-->
 				<label> Password </label>
 				<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
 				<br>
 				<label> New Password </label>
-				<input type="password" class="form-control" name="newpassword" id="newpassword" placeholder="newpassword">
+				<input type="password" class="form-control" name="newpassword" id="newpassword" placeholder="New password">
+				<br>
+				<br>
+				<br>
+
 				<input type="submit" value="change password" name="submit" id="submit" class="btn btn-primary form-control"/>
 
 			</form>
 		</div>
-	</div>
 </div>
 
-<div class = "card">
-	<div id = "right">
-		<div id="edit_quote">	
+<div class = "cardleon">
+		<div id="edit_quote">
 			<form action="edit_quote" method="post" id="edit_form" enctype="multipart/form-data">
+				<!--
+
 				<label> Name </label>
 				<input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
 				<br>
+
+				-->
 				<label> Password </label>
 				<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
 				<br>
 				<label>Edit Quote</label>
 				<input type="text" class="form-control" name="quote" id="quote" rows="3" placeholder="Leon is the OG.">
+				<br>
+				<br>
+				<br>
+
 				<input type="submit" value="change quote" name="submit" id="submit" class="btn btn-primary form-control"/>
 			</form>
 		</div>
-
-	</div>
-
-<br>
 </div>
+<br>
+<br>
+
+<!--
+<button id = "asdfasdf"> Press if you Dare </button>
+<script>
+	$("#asdfasdf").click(function () {
+		alert("FSIOE");
+		$.notify("I AM WATCHING YOU");
+	});
+</script>
+-->
+
 {% endblock %}
