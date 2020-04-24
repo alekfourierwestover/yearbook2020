@@ -82,7 +82,7 @@
       $("#faces").append(currentRow);
   });
 
-$.get("/get_uuid", function(username){
+$.get("/get_username", function(username){
   $.get("/view_all_messages", function(data){
     for (let person in data){
       if (Object.keys(data[person]).indexOf(username) != -1) {

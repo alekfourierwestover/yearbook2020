@@ -1,6 +1,36 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
+#TODO 4/22/20
+- Ziyong: checkmarks next to names; responsive web design (main; text; pictures); increase text size; sendmessages css two columns
+- Leon: notify.js; login page (make two columns) => css; lowercase names (not case-sensitive); login css
+- Andrew: navbar (make it a drop down) (make separate file for navbar and import it to all sites); delete navbar on index
+- style is not consistently applied
+- David: users.json ==> users.csv (import pandas); make second login page; remove quotes around names; auto update map somehow
+- sending verification code emails
+- changing json to database (and something about images)
+- put it onto heroku
+
+
+
+
+
+#Completed:
+- fix upload images/register
+- script injections and bad names
+- view yearbook msgs not just to Ziyong
+- Maps
+- sendMessages image ratio/responsiveness
+- edit profile bug fixed
+- passwords are hashed
+- sticky notes (are AWESOMEEEE)
+
+#notCompleted:
+- checkmarks next to names
+- responsive web design (main)
+- notify.js
+
+
 #TODO 4/20/20
 - Alek: fix upload images/register; script injections and bad names; view yearbook msgs not just to Ziyong
 - Ziyong: checkmark next to name; sendMessages image ratio; general responsive web design
