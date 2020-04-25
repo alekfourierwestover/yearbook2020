@@ -15,7 +15,7 @@ $.get("/getProfiles", function(data){
       currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
       let username = JSON.stringify(data[uuid].name);
       currentCard.append($(`<h2 id="my${uuid}" style="font-size:2.5vw">${username}</h2>`));
-      currentCard.append($(`<p style="font-size:2vw">${JSON.stringify(data[uuid].bio)}</p>`));
+      currentCard.append($(`<p id="bio">${JSON.stringify(data[uuid].bio)}</p>`));
       currentRow.push(currentCard);
       ct++;
     }
@@ -68,4 +68,3 @@ document.getElementById("search").addEventListener("keyup", function(event){
   }
 });
 */
-

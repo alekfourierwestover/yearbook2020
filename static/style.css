@@ -112,6 +112,10 @@ footer{
   padding-bottom: 100px;
 }
 
+#bio{
+  font-size: min(3vw, 15px);
+}
+
 .card{
     position: relative;
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
@@ -213,4 +217,3 @@ li {
   padding-right: 20px;
   color: white;
 }
-
