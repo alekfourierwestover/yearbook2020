@@ -25,25 +25,32 @@
       const urlParams = new URLSearchParams(queryString);
       const pfp_path= "{{url_for('static', filename='pfps')}}";
     </script>
+
     <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="/main">Belmont High School Yearbook 2020</a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li><a class="nav-item" style="font-size:110%" href="/mymessages">My Messages</a></li>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="chungus" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="chungus">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link" style="font-size:110%" href="/mymessages">My Messages</a></li>
 
-          <li><a class="nav-item" style="font-size:110%" href="/map">Map</a></li>
+          <li class="nav-item"><a class="nav-link" style="font-size:110%" href="/map">Map</a></li>
 
-          <li><a class="nav-item" style="font-size:110%" href="/edit">Edit Profile</a></li>
+          <li class="nav-item"><a class="nav-link" style="font-size:110%" href="/edit">Edit Profile</a></li>
 
+          
         </ul>
         <ul class="navbar-nav navbar-right">
-          <li> 
+          <li>  
             <form action="logout" method="post"> 
             <input type="submit" name="logout" id="logout" value="logout"> </form>
           </li>
-        </ul>
+        </div>
       </div>
     </nav>
+
     <div id="content" class="container">
       <div id="content-inside">
         {% block content %}{% endblock %}
