@@ -3,7 +3,6 @@ import json
 from passlib.hash import sha256_crypt
 import uuid
 # session is a dictionary that is stored client side as a cookie
-# (testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding, and ofc heroku!)
 
 app = Flask(__name__)
 
@@ -64,7 +63,7 @@ def serve_map():
         return redirect(url_for("serve_index"))
 
 # request routes
-@app.route("/logout", methods=("POST",))
+@app.route("/logout", methods=("POST","GET"))
 def handle_logout():
     session["loggedin"] = False
     session["username"] = ""
@@ -218,4 +217,5 @@ def handle_edit_quote():
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port='80')
+

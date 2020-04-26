@@ -1,9 +1,16 @@
 {
     "3a84426d-b85d-5835-94e6-093fa7e33457": {
         "name": "asdf",
-        "email": "joy@belasdf",
-        "password": "$5$rounds=535000$R4mGNYtHvb0U4lc4$2ujEh1G5R4GiRacaqvHmBcqmnGdqBEhwYnHMyZoBYWD",
+        "email": "hacker@hacks",
+        "password": "$5$rounds=535000$W8di1/96x0WYjeUu$1oVSGenEPA8P/mknbzM2caP8HTZ5/RXRtGTGcYuwESC",
         "institution": "",
-        "bio": ""
+        "bio": "JSON.stringify(</p><script>alert(\"malicious user is a bad person\")</script><p>)"
+    },
+    "6206d4f1-7378-5d5b-a217-f4584a562c60": {
+        "name": "hacker",
+        "email": "hacker@hacks",
+        "password": "$5$rounds=535000$C8/AjLphoRs3caED$hF/t3vl.8D/cxMN2B8iQjkk6r9jadRYAoii06yQ4ui0",
+        "institution": "hack",
+        "bio": "</p><script>alert('malicious user is being bad')</script><p>"
     }
 }
