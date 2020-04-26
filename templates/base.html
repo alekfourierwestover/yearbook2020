@@ -6,9 +6,8 @@
     <meta charset="utf-8">
     <title>Yearbook 2020</title>
     <script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js')}}" charset="utf-8"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}">
     <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}" charset="utf-8"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}">
     <script src="{{ url_for('static', filename='notify.js')}}" charset="utf-8"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" >
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
@@ -24,30 +23,7 @@
       const pfp_path= "{{url_for('static', filename='pfps')}}";
     </script>
 
-    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/main">Belmont High School Yearbook 2020</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="chungus" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="chungus">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" style="font-size:110%" href="/mymessages">My Messages</a></li>
-
-          <li class="nav-item"><a class="nav-link" style="font-size:110%" href="/map">Map</a></li>
-
-          <li class="nav-item"><a class="nav-link" style="font-size:110%" href="/edit">Edit Profile</a></li>
-
-          
-        </ul>
-        <ul class="navbar-nav navbar-right">
-          <li>  
-            <form action="logout" method="post"> 
-            <input type="submit" name="logout" id="logout" value="logout"> </form>
-          </li>
-        </div>
-      </div>
-    </nav>
+    {% block uncontained_content %}{% endblock %}
 
     <div id="content" class="container">
       <div id="content-inside">
