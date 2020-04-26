@@ -1,2 +1,30 @@
 {
+    "1d00c955-96d5-5516-ba6a-675f223b000c": {
+        "name": "Alek Westover",
+        "email": "alek.westover@gmail.com",
+        "password": "$5$rounds=535000$zRTpglI5MqGvQ9X3$J8v8SkkaNbevBBfo/73xf0Vt/q9hKFZaieJnDu1cZXD",
+        "institution": "MIT",
+        "bio": "TBD"
+    },
+    "9afa518a-c161-5d21-b501-4408174fccaa": {
+        "name": "David Leigh",
+        "email": "dleigh20@belmontschools.net",
+        "password": "$5$rounds=535000$9V2bPcanvDq2WxEp$snD1ErO5ifj8jfOX/EaxwYR/ZcV09x5oNu6H4JAyWh3",
+        "institution": "Northeastern University",
+        "bio": "\"You're breathtaking!\" -Keanu Reeves"
+    },
+    "7d946e48-e0e4-5bb2-b842-11cf5d55dfa5": {
+        "name": "joy",
+        "email": "asdfasdf@bgasdf",
+        "password": "$5$rounds=535000$AcUUxUVvEKXpuN9N$XnfwbaBNYgAxlYwHREVf.lWfguIba/9v8D9VNWL.6QC",
+        "institution": "",
+        "bio": ""
+    },
+    "aeaab296-cef2-59c9-9d73-bbbf0dd05f15": {
+        "name": "Ziyong Cui",
+        "email": "zcui20@belmontschools.net",
+        "password": "$5$rounds=535000$VxkqyTQkzRdKgNnk$Gzs/B9TWojqX6Jpn3qU6yj0Ad1LwdNrKwF1N77vkfZB",
+        "institution": "Harvard University",
+        "bio": "Lovely :)"
+    }
 }
