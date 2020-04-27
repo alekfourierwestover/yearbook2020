@@ -45,27 +45,27 @@
 </div>
 
 <div class = "cardleon">
-		<div id="edit_quote">
-			<form action="edit_quote" method="post" id="edit_form" enctype="multipart/form-data">
-				<!--
+<div id="edit_quote">
+<form action="edit_quote" method="post" id="edit_form" enctype="multipart/form-data">
+	<!--
 
-				<label> Name </label>
-				<input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
-				<br>
+	<label> Name </label>
+	<input type="name" class="form-control" name="name" id="name" namearia-describedby="name" placeholder="Current Name">
+	<br>
 
-				-->
-				<label> Password </label>
-				<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
-				<br>
-				<label>Edit Quote</label>
-				<input type="text" class="form-control" name="quote" id="quote" rows="3" placeholder="Leon is the OG.">
-				<br>
-				<br>
-				<br>
+	-->
+	<label> Password </label>
+	<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
+	<br>
+	<label>Edit Quote</label>
+	<textarea maxlength="200" class="form-control" name="quote" form="edit_quote" id="quote" rows="3" placeholder="I am a generic student at BHS graduating in 2020."></textarea>
+	<br>
+	<br>
+	<br>
 
-				<input type="submit" value="change quote" name="submit" id="submit" class="btn btn-primary form-control"/>
-			</form>
-		</div>
+	<input type="submit" value="change quote" name="submit" id="submit" class="btn btn-primary form-control"/>
+</form>
+</div>
 </div>
 
 <!--
@@ -88,14 +88,5 @@
 -->
 <br>
 
-<!--
-<button id = "asdfasdf"> Press if you Dare </button>
-<script>
-	$("#asdfasdf").click(function () {
-		alert("FSIOE");
-		$.notify("I AM WATCHING YOU");
-	});
-</script>
--->
 
 {% endblock %}

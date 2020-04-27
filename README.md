@@ -1,41 +1,36 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
-#Bugs 4/27/20 
+# Bugs 4/27/20 
 
-- verify
-	- resend verification code throws internal server error
- 	- verify has no style
+# unresolved 
 
-- teacher emails?
-- keep the 20@belmontschools.net => if not, look through teacher email list   
+- verify - you shouldn't show up on main until you have a verified account
 
-- sendmessages can submit empty message
-
-- index
-	- login and register w/o entering anything returns internal server error
-	- need length restriction on qutoe and name
-
-	- password resets
-
-- main
-	- Names should be alphabetical
+- teacher emails?  - keep the 20@belmontschools.net => if not, look through teacher email list   
+- password resets
+- shouldn't be able to create an account over someone elses account
 
 - map
 	- maurader head map stuff is squished
 	- dumb blank space at the bottom
 
-- edit profile: change quote / change password : wrong password --> logs you out
-	- desired behavior: tells you try again
-	- need length restriction on qutoe and name
-
 - server stuff:
-	- you dont need to be logged in to getProfiles for instance, 
-	- need to make sure that you can only get your messages
+	- should need to be logged in to get your messages
 
-- do a test with lots of people using it
-- static pages
+- misc: 
+	- do a test with lots of people using it
+	- static pages
 
+# resolved
+- edit profile: change quote / change password : wrong password --> logs you out - desired behavior: tells you try again
+- need length restriction on qutoe and name
+- login and register w/o entering anything returns internal server error
+- verify has no style
+- resend verification code throws internal server error
+- sendmessages can submit empty message (not a real issue)
+- need length restriction on qutoe and name
+- main - Names should be alphabetical
 
 
 #TODO 4/22/20

@@ -22,15 +22,15 @@ mail = Mail(app)
 def safestr(bad_txt):
     return str(uuid.uuid5(uuid.NAMESPACE_URL, bad_txt))
 
-@app.route('/send_verification_code/', methods=("GET",))
+@app.route('/send_verification_code/', methods=("GET","POST"))
 def session_send_verification_code():
     try:
         msg = Message("Verification Code", sender=app.config.get("MAIL_USERNAME"), recipients=[session["email"]])
         msg.html = f"Hey {session['username']}, <br>Thank you for creating an account for the digial bhs yearbook! <br>Your verification code is <strong>{session['verification_code']}</strong>. <br>Please use this to verify your account at <a href='bhsyearbook.tech'>bhsyearbook.tech</a>. <br>You can also verify your account by just clicking on this link: <a href='http://bhsyearbook.tech/check_verification_code?verification={session['verification_code']}'>verify account</a> <br>Thanks!"
         mail.send(msg)
-        return 'Mail sent!'
+        return redirect(url_for("serve_verify"))
     except Exception as e:
-        return str(e)
+        return redirect(url_for("serve_index", error=str(e)))
 
 @app.route("/check_verification_code", methods=("POST","GET"))
 def check_verification_code():
@@ -311,9 +311,10 @@ def handle_edit_password():
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
-            session["loggedin"] = False
-            return redirect(url_for("serve_index", error="password_wrong"))
+            return redirect(url_for("serve_edit", error="password_wrong"))
     except:
+        session["loggedin"] = False
+        session["verified"] = False
         return redirect(url_for("serve_index", error="error"))
 
 @app.route("/edit_quote", methods=("POST", ))
@@ -328,9 +329,10 @@ def handle_edit_quote():
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
-            session["loggedin"] = False
-            return redirect(url_for("serve_index", error="password_wrong"))
+            return redirect(url_for("serve_edit", error="password_wrong"))
     except:
+        session["loggedin"] = False
+        session["verified"] = False
         return redirect(url_for("serve_index", error="user_not_found"))
 
 if __name__ == "__main__":

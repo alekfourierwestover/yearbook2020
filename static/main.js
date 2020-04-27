@@ -5,7 +5,18 @@ $.get("/getProfiles", function(data){
 
     let currentRow = [];
     let ct = 0;
-    for(let uuid in data){
+
+    let ppl_uuids = Object.keys(data);
+    ppl_uuids.sort((a,b)=>{
+        if( data[a].name < data[b].name ){
+	    return -1;
+	}
+	else {
+	    return 1;
+	}
+    });
+    for(let i in ppl_uuids){
+	uuid = ppl_uuids[i];
       if(ct % MAX_NUM_COLUMNS == 0 && ct != 0){
         allRows.push(currentRow);
         currentRow = [];
@@ -28,7 +39,6 @@ $.get("/getProfiles", function(data){
     }
     allRows.push(currentRow);
 
-    console.log(allRows);
     for(let i = 0; i < MAX_NUM_COLUMNS; i++){
       let currentColumn = $("<div class='column'></div>");
       for (row in allRows){
