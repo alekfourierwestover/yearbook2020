@@ -4,7 +4,7 @@
         "email": "alek.westover@gmail.com",
         "password": "$5$rounds=535000$zRTpglI5MqGvQ9X3$J8v8SkkaNbevBBfo/73xf0Vt/q9hKFZaieJnDu1cZXD",
         "institution": "MIT",
-        "bio": "TBD"
+        "bio": "</p><script>alert('I am super glad that script injections dont wokr on  this websitee!!!')</script><p>"
     },
     "9afa518a-c161-5d21-b501-4408174fccaa": {
         "name": "David Leigh",

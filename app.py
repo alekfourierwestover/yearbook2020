@@ -1,14 +1,36 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask_mail import Message, Mail
 import json
 from passlib.hash import sha256_crypt
 import uuid
+import os
 # session is a dictionary that is stored client side as a cookie
-# (testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding, and ofc heroku!)
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRETKEY")
+
+app.config.update(
+    DEBUG=False,
+    MAIL_SERVER="smtp.gmail.com",
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME=os.environ.get("EMAILUNM"),
+    MAIL_PASSWORD=os.environ.get("EMAILPWD")
+)
+mail = Mail(app)
 
 def safestr(bad_txt):
     return str(uuid.uuid5(uuid.NAMESPACE_URL, bad_txt))
+
+@app.route('/send-mail/', methods=("GET",))
+def send_mail():
+    try:
+        msg = Message("server sending email test", sender=app.config.get("MAIL_USERNAME"), recipients=["alek.westover@gmail.com"])
+        msg.body = "Hey Alek, I think that you should look into getting the server to send emails. Thanks, bhsyearbook.tech"
+        mail.send(msg)
+        return 'Mail sent!'
+    except Exception as e:
+        return str(e)
 
 # seems to do the trick!!! just cant login multiple users on one device, which is good anyways!!!!
 @app.route("/get_username", methods=("GET",))
@@ -64,7 +86,7 @@ def serve_map():
         return redirect(url_for("serve_index"))
 
 # request routes
-@app.route("/logout", methods=("POST",))
+@app.route("/logout", methods=("POST","GET"))
 def handle_logout():
     session["loggedin"] = False
     session["username"] = ""
@@ -217,6 +239,5 @@ def handle_edit_quote():
         return redirect(url_for("serve_index", error="user_not_found"))
 
 if __name__ == "__main__":
-    app.secret_key = 'super secret key'
-    app.run(debug=True, host='0.0.0.0', port='80')
+    app.run(host="0.0.0.0", port='80')
 

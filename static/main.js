@@ -13,9 +13,12 @@ $.get("/getProfiles", function(data){
       let link = `/sendmessages?sendto=${uuid}`;
       let currentCard = $(`<div class='face-card' id="card_${uuid}" onclick='window.location.href="${link}"'></div>`);
       currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
-      let username = JSON.stringify(data[uuid].name);
-      currentCard.append($(`<h2 id="my${uuid}" style="font-size:2.5vw">${username}</h2>`));
-      currentCard.append($(`<p id="bio">${JSON.stringify(data[uuid].bio)}</p>`));
+      let nameText = $(`<h2 id="my${uuid}" style="font-size:2.5vw"></h2>`);
+      nameText.text(data[uuid].name);
+      currentCard.append(nameText);
+      let bioText = $(`<p id="bio${uuid}"></p>`)
+      bioText.text(data[uuid].bio);
+      currentCard.append(bioText);
       currentRow.push(currentCard);
       ct++;
     }
