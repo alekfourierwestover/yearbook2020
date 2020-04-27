@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<script charset="utf-8">
+  if(urlParams.get("error")){
+    $.notify(urlParams.get("error"));
+  }
+</script>
+
+<div class="container">
+    <div class="col">
+  <div id="register-form-div" class="bg-light">
+
+    <form action="register" method="post" id="register-form" enctype="multipart/form-data">
+      <h2>Register</h2>
+      <div class="form-group">
+        <label>Verification Code</label>
+        <input type="name" class="form-control" name="verification" placeholder="Look in your school email">
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+<div class="w-100"></div>
+
+<img width="80%" src="{{url_for('static', filename='marauder.png')}}" alt="maurader"/>
+
+{% endblock %}
