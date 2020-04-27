@@ -7,7 +7,7 @@ import os
 import random
 
 app = Flask(__name__)
-app.secret_key = os.environ("SECRETKEY") with supersecretekey
+app.secret_key = os.environ.get("SECRETKEY")
 
 app.config.update(
     DEBUG=False,

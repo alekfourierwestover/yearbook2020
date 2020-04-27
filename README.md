@@ -1,6 +1,22 @@
 # yearbook2020
 Yearbook for BHS 2020 :(
 
+#Bugs 4/27/20 
+
+- verify
+	- resend verification code throws internal server error
+ 	- verify has no style
+- teacher emails?
+- keep the 20@belmontschools.net => if not, look through teacher email list   
+
+- student council/chloe is working on it 
+- login and register w/o entering anything returns internal server error
+- Names should be alphabetical
+- maurader head map stuff is squished
+- edit profile: change quote / change password : wrong password --> logs you out
+	desired behavior: tells you try again
+
+
 #TODO 4/22/20
 - Ziyong: checkmarks next to names; responsive web design (main; text; pictures); increase text size; sendmessages css two columns
 - Leon: notify.js; login page (make two columns) => css; lowercase names (not case-sensitive); login css

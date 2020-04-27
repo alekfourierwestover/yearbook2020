@@ -1,4 +1,7 @@
 .DS_Store
+users.json
+messages.json
+static/pfps/
 
 # js
 node_modules/

@@ -5,26 +5,26 @@
         "password": "$5$rounds=535000$ff2hqKZ3Hjvcx/x6$yWV8UizazkLrDnQk.eE1PwtuqiZIW3sI3ChUxKWvdL7",
         "institution": "Northeastern University",
         "bio": "\"You're breathtaking!\" - Keanu Reeves",
-        "verified": false,
+        "verified": true,
         "verification_code": "2b266c55"
     },
     "1d00c955-96d5-5516-ba6a-675f223b000c": {
         "name": "Alek Westover",
         "email": "awestover20@belmontschools.net",
-        "password": "$5$rounds=535000$BcLrgjwYwiF/pFXD$Fpq3QKXhWwjk5MFeqr39wjglCyqzIuuX844LLvE1gmA",
-        "institution": "MIT",
-        "bio": "</p><script>alert(\"no script injections here\")</script><p>",
+        "password": "$5$rounds=535000$5w1kkzCKGO8Br3U/$Y7nnzNbAGuGLylV0TSUSLg3UZjvDhBqsXAwTkzduoF7",
+        "institution": "",
+        "bio": "",
         "verified": false,
-        "verification_code": "8bff7490"
+        "verification_code": "5c21927c"
     },
     "146aed34-970e-5dec-9a5d-9e4a045a6a38": {
         "name": "Leon Fan",
-        "email": "leon@belmontschools.net",
-        "password": "$5$rounds=535000$F4Dv.GybFPEznvSP$ftKCajPVGkxjceyEmWFwTTTtdejMOfTW9cMcvdx/KX.",
-        "institution": "belmont",
+        "email": "lfan20@belmontschools.net",
+        "password": "$5$rounds=535000$.eAKFNrXYE75xPnD$XOVGJzegm2GfN9er0jDYPNLhuZfro0z2NRivYXEFsd2",
+        "institution": "MIT",
         "bio": "",
         "verified": true,
-        "verification_code": "65738250"
+        "verification_code": "55071dab"
     },
     "09dc805c-7e97-5acb-bebb-0ffce0457b8b": {
         "name": "Z",
@@ -43,5 +43,59 @@
         "bio": "",
         "verified": true,
         "verification_code": "4720cbc1"
+    },
+    "daccb24c-2126-5b1d-a38e-bcc2fc2a43a0": {
+        "name": "Joy",
+        "email": "awestover20@belmontschools.net",
+        "password": "$5$rounds=535000$qOXwlX.CsL7bfhOf$sqJDkF12AwU95N9/PZxTYzojk2yMW0a/nUp1vRVSO0.",
+        "institution": "",
+        "bio": "",
+        "verified": true,
+        "verification_code": "0f593826"
+    },
+    "aeaab296-cef2-59c9-9d73-bbbf0dd05f15": {
+        "name": "Ziyong Cui",
+        "email": "zcui20@belmontschools.net",
+        "password": "$5$rounds=535000$WexUhd7ytNgg2N4n$pQWqPcNgnwkN7BeuUWhvIdvBoEQZ3PjFyEj2LY3mmqB",
+        "institution": "Harvard University",
+        "bio": "I love alek",
+        "verified": true,
+        "verification_code": "612ac5de"
+    },
+    "2c28a2eb-87d3-5da0-af01-0e5ede723e62": {
+        "name": "Bro",
+        "email": "awestover20@belmontschools.net",
+        "password": "$5$rounds=535000$mzzRsSdXMDPEd1/B$EE3Hl4KEg8FyFhjJy1Z6rCnU.Cm95ZWfPY7q68BmaFA",
+        "institution": "",
+        "bio": "",
+        "verified": true,
+        "verification_code": "36b5675a"
+    },
+    "87d23e04-c438-516b-bd71-cd2256c1b922": {
+        "name": "Chloe Park",
+        "email": "spark20@belmontschools.net",
+        "password": "$5$rounds=535000$ghS9uiud/P3UTFPz$TVs.2OmfVYw4Qdvl0SKV8SgLT7EcZmW7ankGXnOpTl4",
+        "institution": "Dartmouth College",
+        "bio": "I <3 BHS",
+        "verified": true,
+        "verification_code": "2813e04f"
+    },
+    "dc739930-d88d-5da8-bcc9-c6284fe33316": {
+        "name": "Andrew Naumann",
+        "email": "anaumann20@belmontschools.net",
+        "password": "$5$rounds=535000$jAxqRM2.BzgL0Aev$3sLoNd5OBZcRX9j7MfUXQ3e9jbnoUEHYGziLnCy0rO/",
+        "institution": "Brigham Young University, Provo",
+        "bio": "Its been real",
+        "verified": false,
+        "verification_code": "5005314a"
+    },
+    "63cf949d-faee-5dfa-9210-e07a29036c5c": {
+        "name": "Madeline Kitch",
+        "email": "awestover20@belmontschools.net",
+        "password": "$5$rounds=535000$IcmI.1DcVzTvcQ.2$QaDWx1S2O7pLZO3bbBBnqc/KkdQOMcjoTvm5ttpztj6",
+        "institution": "Dartmouth",
+        "bio": "test",
+        "verified": true,
+        "verification_code": "5fd16265"
     }
 }
