@@ -63,6 +63,13 @@ def serve_map():
     else:
         return redirect(url_for("serve_index"))
 
+@app.route("/verify")
+def serve_map():
+    if session.get("loggedin"):
+        return render_template("verify.html")
+    else:
+        return redirect(url_for("serve_index"))
+
 # request routes
 @app.route("/logout", methods=("POST",))
 def handle_logout():
