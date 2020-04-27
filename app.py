@@ -155,7 +155,14 @@ def handle_login():
         data = json.load(f)
         user_name = request.form.get("name").lower()
 
+        b = []
         tmp = user_name.split(" ")
+        for word in tmp:
+            word = word.strip()
+
+            if not(word == ' ' or word == ''):
+                b.append(word)
+        tmp = b
         for leon in range(len(tmp)):
             if len(tmp[leon]) == 1:
                 tmp[leon] = tmp[leon].upper()
@@ -185,7 +192,14 @@ def handle_register():
         x = json.load(f)
         user_name = request.form["name"].lower()
         
+        b = []
         tmp = user_name.split(" ")
+        for word in tmp:
+            word = word.strip()
+
+            if not(word == ' ' or word == ''):
+                b.append(word)
+        tmp = b
         for leon in range(len(tmp)):
             if len(tmp[leon]) == 1:
                 tmp[leon] = tmp[leon].upper()
