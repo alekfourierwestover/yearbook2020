@@ -22,7 +22,7 @@
 
 <div class = "cardmadeline">
 		<div id="edit_password"><!--class="bg-light"-->
-			<form action="edit_password" method="post" id="edit_form" enctype="multipart/form-data">
+			<form action="edit_password" method="post" id="edit_password_form">
 				<!--
 
 				<label> Name </label>
@@ -30,15 +30,15 @@
 
 				-->
 				<label> Password </label>
-				<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
+				<input type="password" class="form-control" name="password" placeholder="Current Password">
 				<br>
 				<label> New Password </label>
-				<input type="password" class="form-control" name="newpassword" id="newpassword" placeholder="New password">
+				<input type="password" class="form-control" name="newpassword" placeholder="New password">
 				<br>
 				<br>
 				<br>
 
-				<input type="submit" value="change password" name="submit" id="submit" class="btn btn-primary form-control"/>
+				<input type="submit" value="change password" name="submit" class="btn btn-primary form-control"/>
 
 			</form>
 		</div>
@@ -46,7 +46,7 @@
 
 <div class = "cardleon">
 <div id="edit_quote">
-<form action="edit_quote" method="post" id="edit_form" enctype="multipart/form-data">
+<form action="edit_quote" method="post" id="edit_quote_form">
 	<!--
 
 	<label> Name </label>
@@ -55,15 +55,15 @@
 
 	-->
 	<label> Password </label>
-	<input type="password" class="form-control" name="password" id="password" placeholder="Current Password">
+	<input type="password" class="form-control" name="password" placeholder="Current Password">
 	<br>
 	<label>Edit Quote</label>
-	<textarea maxlength="200" class="form-control" name="quote" form="edit_quote" id="quote" rows="3" placeholder="I am a generic student at BHS graduating in 2020."></textarea>
+	<textarea maxlength="200" class="form-control" name="quote" form="edit_quote_form" rows="3" placeholder="I am a generic student at BHS graduating in 2020."></textarea>
 	<br>
 	<br>
 	<br>
 
-	<input type="submit" value="change quote" name="submit" id="submit" class="btn btn-primary form-control"/>
+	<input type="submit" value="change quote" name="submit" class="btn btn-primary form-control"/>
 </form>
 </div>
 </div>
