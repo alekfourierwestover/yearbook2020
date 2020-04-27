@@ -3,7 +3,6 @@ import json
 from passlib.hash import sha256_crypt
 import uuid
 # session is a dictionary that is stored client side as a cookie
-# (testable by going to 192.168.1.165:5000 on your phone and computer simultaneusly; should also be compatible with port forwarding, and ofc heroku!)
 
 app = Flask(__name__)
 
@@ -71,7 +70,7 @@ def serve_map():
         return redirect(url_for("serve_index"))
 
 # request routes
-@app.route("/logout", methods=("POST",))
+@app.route("/logout", methods=("POST","GET"))
 def handle_logout():
     session["loggedin"] = False
     session["username"] = ""
@@ -83,7 +82,14 @@ def handle_login():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         data = json.load(f)
-        user_name = request.form.get("name")
+        user_name = request.form.get("name").lower()
+
+        tmp = user_name.split(" ")
+        for leon in range(len(tmp)):
+            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+        user_name = " ".join(tmp)
+
+
         safe_user_name = safestr(user_name)
         try:
             if sha256_crypt.verify(request.form.get("password"), data[safe_user_name]["password"]):
@@ -101,7 +107,16 @@ def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         x = json.load(f)
-        user_name = request.form["name"]
+        user_name = request.form["name"].lower()
+
+        
+        tmp = user_name.split(" ")
+        for leon in range(len(tmp)):
+            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+        user_name = " ".join(tmp)
+        
+
+
         safe_user_name = safestr(user_name)
         session["username"] = user_name
         session["uuid"] = safe_user_name
@@ -225,4 +240,5 @@ def handle_edit_quote():
 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', port='80')
+

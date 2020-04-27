@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<style type="text/css" media="screen">
+.column {
+  flex: 48%;
+  padding:2%;
+  margin: 1%;
+}
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+  }
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <script charset="utf-8">
@@ -8,10 +23,8 @@
   }
 </script>
 
-<div class="container">
-    <div class="col">
-  <div id="register-form-div" class="bg-light">
-
+<div class="row">
+  <div class="column bg-light">
     <form action="register" method="post" id="register-form" enctype="multipart/form-data">
       <h2>Register</h2>
       <div class="form-group">
@@ -44,13 +57,8 @@
       </div>
     </form>
   </div>
-</div>
-</div>
 
-
-<div class="container">
-<div class="col font-small">
-  <div id="login-form-div" class="bg-light">
+  <div class="column bg-light">
     <form action="login" method="post" id="login-form" enctype="multipart/form-data">
 
       <h2>Log In</h2>
@@ -67,11 +75,10 @@
         <input type="submit" value="submit" name="submit" id="submit" class="btn btn-primary form-control"/>
       </div>
     </form>
+    <img width="40%" src="{{url_for('static', filename='marauder.png')}}" alt="maurader"/>
+    <img width="40%" src="{{url_for('static', filename='marauder.png')}}" style="transform: scaleX(-1)" alt="maurader"/>
   </div>
-</div>
-</div>
-<div class="w-100"></div>
 
-<img width="80%" src="{{url_for('static', filename='marauder.png')}}" alt="maurader"/>
+</div>
 
 {% endblock %}
