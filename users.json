@@ -12,5 +12,12 @@
         "password": "$5$rounds=535000$C8/AjLphoRs3caED$hF/t3vl.8D/cxMN2B8iQjkk6r9jadRYAoii06yQ4ui0",
         "institution": "hack",
         "bio": "</p><script>alert('malicious user is being bad')</script><p>"
+    },
+    "146aed34-970e-5dec-9a5d-9e4a045a6a38": {
+        "name": "Leon Fan",
+        "email": "leon@belmontschools.net",
+        "password": "$5$rounds=535000$Pvbl8PZ9v3mGzwFK$jely7saP2WylxVAB29mihLiXIIDexyMNzAGX6efMB28",
+        "institution": "oij",
+        "bio": "hello"
     }
 }
