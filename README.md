@@ -16,6 +16,8 @@ Yearbook for BHS 2020 :(
 	- login and register w/o entering anything returns internal server error
 	- need length restriction on qutoe and name
 
+	- password resets
+
 - main
 	- Names should be alphabetical
 
@@ -30,6 +32,9 @@ Yearbook for BHS 2020 :(
 - server stuff:
 	- you dont need to be logged in to getProfiles for instance, 
 	- need to make sure that you can only get your messages
+
+- do a test with lots of people using it
+- static pages
 
 
 
