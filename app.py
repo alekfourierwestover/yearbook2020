@@ -190,89 +190,106 @@ def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         x = json.load(f)
-        user_name = request.form["name"].lower()
-        
-        b = []
-        tmp = user_name.split(" ")
-        for word in tmp:
-            word = word.strip()
 
-            if not(word == ' ' or word == ''):
-                b.append(word)
-        tmp = b
-        for leon in range(len(tmp)):
-            if len(tmp[leon]) == 1:
-                tmp[leon] = tmp[leon].upper()
-            else:
-                tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
-        user_name = " ".join(tmp)
+    user_name = request.form["name"].lower()
+    
+    b = []
+    tmp = user_name.split(" ")
+    for word in tmp:
+        word = word.strip()
 
+        if not(word == ' ' or word == ''):
+            b.append(word)
+    tmp = b
+    for leon in range(len(tmp)):
+        if len(tmp[leon]) == 1:
+            tmp[leon] = tmp[leon].upper()
+        else:
+            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+    user_name = " ".join(tmp)
 
-        safe_user_name = safestr(user_name)
-        session["username"] = user_name
-        session["uuid"] = safe_user_name
-        session["loggedin"] = True
-        session["verified"] = False
-        session["email"] = request.form["email"]
-        session["verification_code"] = safestr(str(random.random()))[:8]
+    safe_user_name = safestr(user_name)
 
-        try:
-            img_stream = request.files.get("profilepic").stream
-            with open(f"static/pfps/{safe_user_name}.png", "wb") as f:
-                f.write(img_stream.read())
-        except:
-            pass
+    if safe_user_name in x:
+        return redirect(url_for("serve_index", error="username_taken"))
 
-        x[safe_user_name] = {
-            "name": user_name,
-            "email": request.form["email"],
-            "password": sha256_crypt.hash(request.form["password"]),
-            "institution": request.form["institution"],
-            "bio": request.form["bio"],
-            "verified": False,
-            "verification_code": session["verification_code"]
-        }
-        with open("users.json", "w") as f:
-            json.dump(x, f, indent = 4)
+    session["username"] = user_name
+    session["uuid"] = safe_user_name
+    session["loggedin"] = True
+    session["verified"] = False
+    session["email"] = request.form["email"]
+    session["verification_code"] = safestr(str(random.random()))[:8]
 
-        session_send_verification_code()
-        return redirect(url_for("serve_verify"))
+    try:
+        img_stream = request.files.get("profilepic").stream
+        with open(f"static/pfps/{safe_user_name}.png", "wb") as f:
+            f.write(img_stream.read())
+    except:
+        pass
+
+    x[safe_user_name] = {
+        "name": user_name,
+        "email": request.form["email"],
+        "password": sha256_crypt.hash(request.form["password"]),
+        "institution": request.form["institution"],
+        "bio": request.form["bio"],
+        "verified": False,
+        "verification_code": session["verification_code"]
+    }
+    with open("users.json", "w") as f:
+        json.dump(x, f, indent = 4)
+
+    session_send_verification_code()
+    return redirect(url_for("serve_verify"))
 
 @app.route("/getProfiles", methods=("GET",))
 def getProfiles():
+    if not(session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
+
     with open("users.json", "r") as f:
         data = json.load(f)
-    return jsonify(data)
+    
+    verified_profiles = {}
+    for uuid in data:
+        if data[uuid]["verified"]:
+            verified_profiles[uuid] = data[uuid]
+
+    return jsonify(verified_profiles)
 
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
-    with open("messages.json", "r") as f:
-        message_data = json.load(f)
+    try:
+        if not (session["loggedin"] and session["verified"]):
+            return redirect(url_for("serve_index", error="malicious_user"))
+        with open("messages.json", "r") as f:
+            message_data = json.load(f)
 
-    with open("users.json", "r") as f:
-        user_data = json.load(f)
+        with open("users.json", "r") as f:
+            user_data = json.load(f)
 
-    sent_from = session.get("username")
-    sent_from_uuid = session.get("uuid")
-    send_to = request.form.get("sendto")
-    message = request.form.get("message")
+        sent_from = session.get("username")
+        sent_from_uuid = session.get("uuid")
+        send_to = request.form.get("sendto")
+        message = request.form.get("message")
 
-    if send_to not in user_data.keys():
-        session["loggedin"] = False
-        return url_for("serve_index", error="malicious_user")
+        if send_to not in user_data.keys():
+            session["loggedin"] = False
+            return url_for("serve_index", error="malicious_user")
 
-    if not send_to in message_data.keys():
-        message_data[send_to] = { sent_from: [message] }
-    elif sent_from not in message_data[send_to].keys():
-        message_data[send_to][sent_from] = [message]
-    else:
-        message_data[send_to][sent_from].append(message)
+        if not send_to in message_data.keys():
+            message_data[send_to] = { sent_from: [message] }
+        elif sent_from not in message_data[send_to].keys():
+            message_data[send_to][sent_from] = [message]
+        else:
+            message_data[send_to][sent_from].append(message)
 
-    with open("messages.json", "w") as f:
-        json.dump(message_data, f, indent=4)
+        with open("messages.json", "w") as f:
+            json.dump(message_data, f, indent=4)
 
-    return url_for("serve_main")
-
+        return url_for("serve_main")
+    except:
+        return redirect(url_for("serve_index", error="malicious_user"))
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
@@ -283,24 +300,37 @@ def handle_view_my_messages():
     except:
         return "no messages"
 
-@app.route("/view_all_messages", methods=("GET",))
-def handle_view_all_messages():
-    try:
-        with open("messages.json", "r") as f:
-            data = json.load(f)
-        return jsonify(data)
-    except:
-        return "no messages"
+@app.route("/get_uuids_sentto", methods=("GET",))
+def handle_get_uuids_sentto():
+    if not (session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
+
+    with open("messages.json", "r") as f:
+        data = json.load(f)
+
+    uuids_sentto = []
+    for uuid_sentto in data:
+        if session["username"] in data[uuid_sentto]:
+            uuids_sentto.append(uuid_sentto)
+
+    return jsonify(uuids_sentto)
 
 @app.route("/view_profile", methods=("GET",))
 # returns name and bio
 def handle_view_profile():
-    with open("users.json", "r") as f:
-        data = json.load(f)
-        return jsonify(data[request.args.get("uuid")])
+    if not (session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
+    try:
+        with open("users.json", "r") as f:
+            data = json.load(f)
+            return jsonify(data[request.args.get("uuid")])
+    except:
+        return redirect(url_for("serve_index", error="malicious_user"))
 
 @app.route("/edit_password", methods=("POST", ))
 def handle_edit_password():
+    if not (session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
     with open("users.json", "r") as f:
         data = json.load(f)
 
@@ -319,6 +349,8 @@ def handle_edit_password():
 
 @app.route("/edit_quote", methods=("POST", ))
 def handle_edit_quote():
+    if not (session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
     with open("users.json", "r") as f:
         data = json.load(f)
     try:

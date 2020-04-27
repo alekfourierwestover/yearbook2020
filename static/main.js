@@ -53,14 +53,10 @@ $(".face-card").css({
     'height': cw + 'px'
 });
 
-$.get("/get_username", function(username){
-  $.get("/view_all_messages", function(data){
-    for (let person in data){
-      if (Object.keys(data[person]).indexOf(username) != -1) {
-        document.getElementById("my" + person).innerHTML += "&#x2713";
-      }
+$.get("/get_uuids_sentto", (uuids_sentto)=>{
+    for(let i in uuids_sentto){
+        document.getElementById("my" + uuids_sentto[i]).innerHTML += "&#x2713"; // checkmark
     }
-  });
 });
 
 function search_name(){

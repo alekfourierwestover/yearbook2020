@@ -4,19 +4,12 @@ Yearbook for BHS 2020 :(
 # Bugs 4/27/20 
 
 # unresolved 
-
-- verify - you shouldn't show up on main until you have a verified account
-
-- teacher emails?  - keep the 20@belmontschools.net => if not, look through teacher email list   
 - password resets
-- shouldn't be able to create an account over someone elses account
+- outside emails?  - keep the 20@belmontschools.net => if not, look through teacher email list   
 
 - map
 	- maurader head map stuff is squished
 	- dumb blank space at the bottom
-
-- server stuff:
-	- should need to be logged in to get your messages
 
 - misc: 
 	- do a test with lots of people using it
@@ -31,6 +24,9 @@ Yearbook for BHS 2020 :(
 - sendmessages can submit empty message (not a real issue)
 - need length restriction on qutoe and name
 - main - Names should be alphabetical
+- shouldn't be able to create an account over someone elses account
+- server stuff: - should need to be logged in to get your messages
+- verify - you shouldn't show up on main until you have a verified account
 
 
 #TODO 4/22/20
