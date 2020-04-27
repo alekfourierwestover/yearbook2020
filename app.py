@@ -26,11 +26,36 @@ def safestr(bad_txt):
 def session_send_verification_code():
     try:
         msg = Message("Verification Code", sender=app.config.get("MAIL_USERNAME"), recipients=[session["email"]])
-        msg.body = f"Hey {session['username'], \nThank you for creating an account on the bhsyearbook.tech website. You're verification code is {session['verification_code']}. Please use this at <a href='bhsyearbook.tech/verify'>bhsyearbook.tech/verify</a>"
+        msg.html = f"Hey {session['username']}, <br>Thank you for creating an account for the digial bhs yearbook! <br>Your verification code is <strong>{session['verification_code']}</strong>. <br>Please use this to verify your account at <a href='bhsyearbook.tech'>bhsyearbook.tech</a>. <br>You can also verify your account by just clicking on this link: <a href='http://bhsyearbook.tech/check_verification_code?verification={session['verification_code']}'>verify account</a> <br>Thanks!"
         mail.send(msg)
         return 'Mail sent!'
     except Exception as e:
         return str(e)
+
+@app.route("/check_verification_code", methods=("POST","GET"))
+def check_verification_code():
+    try:
+        if session["loggedin"] and not session["verified"]:
+            if request.method=="POST":
+                verification_code = request.form.get("verification")
+            else:
+                verification_code = request.args.get("verification")
+
+            if session["verification_code"] == verification_code:
+                session["verified"] = True
+                with open("users.json", "r") as f:
+                    data = json.load(f)
+                data[session.get("uuid")]["verified"] = True
+                with open("users.json", "w") as f:
+                    json.dump(data,f, indent=4)
+                return redirect(url_for("serve_main"))
+            else:
+                return redirect(url_for("serve_verified", error="code_wrong"))
+        else:
+            return redirect(url_for("serve_index"))
+    except:
+        return redirect(url_for("serve_index"))
+
 
 # session seems to do the trick!!! just cant login multiple users on one device, which is good anyways!!!!
 # session is a dictionary that is stored client side as a cookie
@@ -58,7 +83,7 @@ def serve_index():
 def serve_main():
     if session.get("loggedin"):
         if session.get("verified"):
-            return redirect(url_for("serve_main"))
+            return render_template("main.html")
         else:
             return redirect(url_for("serve_verify"))
     else:
@@ -105,11 +130,14 @@ def serve_map():
         return redirect(url_for("serve_index"))
 
 @app.route("/verify")
-def serve_map():
-    if session.get("loggedin"):
-        return render_template("verify.html")
+def serve_verify():
+    if not session.get("verified"):
+        if session.get("loggedin"):
+            return render_template("verify.html")
+        else:
+            return redirect(url_for("serve_index", error="malicious_user"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_main"))
 
 # request routes
 @app.route("/logout", methods=("POST","GET"))
@@ -165,7 +193,7 @@ def handle_register():
         session["loggedin"] = True
         session["verified"] = False
         session["email"] = request.form["email"]
-        session["verification_code"] = safestr(str(random.random()))
+        session["verification_code"] = safestr(str(random.random()))[:8]
 
         try:
             img_stream = request.files.get("profilepic").stream

@@ -1,37 +1,47 @@
 {
-    "1d00c955-96d5-5516-ba6a-675f223b000c": {
-        "name": "Alek Westover",
-        "email": "alek.westover@gmail.com",
-        "password": "$5$rounds=535000$zRTpglI5MqGvQ9X3$J8v8SkkaNbevBBfo/73xf0Vt/q9hKFZaieJnDu1cZXD",
-        "institution": "MIT",
-        "bio": "</p><script>alert('I am super glad that script injections dont wokr on  this websitee!!!')</script><p>"
-    },
     "9afa518a-c161-5d21-b501-4408174fccaa": {
         "name": "David Leigh",
         "email": "dleigh20@belmontschools.net",
-        "password": "$5$rounds=535000$9V2bPcanvDq2WxEp$snD1ErO5ifj8jfOX/EaxwYR/ZcV09x5oNu6H4JAyWh3",
+        "password": "$5$rounds=535000$ff2hqKZ3Hjvcx/x6$yWV8UizazkLrDnQk.eE1PwtuqiZIW3sI3ChUxKWvdL7",
         "institution": "Northeastern University",
-        "bio": "\"You're breathtaking!\" -Keanu Reeves"
+        "bio": "\"You're breathtaking!\" - Keanu Reeves",
+        "verified": false,
+        "verification_code": "2b266c55"
     },
-    "7d946e48-e0e4-5bb2-b842-11cf5d55dfa5": {
-        "name": "joy",
-        "email": "asdfasdf@bgasdf",
-        "password": "$5$rounds=535000$AcUUxUVvEKXpuN9N$XnfwbaBNYgAxlYwHREVf.lWfguIba/9v8D9VNWL.6QC",
-        "institution": "",
-        "bio": ""
-    },
-    "6206d4f1-7378-5d5b-a217-f4584a562c60": {
-        "name": "hacker",
-        "email": "hacker@hacks",
-        "password": "$5$rounds=535000$C8/AjLphoRs3caED$hF/t3vl.8D/cxMN2B8iQjkk6r9jadRYAoii06yQ4ui0",
-        "institution": "hack",
-        "bio": "</p><script>alert('malicious user is being bad')</script><p>"
+    "1d00c955-96d5-5516-ba6a-675f223b000c": {
+        "name": "Alek Westover",
+        "email": "awestover20@belmontschools.net",
+        "password": "$5$rounds=535000$BcLrgjwYwiF/pFXD$Fpq3QKXhWwjk5MFeqr39wjglCyqzIuuX844LLvE1gmA",
+        "institution": "MIT",
+        "bio": "</p><script>alert(\"no script injections here\")</script><p>",
+        "verified": false,
+        "verification_code": "8bff7490"
     },
     "146aed34-970e-5dec-9a5d-9e4a045a6a38": {
         "name": "Leon Fan",
         "email": "leon@belmontschools.net",
-        "password": "$5$rounds=535000$Pvbl8PZ9v3mGzwFK$jely7saP2WylxVAB29mihLiXIIDexyMNzAGX6efMB28",
-        "institution": "oij",
-        "bio": "hello"
+        "password": "$5$rounds=535000$F4Dv.GybFPEznvSP$ftKCajPVGkxjceyEmWFwTTTtdejMOfTW9cMcvdx/KX.",
+        "institution": "belmont",
+        "bio": "",
+        "verified": true,
+        "verification_code": "65738250"
+    },
+    "09dc805c-7e97-5acb-bebb-0ffce0457b8b": {
+        "name": "Z",
+        "email": "awestover20@belmontschools.net",
+        "password": "$5$rounds=535000$Y4B.sQILm6b8Nlfx$Ccc3/g22cq23f5pj8oNvI4lXWwav1aLV6MhaWEf8Ak9",
+        "institution": "harvard",
+        "bio": "yeet",
+        "verified": true,
+        "verification_code": "d651e8e5"
+    },
+    "41201bdb-d729-5992-9740-94eb062befa3": {
+        "name": "J",
+        "email": "awestover20@belmontschools.net",
+        "password": "$5$rounds=535000$ghvHQ6k02q.bO2Ma$uT.2QxP/JXC938W0E2U3a.oUShNwatzYhaTMcVD9p40",
+        "institution": "",
+        "bio": "",
+        "verified": true,
+        "verification_code": "4720cbc1"
     }
 }

@@ -81,4 +81,19 @@
 
 </div>
 
+<script>
+document.getElementById("profilepic").onchange = function() {
+    if(this.files[0].size > 2097152){
+       alert("File is too big!");
+       this.value = "";
+    };
+};
+
+document.getElementById("email").onchange = function() {
+    if(this.value.indexOf("20@belmontschools.net") == -1){
+    	alert("Please input your belmont schools email");
+    }
+};
+</script>
+
 {% endblock %}
