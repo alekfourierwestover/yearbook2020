@@ -98,7 +98,14 @@ def handle_login():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         data = json.load(f)
-        user_name = request.form.get("name")
+        user_name = request.form.get("name").lower()
+
+        tmp = user_name.split(" ")
+        for leon in range(len(tmp)):
+            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+        user_name = " ".join(tmp)
+
+
         safe_user_name = safestr(user_name)
         try:
             if sha256_crypt.verify(request.form.get("password"), data[safe_user_name]["password"]):
@@ -116,7 +123,16 @@ def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         x = json.load(f)
-        user_name = request.form["name"]
+        user_name = request.form["name"].lower()
+
+        
+        tmp = user_name.split(" ")
+        for leon in range(len(tmp)):
+            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+        user_name = " ".join(tmp)
+        
+
+
         safe_user_name = safestr(user_name)
         session["username"] = user_name
         session["uuid"] = safe_user_name
