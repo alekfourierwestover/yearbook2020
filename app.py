@@ -7,7 +7,7 @@ import os
 import random
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRETKEY")
+app.secret_key = os.environ("SECRETKEY") with supersecretekey
 
 app.config.update(
     DEBUG=False,
@@ -157,7 +157,10 @@ def handle_login():
 
         tmp = user_name.split(" ")
         for leon in range(len(tmp)):
-            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+            if len(tmp[leon]) == 1:
+                tmp[leon] = tmp[leon].upper()
+            else:
+                tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
         user_name = " ".join(tmp)
 
 
@@ -184,8 +187,12 @@ def handle_register():
         
         tmp = user_name.split(" ")
         for leon in range(len(tmp)):
-            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
+            if len(tmp[leon]) == 1:
+                tmp[leon] = tmp[leon].upper()
+            else:
+                tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
         user_name = " ".join(tmp)
+
 
         safe_user_name = safestr(user_name)
         session["username"] = user_name
