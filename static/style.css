@@ -190,6 +190,7 @@ footer{
   left: 6%;
   max-width:57%;
   height:57%;
+  line-height: 2vw;
 }
 
 #right-maurader {
@@ -198,6 +199,24 @@ footer{
   height:57%;
   right: 6%;
   transform: scaleX(-1);
+  line-height: 2vw;
+}
+
+#left-maurader-map {
+  position: absolute;
+  left: 6%;
+  width: 9vw;
+  height:9vw;
+  line-height: 2vw;
+}
+
+#right-maurader-map {
+  position: absolute;
+  width: 9vw;
+  height:9vw;
+  right: 6%;
+  transform: scaleX(-1);
+  line-height: 2vw;
 }
 
 
