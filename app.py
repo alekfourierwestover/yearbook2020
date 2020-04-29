@@ -5,6 +5,7 @@ from passlib.hash import sha256_crypt
 import uuid
 import os
 import random
+from PIL import Image
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRETKEY")
@@ -192,7 +193,8 @@ def handle_register():
         x = json.load(f)
 
     user_name = request.form["name"].lower()
-    
+    crop_info = json.loads(request.form.get("crop_info"))
+
     b = []
     tmp = user_name.split(" ")
     for word in tmp:
@@ -222,8 +224,13 @@ def handle_register():
 
     try:
         img_stream = request.files.get("profilepic").stream
-        with open(f"static/pfps/{safe_user_name}.png", "wb") as f:
+        img_file = f"static/pfps/{safe_user_name}.png"
+        with open(img_file, "wb") as f:
             f.write(img_stream.read())
+        im = Image.open(img_file)
+        im_cropped = im.crop([int(x) for x in crop_info["points"]])
+        im_cropped.save(img_file, "PNG")
+
     except:
         pass
 
