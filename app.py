@@ -27,7 +27,7 @@ def safestr(bad_txt):
 def session_send_verification_code():
     try:
         msg = Message("Verification Code", sender=app.config.get("MAIL_USERNAME"), recipients=[session["email"]])
-        msg.html = f"Hey {session['username']}, <br>Thank you for creating an account for the digial bhs yearbook! <br>Your verification code is <strong>{session['verification_code']}</strong>. <br>Please use this to verify your account at <a href='bhsyearbook.tech'>bhsyearbook.tech</a>. <br>You can also verify your account by just clicking on this link: <a href='http://bhsyearbook.tech/check_verification_code?verification={session['verification_code']}'>verify account</a> <br>Thanks!"
+        msg.html = f"Hey {session['username']}, <br>Thank you for creating an account for the digital bhs yearbook! <br>Your verification code is <strong>{session['verification_code']}</strong>. <br>Please use this to verify your account at <a href='bhsyearbook.tech'>bhsyearbook.tech</a>. <br>You can also verify your account by just clicking on this link: <a href='http://bhsyearbook.tech/check_verification_code?verification={session['verification_code']}'>verify account</a> <br>Thanks!"
         mail.send(msg)
         return redirect(url_for("serve_verify"))
     except Exception as e:
@@ -67,6 +67,10 @@ def get_username():
 @app.route("/get_uuid", methods=("GET",))
 def get_uuid():
     return session.get("uuid")
+
+@app.route("/get_senior", methods=("GET",))
+def get_senior():
+    return jsonify(session.get("senior"))
 
 # website page routes, note: you must be logged in to view this
 @app.route("/index")
@@ -180,6 +184,7 @@ def handle_login():
                 session["loggedin"] = True
                 session["verified"] = data[safe_user_name]["verified"]
                 session["verification_code"] = data[safe_user_name]["verification_code"]
+                session["senior"] = data[safe_user_name]["senior"]
                 return redirect(url_for("serve_main"))
             else:
                 return redirect(url_for("serve_index", error="password_wrong"))
@@ -192,25 +197,21 @@ def handle_register():
     with open("users.json", "r") as f:
         x = json.load(f)
 
-    user_name = request.form["name"].lower()
-    crop_info = json.loads(request.form.get("crop_info"))
+    first_name = request.form["firstname"].strip()
+    last_name = request.form["lastname"].strip()
 
-    b = []
-    tmp = user_name.split(" ")
-    for word in tmp:
-        word = word.strip()
+    if len(last_name) < 2 or len(first_name) < 2:
+        return redirect(url_for("serve_index", error="name_is_too_short"))
 
-        if not(word == ' ' or word == ''):
-            b.append(word)
-    tmp = b
-    for leon in range(len(tmp)):
-        if len(tmp[leon]) == 1:
-            tmp[leon] = tmp[leon].upper()
-        else:
-            tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
-    user_name = " ".join(tmp)
+    first_name = first_name[0].upper() + first_name[1:].lower()
+    last_name = last_name[0].upper() + last_name[1:].lower()
 
+    user_name = first_name + " " + last_name 
     safe_user_name = safestr(user_name)
+    user_email = request.form["email"].lower()
+
+    if last_name.lower() not in user_email:
+        return redirect(url_for("serve_index", error="email_does_not_contain_your_lastname"))
 
     if safe_user_name in x:
         return redirect(url_for("serve_index", error="username_taken"))
@@ -219,10 +220,12 @@ def handle_register():
     session["uuid"] = safe_user_name
     session["loggedin"] = True
     session["verified"] = False
-    session["email"] = request.form["email"]
+    session["email"] = user_email
+    session["senior"] = "20@belmontschools.net" in user_email
     session["verification_code"] = safestr(str(random.random()))[:8]
 
     try:
+        crop_info = json.loads(request.form.get("crop_info"))
         img_stream = request.files.get("profilepic").stream
         img_file = f"static/pfps/{safe_user_name}.png"
         with open(img_file, "wb") as f:
@@ -241,6 +244,7 @@ def handle_register():
         "institution": request.form["institution"],
         "bio": request.form["bio"],
         "verified": False,
+        "senior": session["senior"],
         "verification_code": session["verification_code"]
     }
     with open("users.json", "w") as f:
@@ -257,12 +261,12 @@ def getProfiles():
     with open("users.json", "r") as f:
         data = json.load(f)
     
-    verified_profiles = {}
+    verified_senior_profiles = {}
     for uuid in data:
-        if data[uuid]["verified"]:
-            verified_profiles[uuid] = data[uuid]
+        if data[uuid]["verified"] and data[uuid]["senior"]:
+            verified_senior_profiles[uuid] = data[uuid]
 
-    return jsonify(verified_profiles)
+    return jsonify(verified_senior_profiles)
 
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
@@ -375,5 +379,5 @@ def handle_edit_quote():
         return redirect(url_for("serve_index", error="user_not_found"))
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port='80')
+    app.run(host="0.0.0.0", port='80', debug=True)
 

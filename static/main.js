@@ -1,5 +1,9 @@
 const MAX_NUM_COLUMNS = 4;
 
+function afterSpace(full_name){
+  return full_name.substring(full_name.indexOf(" ")+1);
+}
+
 $.get("/getProfiles", function(data){
     let allRows = [];
 
@@ -8,7 +12,7 @@ $.get("/getProfiles", function(data){
 
     let ppl_uuids = Object.keys(data);
     ppl_uuids.sort((a,b)=>{
-        if( data[a].name < data[b].name ){
+        if( afterSpace(data[a].name) < afterSpace(data[b].name) ){
 	    return -1;
 	}
 	else {
