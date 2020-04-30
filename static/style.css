@@ -97,13 +97,14 @@ img {
 }
 
 footer{
-  position: relative;
-  font-size: 2vw;
+  position: fixed;
+  font-size: 12px;
   background-color: #464646;
   color: rgb(255, 255, 255);
   bottom: 0px;
-  height: 22vw;
-  width: 100%;
+  left: 0;
+  right: 0;
+  height: 70px;
 }
 
 #content {
