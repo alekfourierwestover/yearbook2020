@@ -150,7 +150,7 @@ footer{
   width: 45%;
   height: 50%;
   border: 1px;
-  max-height: 60vw;
+  max-height: 65vw;
   line-height: 2vw;
 }
 
@@ -167,7 +167,7 @@ footer{
   width: 45%;
   height: 50%;
   border: 1px;
-  max-height: 60vw;
+  max-height: 65vw;
   line-height: 2vw;
 }
 
@@ -179,6 +179,8 @@ footer{
   margin-left: 5%;
   background-color: #3f3f3f;
 }
+
+
 
 #faces a {
   color: black;
