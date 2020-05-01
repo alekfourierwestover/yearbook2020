@@ -255,8 +255,11 @@ def handle_register():
 
 @app.route("/getProfiles", methods=("GET",))
 def getProfiles():
+    print("GETTING PROFILES")
+
     if not(session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
+
 
     with open("users.json", "r") as f:
         data = json.load(f)
@@ -378,6 +381,47 @@ def handle_edit_quote():
         session["verified"] = False
         return redirect(url_for("serve_index", error="user_not_found"))
 
+@app.route("/edit_picture", methods=("POST", ))
+def handle_edit_picture():
+    print("edit picture")
+    print(request.files)
+    print(request.form)
+    print(request.form.get("password"))
+    print(request.form.get("crop_info"))
+
+
+    if not (session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
+    with open("users.json", "r") as f:
+        data = json.load(f)
+
+    try:
+        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+            try:
+                crop_info = json.loads(request.form.get("crop_info"))
+                print(crop_info)
+                img_stream = request.files.get("profilepic").stream
+                img_file = f"static/pfps/{session.get('uuid')}.png"
+                with open(img_file, "wb") as f:
+                    f.write(img_stream.read())
+                im = Image.open(img_file)
+                im_cropped = im.crop([int(x) for x in crop_info["points"]])
+                im_cropped.save(img_file, "PNG")
+            except:
+                print("HELLO")
+                pass
+
+            return redirect(url_for("serve_main"))   
+        else:
+            return redirect(url_for("serve_edit", error="password_wrong"))
+    except:
+        session["loggedin"] = False
+        session["verified"] = False
+        return redirect(url_for("serve_index", error="user_not_found"))
+
+
+
+
 if __name__ == "__main__":
-app.run(debug = True, host="0.0.0.0", port='80')
+    app.run(debug = True, host="0.0.0.0", port='80')
 
