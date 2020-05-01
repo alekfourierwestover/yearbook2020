@@ -152,7 +152,6 @@ footer{
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
-  width: 25%;
 
 }
 
@@ -170,13 +169,13 @@ footer{
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
-  width: 25%;
 }
 
 .carda{
   position: relative;
   display: inline-block;
-  vertical-align: middle;
+  vertical-align: top;
+  left: 8%;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   background-color: white;
   color: black;
@@ -185,11 +184,13 @@ footer{
   margin-top: 5%;
   padding-bottom: 1%;
   height: 500%;
-  width: 25%;
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
+  
 }
+
+
 
 .card-search{
   border-radius: 0.5em;
