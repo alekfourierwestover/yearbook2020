@@ -12,7 +12,6 @@ Yearbook for BHS 2020 :(
 	- dumb blank space at the bottom
 
 - misc: 
-	- do a test with lots of people using it
 	- static pages
 
 # resolved
