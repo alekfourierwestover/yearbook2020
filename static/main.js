@@ -1,5 +1,9 @@
 const MAX_NUM_COLUMNS = 4;
 
+if(urlParams.get("sent_message")){
+  $.notify("You successfully sent a message", "success");
+}
+
 function afterSpace(full_name){
   return full_name.substring(full_name.indexOf(" ")+1);
 }

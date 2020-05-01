@@ -2,8 +2,8 @@
 <html lang="en" dir="ltr">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <head>
+    <meta charset="utf-8" name="description" content="BHS digital yearbook website. A better, free, version of the classic yearbook. You can't lose it, you can send an unlimited number of messages. You don't have to wait for someone's yearbook to sign it. ok, actually that is just a joke, it's not really as good. But it still should be kind of fun."/>
     <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}">
-    <meta charset="utf-8">
     <title>Yearbook 2020</title>
     <script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js')}}" charset="utf-8"></script>
     <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}" charset="utf-8"></script>
@@ -15,7 +15,6 @@
 
     <script src="{{url_for('static', filename='node_modules/croppie/croppie.min.js')}}" charset="utf-8"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/croppie/croppie.css')}}">
-    <!-- <meta charset="UTF-8"> -->
 
     {% block head %}{% endblock %}
   </head>

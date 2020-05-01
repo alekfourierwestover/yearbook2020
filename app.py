@@ -301,7 +301,7 @@ def handle_send_message():
         with open("messages.json", "w") as f:
             json.dump(message_data, f, indent=4)
 
-        return url_for("serve_main")
+        return url_for("serve_main", sent_message="true")
     except:
         return redirect(url_for("serve_index", error="malicious_user"))
 
@@ -424,4 +424,5 @@ def handle_edit_picture():
 
 if __name__ == "__main__":
     app.run(debug = True, host="0.0.0.0", port='80')
+
 

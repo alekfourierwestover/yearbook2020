@@ -59,7 +59,9 @@ $.get("/view_my_messages", function(data){
       let currentCard = $("<div class='sticky'></div>");
       currentCard.append($(`<h2>messages from ${sender_person}</h2>`));
       for(let message in data[sender_person]){
-        currentCard.append($(`<p>message: ${data[sender_person][message]}</p>`));
+	let stickyMessageText = $("<p></p>");
+        stickyMessageText.text(`message: ${data[sender_person][message]}`);
+        currentCard.append(stickyMessageText);
       }
       let currentSticky = $("<li></li>");
       currentSticky.append(currentCard);
