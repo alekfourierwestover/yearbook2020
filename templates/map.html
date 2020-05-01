@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<style>
+  #content{
+    height: 0% !important; 
+  }
+</style>
+
+{% endblock %}
+
 {% block uncontained_content %}
   {% include "header.html" %}
 
@@ -16,6 +25,7 @@
 </div>
 </div>
 <br>
-<iframe width="100%" height="100%" src="https://www.google.ie/gwt/x?u=https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" align="middle" scrolling="no" frameborder="0"></iframe>
+<iframe id="google-map-iframe" style="width: 100%; height: 100%;" src="https://www.google.ie/gwt/x?u=https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" align="middle" scrolling="no" frameborder="0"></iframe>
+
 
 {% endblock %}

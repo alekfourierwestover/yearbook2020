@@ -298,7 +298,7 @@ def handle_send_message():
         with open("messages.json", "w") as f:
             json.dump(message_data, f, indent=4)
 
-        return url_for("serve_main")
+        return url_for("serve_main", sent_message="true")
     except:
         return redirect(url_for("serve_index", error="malicious_user"))
 
