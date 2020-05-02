@@ -419,7 +419,25 @@ def handle_edit_picture():
         session["verified"] = False
         return redirect(url_for("serve_index", error="user_not_found"))
 
-
+@app.route("/edit_college", methods=("POST", ))
+def handle_edit_college():
+    if not (session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious_user"))
+    with open("users.json", "r") as f:
+        data = json.load(f)
+    try:
+        college = request.form.get("institution")
+        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+            data[session.get("uuid")]["institution"] = college
+            with open("users.json", "w") as f:
+                json.dump(data, f, indent = 4)
+                return redirect(url_for("serve_main"))
+        else:
+            return redirect(url_for("serve_edit", error="password_wrong"))
+    except:
+        session["loggedin"] = False
+        session["verified"] = False
+        return redirect(url_for("serve_index", error="user_not_found"))
 
 
 if __name__ == "__main__":
