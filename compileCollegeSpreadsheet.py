@@ -9,10 +9,18 @@ names = []
 institutions = []
 
 for uuid in data:
-    names.append(data[uuid]["name"])
-    institutions.append(data[uuid]["institution"])
+    if data[uuid]["institution"] in institutions:
+        names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
+
+    else:
+        names.append(data[uuid]["name"])
+        institutions.append(data[uuid]["institution"])
+
+for i in range(len(names)):
+    temp=names[i].split(", ")
+    temp.sort(key=lambda x: x.split(" ")[1].lower())
+    names[i]= ", ".join(temp)
 
 data_frame_dict = {"names": names, "institutions": institutions}
 df = pd.DataFrame.from_dict(data_frame_dict)
-df.to_csv("colleges.csv")
-
+df.to_csv("colleges.csv", "\t", columns=["institutions", "names"])
