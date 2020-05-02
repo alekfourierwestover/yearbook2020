@@ -47,3 +47,14 @@ $("#edit_picture").submit( function(eventObj) {
         .appendTo("#edit_picture");
     return true;
 });
+
+
+function showEdit(which_edit){
+  let all_edits = ["#edit_pfp", "#edit_college", "#edit_quote", "#edit_pwd"];
+  for(let i in all_edits){
+    $(all_edits[i]).css("display", "none");
+  }
+  $(which_edit).css("display", "block");
+}
+showEdit("#edit_pwd");
+

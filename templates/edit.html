@@ -10,75 +10,78 @@
 
 {% block content %}
 
+<div class="card"> <h1 id="edit_profile_head"> EDIT PROFILE</h1> </div>
+
 <div class="card">
-<h1 style="font-size: 4vw;"> EDIT PROFILE/SENIOR QUOTE/PICTURE/</h1>
-</div>
-<br>
-<div class="wrapper-edit">
-<div class = "cardleon">
-	<div id="edit_password"><!--class="bg-light"-->
-		<form action="edit_password" method="post" id="edit_password_form">
-		<label style="font-size: 2vw;"> Password </label>
-		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
-		<br>
-		<label style="font-size: 2vw;"> New Password </label>
-		<input type="password" class="form-control" name="newpassword" placeholder="New password" style="font-size: 2vw; width: 20vw; height: auto;">
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<input type="submit" value="change password" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
-		</form>
-	</div>
-</div>
-<div class = "cardleon">
-	<div id="edit_quote">
-		<form action="edit_quote" method="post" id="edit_quote_form">
-		<label style="font-size: 2vw;"> Password </label>
-		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
-		<br>
-		<label style="font-size: 2vw;">Edit Quote</label>
-		<textarea maxlength="200" class="form-control" name="quote" form="edit_quote_form" rows="3" placeholder="I am a generic student at BHS graduating in 2020." style="font-size: 2vw; width: 20vw; height: auto;"></textarea>
-		<br>
-		<br>
-		<input type="submit" value="change quote" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
-		</form>
-	</div>
-</div>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input onclick="showEdit('#edit_pwd')" type="radio" name="options" id="option1" autocomplete="off" checked> Passsword
+    </label>
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_pfp')" type="radio" name="options" id="option2" autocomplete="off"> Profile Picture
+    </label>
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_quote')" type="radio" name="options" id="option3" autocomplete="off"> Quote
+    </label>
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_college')" type="radio" name="options" id="option3" autocomplete="off"> Where I'm going next
+    </label>
+  </div>
 </div>
 
-<div class = "cardleon">
-	<form action="edit_picture" method="post" id="edit_picture" enctype="multipart/form-data">
-	<label style="font-size: 2vw;"> Password </label>
-	<input type="password" class="form-control" name="password" id="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto; "/>
+<div id="container-card-edit" class="card">
+  <div id="edit_pwd" class="cardleon"><!--class="bg-light"-->
+    <form action="edit_password" method="post" id="edit_password_form">
+    <label> Password </label>
+    <input type="password" class="form-control myform-passsword" name="password" placeholder="Current Password" >
+    <br>
+    <label> New Password </label>
+    <input type="password" class="form-control myform-passsword" name="newpassword" placeholder="New password" >
+    <br> <br> 
+    <input type="submit" value="change password" name="submit" class="btn btn-primary form-control myform-submit" />
+    </form>
+  </div>
+  <div id="edit_quote" class="cardleon">
+    <form action="edit_quote" method="post" id="edit_quote_form">
+    <label> Password </label>
+    <input type="password" class="form-control" name="password" placeholder="Current Password">
+    <br>
+    <label>Edit Quote</label>
+    <textarea maxlength="200" class="form-control" name="quote" form="edit_quote_form" rows="3" placeholder="I am a generic student at BHS graduating in 2020."></textarea>
+    <br>
+    <br>
+    <input type="submit" value="change quote" name="submit" class="btn btn-primary form-control myform-submit"/>
+    </form>
+  </div>
 
-	<br>
+  <div id="edit_pfp" class = "cardleon">
+    <form action="edit_picture" method="post" id="edit_picture" enctype="multipart/form-data">
+    <label > Password </label>
+    <input type="password" class="form-control myform-password" name="password" placeholder="Current Password"/>
 
-	<label for="img" style="font-size: 2vw;">Select profile picture:</label>
-	<input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*" style="font-size: 1vw; width: 20vw; height: auto; "/>
+    <br>
 
-	<img form="edit_picture" name="realpfp" src="{{url_for('static', filename='assets/panda.png')}}" id="profilepic_display" alt="profilepic">
-	<br>
-	<br>
-  <br>
-  <br>
-	<input type="submit" value="change picture" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
-	</form>
-</div>
+    <label for="img" >Select profile picture:</label>
+    <input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*"/>
 
-<div class = "cardleon">
-	<form action="edit_college" method="post" id="edit_college_form">
-		<label style="font-size: 2vw;"> Password </label>
-		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
-		<br>
-		<label style="font-size: 2vw;">Where I'm Going Next</label>
-        <input type="text" class="form-control" name="institution" placeholder="cool university">
+    <img form="edit_picture" name="realpfp" src="{{url_for('static', filename='assets/panda.png')}}" id="profilepic_display" alt="profilepic">
+    <br> <br> <br> <br>
+    <input type="submit" value="change picture" name="submit" class="btn btn-primary form-control myform-submit"/>
+    </form>
+  </div>
 
-				<br>
-				<br>
-		<input type="submit" value="change institution" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
-	</form>
+  <div id="edit_college" class = "cardleon">
+    <form action="edit_college" method="post" id="edit_college_form">
+      <label> Password </label>
+      <input type="password" class="form-control myform-password" name="password" placeholder="Current Password" >
+      <br>
+      <label>Where I'm Going Next</label>
+          <input type="text" class="form-control" name="institution" placeholder="cool university">
+          <br>
+          <br>
+      <input type="submit" value="change institution" name="submit" class="btn btn-primary form-control myform-submit"/>
+    </form>
+  </div>
 </div>
 
 

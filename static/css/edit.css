@@ -18,6 +18,25 @@
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
+  width: 90%;
+
+  display: none;
+}
+
+#container-card-edit {
+  padding-bottom: 50px;
+}
+
+
+.myform-password {
+  font-size: 2vw; 
+}
+
+.myform-submit {
   width: 50%;
+}
+
+#edit_profile_head {
+  font-size: 4vw;
 }
 
