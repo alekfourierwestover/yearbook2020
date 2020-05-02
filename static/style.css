@@ -144,38 +144,47 @@ footer{
   background-color: white;
   color: black;
   border-radius: 0.5em;
-  padding: 20px;
+  padding: 2%;
   margin-top: 5%;
   padding-bottom: 1%;
-  float:left;
+  /* float:left; */
   height: 50%;
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
+  width: 33%;
 
 }
 
 .cardleon{
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   background-color: white;
   color: black;
   border-radius: 0.5em;
-  padding: 20px;
+  padding: 2%;
   margin-top: 5%;
   padding-bottom: 1%;
-  float: right;
+  /* float: right; */
   height: 50%;
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
+  width: 50%;
+
 }
+
+
+
 
 .carda{
   position: relative;
   display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
   vertical-align: top;
-  left: 8%;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   background-color: white;
   color: black;
@@ -187,7 +196,8 @@ footer{
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
-  
+  width: 23vw;
+
 }
 
 

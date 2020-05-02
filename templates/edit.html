@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block uncontained_content %}
- 
+
 	{% include "header.html" %}
 {% endblock %}
 
@@ -16,9 +16,6 @@
 {% endblock %}
 
 
-
-
-
 <script charset="utf-8">
   if(urlParams.get("error")){
     $.notify(urlParams.get("error"));
@@ -30,14 +27,14 @@
 <h1 style="font-size: 4vw;"> EDIT PROFILE/SENIOR QUOTE/PICTURE/</h1>
 </div>
 <br>
-
-<div class = "cardmadeline">
+<div class="wrapper-edit">
+<div class = "cardleon">
 	<div id="edit_password"><!--class="bg-light"-->
 		<form action="edit_password" method="post" id="edit_password_form">
-		<label> Password </label>
+		<label style="font-size: 2vw;"> Password </label>
 		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
 		<br>
-		<label> New Password </label>
+		<label style="font-size: 2vw;"> New Password </label>
 		<input type="password" class="form-control" name="newpassword" placeholder="New password" style="font-size: 2vw; width: 20vw; height: auto;">
 		<br>
 		<br>
@@ -51,38 +48,49 @@
 <div class = "cardleon">
 	<div id="edit_quote">
 		<form action="edit_quote" method="post" id="edit_quote_form">
-		<label> Password </label>
+		<label style="font-size: 2vw;"> Password </label>
 		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
 		<br>
-		<label>Edit Quote</label>
+		<label style="font-size: 2vw;">Edit Quote</label>
 		<textarea maxlength="200" class="form-control" name="quote" form="edit_quote_form" rows="3" placeholder="I am a generic student at BHS graduating in 2020." style="font-size: 2vw; width: 20vw; height: auto;"></textarea>
 		<br>
 		<br>
-
 		<input type="submit" value="change quote" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
 		</form>
 	</div>
 </div>
-<div class = "carda">
+</div>
+
+<div class = "cardleon">
 	<form action="edit_picture" method="post" id="edit_picture" enctype="multipart/form-data">
-	<label> Password </label>
+	<label style="font-size: 2vw;"> Password </label>
 	<input type="password" class="form-control" name="password" id="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto; "/>
 
 	<br>
 
-	<label for="img">Select profile picture:</label>
+	<label for="img" style="font-size: 2vw;">Select profile picture:</label>
 	<input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*" style="font-size: 1vw; width: 20vw; height: auto; "/>
 
 	<img form="edit_picture" name="realpfp" src="{{url_for('static', filename='pfps/panda.png')}}" id="profilepic_display" alt="profilepic">
 	<br>
 	<br>
-	<br>
-	<br>
-
-
+  <br>
+  <br
 	<input type="submit" value="change picture" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
+	</form>
+</div>
 
+<div class = "cardleon">
+	<form action="edit_college" method="post" id="edit_college_form">
+		<label style="font-size: 2vw;"> Password </label>
+		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
+		<br>
+		<label style="font-size: 2vw;">Where I'm Going Next</label>
+        <input type="text" class="form-control" name="institution" placeholder="cool university">
 
+				<br>
+				<br>
+		<input type="submit" value="change institution" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
 	</form>
 </div>
 
@@ -99,7 +107,7 @@ let uploadCrop;
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
-    
+
     reader.onload = function(e) {
       $('#profilepic_display').attr('src', e.target.result);
       uploadCrop = $('#profilepic_display').croppie({
@@ -115,7 +123,7 @@ function readURL(input) {
         }
       });
     }
-    
+
     reader.readAsDataURL(input.files[0]); // convert to base64 string
   }
 }
