@@ -194,28 +194,33 @@ def handle_login():
     # request.form["key"] extracts a value from the js form
     with open("data/users.json", "r") as f:
         data = json.load(f)
-        user_name = request.form.get("name")
-        first_name, last_name = user_name.split(" ")
-        if len(first_name) < 2 or len(last_name) < 2:
-            return redirect(url_for("serve_index", error="name_too_short"))
-        first_name = first_name[0].upper() + first_name[1:]
-        last_name = last_name[0].upper() + last_name[1:]
-        user_name = first_name + " " + last_name
+    with open("data/verification_codes.json", "r") as f:
+        verification_codes = json.load(f)
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
 
-        safe_user_name = safestr(user_name)
-        try:
-            if sha256_crypt.verify(request.form.get("password"), data[safe_user_name]["password"]):
-                session["username"] = user_name
-                session["uuid"] = safe_user_name
-                session["loggedin"] = True
-                session["verified"] = data[safe_user_name]["verified"]
-                session["verification_code"] = data[safe_user_name]["verification_code"]
-                session["senior"] = data[safe_user_name]["senior"]
-                return redirect(url_for("serve_main"))
-            else:
-                return redirect(url_for("serve_index", error="password_wrong"))
-        except:
-            return redirect(url_for("serve_index", error="user_not_found"))
+    user_name = request.form.get("name")
+    first_name, last_name = user_name.split(" ")
+    if len(first_name) < 2 or len(last_name) < 2:
+        return redirect(url_for("serve_index", error="name_too_short"))
+    first_name = first_name[0].upper() + first_name[1:]
+    last_name = last_name[0].upper() + last_name[1:]
+    user_name = first_name + " " + last_name
+
+    safe_user_name = safestr(user_name)
+    try:
+        if sha256_crypt.verify(request.form.get("password"), passwords[safe_user_name]):
+            session["username"] = user_name
+            session["uuid"] = safe_user_name
+            session["loggedin"] = True
+            session["verified"] = data[safe_user_name]["verified"]
+            session["verification_code"] = verification_codes[safe_user_name]
+            session["senior"] = data[safe_user_name]["senior"]
+            return redirect(url_for("serve_main"))
+        else:
+            return redirect(url_for("serve_index", error="password_wrong"))
+    except:
+        return redirect(url_for("serve_index", error="user_not_found"))
 
 @app.route("/register", methods=("POST",))
 def handle_register():
@@ -269,15 +274,25 @@ def handle_register():
     x[safe_user_name] = {
         "name": user_name,
         "email": request.form["email"],
-        "password": sha256_crypt.hash(request.form["password"]),
         "institution": request.form["institution"],
         "bio": request.form["bio"],
         "verified": False,
-        "senior": session["senior"],
-        "verification_code": session["verification_code"]
+        "senior": session["senior"]
     }
     with open("data/users.json", "w") as f:
-        json.dump(x, f, indent = 4)
+        json.dump(x, f, indent=4)
+
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
+    passwords[session["uuid"]] = sha256_crypt.hash(request.form["password"])
+    with open("data/passwords.json", "w") as f:
+        json.dump(passwords, f, indent=4)
+
+    with open("data/verification_codes.json", "r") as f:
+        verification_codes = json.load(f)
+    verification_codes[session["uuid"]] = session["verification_code"]
+    with open("data/verification_codes.json", "w") as f:
+        json.dump(verification_codes, f, indent=4)
 
     session_send_verification_code()
     return redirect(url_for("serve_verify"))
@@ -374,14 +389,14 @@ def handle_view_profile():
 def handle_edit_password():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
-    with open("data/users.json", "r") as f:
-        data = json.load(f)
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
 
     try:
-        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
-            data[session.get("uuid")]["password"] = sha256_crypt.hash(request.form.get("newpassword"))
-            with open("data/users.json", "w") as f:
-                json.dump(data, f, indent = 4)
+        if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
+            passwords[session.get("uuid")] = sha256_crypt.hash(request.form.get("newpassword"))
+            with open("data/passwords.json", "w") as f:
+                json.dump(passwords, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
             return redirect(url_for("serve_edit", error="password_wrong"))
@@ -396,9 +411,11 @@ def handle_edit_quote():
         return redirect(url_for("serve_index", error="malicious_user"))
     with open("data/users.json", "r") as f:
         data = json.load(f)
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
     try:
         quote = request.form.get("quote")
-        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+        if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             data[session.get("uuid")]["bio"] = quote
             with open("data/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
@@ -416,9 +433,11 @@ def handle_edit_picture():
         return redirect(url_for("serve_index", error="malicious_user"))
     with open("data/users.json", "r") as f:
         data = json.load(f)
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
 
     try:
-        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+        if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             try:
                 crop_info = json.loads(request.form.get("crop_info"))
                 print(crop_info)
@@ -446,9 +465,11 @@ def handle_edit_college():
         return redirect(url_for("serve_index", error="malicious_user"))
     with open("data/users.json", "r") as f:
         data = json.load(f)
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
     try:
         college = request.form.get("institution")
-        if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
+        if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             data[session.get("uuid")]["institution"] = college
             with open("data/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
@@ -463,5 +484,4 @@ def handle_edit_college():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port='80') # debug=True
-
 

@@ -1,8 +1,12 @@
 .DS_Store
-users.json
-messages.json
 static/pfps/
+
+messages.json
 colleges.csv
+passwords.json
+users.json
+verification_codes.json
+
 nohup.out
 *.swp
 
