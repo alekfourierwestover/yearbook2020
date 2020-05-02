@@ -1,0 +1,37 @@
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 151-645-001
+127.0.0.1 - - [02/May/2020 02:10:51] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 02:10:52] "[37mGET /static/loginBg.png HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 02:10:59] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 02:11:00] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET / HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET /static/node_modules/bootstrap/dist/js/bootstrap.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET /static/node_modules/jquery/dist/jquery.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET /static/node_modules/bootstrap/dist/css/bootstrap.min.css HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET /static/notify.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET /static/marauder.png HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:53] "[37mGET /static/node_modules/croppie/croppie.min.js HTTP/1.1[0m" 200 -
+127.0.0.1 - - [02/May/2020 10:04:54] "[37mGET /static/loginBg.png HTTP/1.1[0m" 200 -
+ * Detected change in '/Users/ziyongcui/Desktop/yearbook2020/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 151-645-001
+Traceback (most recent call last):
+  File "/Users/ziyongcui/Desktop/yearbook2020/app.py", line 434, in <module>
+    app.run(debug = True, host="0.0.0.0", port='80')
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/serving.py", line 1050, in run_simple
+    run_with_reloader(inner, extra_files, reloader_interval, reloader_type)
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/_reloader.py", line 333, in run_with_reloader
+    ensure_echo_on()
+  File "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages/werkzeug/_reloader.py", line 313, in ensure_echo_on
+    if not sys.stdin.isatty():
+AttributeError: 'NoneType' object has no attribute 'isatty'
