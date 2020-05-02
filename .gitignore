@@ -2,6 +2,7 @@
 users.json
 messages.json
 static/pfps/
+nohup.out
 
 # js
 node_modules/
