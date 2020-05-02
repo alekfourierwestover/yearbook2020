@@ -2,6 +2,7 @@
 users.json
 messages.json
 static/pfps/
+colleges.csv
 nohup.out
 *.swp
 

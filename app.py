@@ -69,12 +69,13 @@ def get_colleges_csv():
     institutions = []
 
     for uuid in data:
-        if data[uuid]["institution"] in institutions:
-            names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
+        if data[uuid]["senior"] and data[uuid]["verified"]:
+            if data[uuid]["institution"] in institutions:
+                names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
 
-        else:
-            names.append(data[uuid]["name"])
-            institutions.append(data[uuid]["institution"])
+            else:
+                names.append(data[uuid]["name"])
+                institutions.append(data[uuid]["institution"])
 
     for i in range(len(names)):
         temp = names[i].split(", ")
@@ -227,6 +228,9 @@ def handle_register():
 
     if len(last_name) < 2 or len(first_name) < 2:
         return redirect(url_for("serve_index", error="name_is_too_short"))
+
+    if request.form["password"] != request.form["confirm"]:
+        return redirect(url_for("serve_index", error="passwords_do_not_match"))
 
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
@@ -408,13 +412,6 @@ def handle_edit_quote():
 
 @app.route("/edit_picture", methods=("POST", ))
 def handle_edit_picture():
-    print("edit picture")
-    print(request.files)
-    print(request.form)
-    print(request.form.get("password"))
-    print(request.form.get("crop_info"))
-
-
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
     with open("data/users.json", "r") as f:
@@ -433,7 +430,6 @@ def handle_edit_picture():
                 im_cropped = im.crop([int(x) for x in crop_info["points"]])
                 im_cropped.save(img_file, "PNG")
             except:
-                print("HELLO")
                 pass
 
             return redirect(url_for("serve_main"))   
@@ -466,6 +462,6 @@ def handle_edit_college():
 
 
 if __name__ == "__main__":
-    app.run(debug = True, host="0.0.0.0", port='80')
+    app.run(host="0.0.0.0", port='80') # debug=True
 
 
