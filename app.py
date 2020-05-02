@@ -376,13 +376,6 @@ def handle_edit_quote():
 
 @app.route("/edit_picture", methods=("POST", ))
 def handle_edit_picture():
-    print("edit picture")
-    print(request.files)
-    print(request.form)
-    print(request.form.get("password"))
-    print(request.form.get("crop_info"))
-
-
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
     with open("users.json", "r") as f:
@@ -401,7 +394,6 @@ def handle_edit_picture():
                 im_cropped = im.crop([int(x) for x in crop_info["points"]])
                 im_cropped.save(img_file, "PNG")
             except:
-                print("HELLO")
                 pass
 
             return redirect(url_for("serve_main"))   
