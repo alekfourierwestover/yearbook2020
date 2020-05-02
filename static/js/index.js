@@ -5,6 +5,9 @@ function alertURLErrors(){
   if(urlParams.get("error")){
     $.notify(urlParams.get("error"));
   }
+  if(urlParams.get("success")){
+    $.notify(urlParams.get("success"), "success");
+  }
 }
 
 document.getElementById("profilepic").onchange = function() {

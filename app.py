@@ -52,7 +52,7 @@ def reset_pwd():
     passwords[safe_user_name] = sha256_crypt.hash(new_pwd)
 
     try:
-        msg = Message("Password Reset", sender=app.config.get("MAIL_USERNAME"), recipients=[session["email"]])
+        msg = Message("Password Reset", sender=app.config.get("MAIL_USERNAME"), recipients=[request.form.get("email")])
         msg.html = f"Hey {user_name}, <br>Your new password is <strong>{new_pwd}</strong>.<br>Thanks!"
         mail.send(msg)
 
@@ -62,7 +62,7 @@ def reset_pwd():
         with open("data/passwords.json", "w") as f:
             json.dump(passwords, f, indent=4)
 
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", success="password successfully reset"))
     except Exception as e:
         return redirect(url_for("serve_index", error=str(e)))
 

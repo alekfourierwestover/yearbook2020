@@ -5,8 +5,27 @@ Yearbook for BHS 2020
 
 ```
 git clone https://github.com/alekfourierwestover/yearbook2020.git
-source ./initialize_project.sh
+cd static 
+npm i
+cd ..
+mkdir data
+echo "{}" > data/users.json
+echo "{}" > data/messages.json
+echo "{}" > data/passwords.json
+echo "{}" > data/verification_codes.json
+
+virtualenv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
 ```
+
+then to run: 
+
+```
+nohup python app.py &
+```
+
 
 
 # Bugs 4/27/20 
