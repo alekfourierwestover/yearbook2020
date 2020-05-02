@@ -193,6 +193,9 @@ def handle_register():
     if len(last_name) < 2 or len(first_name) < 2:
         return redirect(url_for("serve_index", error="name_is_too_short"))
 
+    if request.form["password"] != request.form["confirm"]:
+        return redirect(url_for("serve_index", error="passwords_do_not_match"))
+
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
 
