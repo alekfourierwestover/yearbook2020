@@ -9,12 +9,13 @@ names = []
 institutions = []
 
 for uuid in data:
-    if data[uuid]["institution"] in institutions:
-        names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
+    if data[uuid]["verified"] and data[uuid]["senior"]:
+        if data[uuid]["institution"] in institutions:
+            names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
 
-    else:
-        names.append(data[uuid]["name"])
-        institutions.append(data[uuid]["institution"])
+        else:
+            names.append(data[uuid]["name"])
+            institutions.append(data[uuid]["institution"])
 
 for i in range(len(names)):
     temp=names[i].split(", ")
