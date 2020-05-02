@@ -158,23 +158,13 @@ def handle_login():
     # request.form["key"] extracts a value from the js form
     with open("users.json", "r") as f:
         data = json.load(f)
-        user_name = request.form.get("name").lower()
-
-        b = []
-        tmp = user_name.split(" ")
-        for word in tmp:
-            word = word.strip()
-
-            if not(word == ' ' or word == ''):
-                b.append(word)
-        tmp = b
-        for leon in range(len(tmp)):
-            if len(tmp[leon]) == 1:
-                tmp[leon] = tmp[leon].upper()
-            else:
-                tmp[leon] = tmp[leon][0].upper() + tmp[leon][1:]
-        user_name = " ".join(tmp)
-
+        user_name = request.form.get("name")
+        first_name, last_name = user_name.split(" ")
+        if len(first_name) < 2 or len(last_name) < 2:
+            return redirect(url_for("serve_index", error="name_too_short"))
+        first_name = first_name[0].upper() + first_name[1:]
+        last_name = last_name[0].upper() + last_name[1:]
+        user_name = first_name + " " + last_name
 
         safe_user_name = safestr(user_name)
         try:
@@ -203,14 +193,14 @@ def handle_register():
     if len(last_name) < 2 or len(first_name) < 2:
         return redirect(url_for("serve_index", error="name_is_too_short"))
 
-    first_name = first_name[0].upper() + first_name[1:].lower()
-    last_name = last_name[0].upper() + last_name[1:].lower()
+    first_name = first_name[0].upper() + first_name[1:]
+    last_name = last_name[0].upper() + last_name[1:]
 
     user_name = first_name + " " + last_name 
     safe_user_name = safestr(user_name)
     user_email = request.form["email"].lower()
 
-    if last_name.lower() not in user_email:
+    if last_name.lower().replace("-", "") not in user_email:
         return redirect(url_for("serve_index", error="email_does_not_contain_your_lastname"))
 
     if safe_user_name in x:
