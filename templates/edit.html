@@ -1,27 +1,14 @@
 {% extends 'base.html' %}
 
 {% block uncontained_content %}
-
 	{% include "header.html" %}
 {% endblock %}
 
-{% block content %}
 {% block head %}
-<style>
-  #content {
-    min-height: 100%;
-  }
-</style>
-
+<link rel="stylesheet" href="{{url_for('static', filename='css/edit.css')}}" type="text/css" charset="utf-8">
 {% endblock %}
 
-
-<script charset="utf-8">
-  if(urlParams.get("error")){
-    $.notify(urlParams.get("error"));
-  }
-</script>
-
+{% block content %}
 
 <div class="card">
 <h1 style="font-size: 4vw;"> EDIT PROFILE/SENIOR QUOTE/PICTURE/</h1>
@@ -71,7 +58,7 @@
 	<label for="img" style="font-size: 2vw;">Select profile picture:</label>
 	<input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*" style="font-size: 1vw; width: 20vw; height: auto; "/>
 
-	<img form="edit_picture" name="realpfp" src="{{url_for('static', filename='pfps/panda.png')}}" id="profilepic_display" alt="profilepic">
+	<img form="edit_picture" name="realpfp" src="{{url_for('static', filename='assets/panda.png')}}" id="profilepic_display" alt="profilepic">
 	<br>
 	<br>
   <br>
@@ -95,7 +82,6 @@
 </div>
 
 
-
-
+<script src="{{url_for('static', filename='js/edit.js')}}" charset="utf-8"></script>
 
 {% endblock %}

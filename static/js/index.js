@@ -1,4 +1,12 @@
 
+setTimeout(alertURLErrors, 1000);
+
+function alertURLErrors(){
+  if(urlParams.get("error")){
+    $.notify(urlParams.get("error"));
+  }
+}
+
 document.getElementById("profilepic").onchange = function() {
     if(this.files[0].size > 2097152){
        alert("File is too big!");
@@ -43,9 +51,11 @@ $("#profilepic").change(function() {
 });
 
 $("#register-form").submit( function(eventObj) {
-    $("<input />").attr("text", "hidden")
-        .attr("name", "crop_info")
-        .attr("value", JSON.stringify(uploadCrop.croppie("get")))
-        .appendTo("#register-form");
+    if(uploadCrop){
+      $("<input />").attr("text", "hidden")
+          .attr("name", "crop_info")
+          .attr("value", JSON.stringify(uploadCrop.croppie("get")))
+          .appendTo("#register-form");
+    }
     return true;
 });

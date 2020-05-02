@@ -1,5 +1,13 @@
 # yearbook2020
-Yearbook for BHS 2020 :(
+Yearbook for BHS 2020 
+
+# project installation
+
+```
+git clone https://github.com/alekfourierwestover/yearbook2020.git
+source ./initialize_project.sh
+```
+
 
 # Bugs 4/27/20 
 

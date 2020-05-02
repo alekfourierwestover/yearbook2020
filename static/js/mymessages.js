@@ -3,7 +3,7 @@
 $.get("/get_uuid", function(uuid){
   $.get("/view_profile", {"uuid": uuid}, function(data){
     let currentCard = $("<div class='face-card' style='height:auto'></div>");
-    currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" onerror="this.onerror=null;this.src='${pfp_path}/panda.png';"></img>`));
+    currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" onerror="this.onerror=null;this.src='${assets_path}/panda.png';"></img>`));
 
     let nameText = $("<h2></h2>");
     nameText.text(data.name);

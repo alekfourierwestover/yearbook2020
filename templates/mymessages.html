@@ -4,16 +4,9 @@
   {% include "header.html" %}
 {% endblock %}
 
-
 {% block head %}
-<style>
-  #content {
-    min-height: 100%;
-  }
-</style>
-
-
-<link rel="stylesheet" href="{{url_for('static', filename='stickies.css')}}" type="text/css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/stickies.css')}}" type="text/css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/mymessages.css')}}" type="text/css" >
 {% endblock %}
 
 {% block content %}
@@ -28,9 +21,9 @@
   <ul id="stick">
 
   </ul>
-
 </div>
 
 
+<script src="{{url_for('static', filename='js/mymessages.js')}}" charset="utf-8"></script>
 
 {% endblock %}

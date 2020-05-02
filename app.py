@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session, make_response
 from flask_mail import Message, Mail
 import json
+import io 
+import csv
 from passlib.hash import sha256_crypt
 import uuid
 import os
@@ -44,10 +46,10 @@ def check_verification_code():
 
             if session["verification_code"] == verification_code:
                 session["verified"] = True
-                with open("users.json", "r") as f:
+                with open("data/users.json", "r") as f:
                     data = json.load(f)
                 data[session.get("uuid")]["verified"] = True
-                with open("users.json", "w") as f:
+                with open("data/users.json", "w") as f:
                     json.dump(data,f, indent=4)
                 return redirect(url_for("serve_main"))
             else:
@@ -57,6 +59,39 @@ def check_verification_code():
     except:
         return redirect(url_for("serve_index"))
 
+
+@app.route("/get_colleges_csv", methods=("GET",))
+def get_colleges_csv():
+    with open("data/users.json", "r") as f:
+        data = json.load(f)
+
+    names = []
+    institutions = []
+
+    for uuid in data:
+        if data[uuid]["institution"] in institutions:
+            names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
+
+        else:
+            names.append(data[uuid]["name"])
+            institutions.append(data[uuid]["institution"])
+
+    for i in range(len(names)):
+        temp = names[i].split(", ")
+        temp.sort(key=lambda x: x.split(" ")[1].lower())
+        names[i]= ", ".join(temp)
+
+    names.insert(0, "names")
+    institutions.insert(0, "institutions")
+
+    si = io.StringIO()
+    cw = csv.writer(si)
+    cw.writerows(list(zip(*[institutions, names])))
+
+    output = make_response(si.getvalue())
+    output.headers["Content-Disposition"] = "attachment; filename=colleges.csv"
+    output.headers["Content-type"] = "text/csv"
+    return output
 
 # session seems to do the trick!!! just cant login multiple users on one device, which is good anyways!!!!
 # session is a dictionary that is stored client side as a cookie
@@ -156,7 +191,7 @@ def handle_logout():
 @app.route("/login", methods=("POST",))
 def handle_login():
     # request.form["key"] extracts a value from the js form
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         data = json.load(f)
         user_name = request.form.get("name")
         first_name, last_name = user_name.split(" ")
@@ -184,7 +219,7 @@ def handle_login():
 @app.route("/register", methods=("POST",))
 def handle_register():
     # request.form["key"] extracts a value from the js form
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         x = json.load(f)
 
     first_name = request.form["firstname"].strip()
@@ -237,7 +272,7 @@ def handle_register():
         "senior": session["senior"],
         "verification_code": session["verification_code"]
     }
-    with open("users.json", "w") as f:
+    with open("data/users.json", "w") as f:
         json.dump(x, f, indent = 4)
 
     session_send_verification_code()
@@ -251,7 +286,7 @@ def getProfiles():
         return redirect(url_for("serve_index", error="malicious_user"))
 
 
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         data = json.load(f)
     
     verified_senior_profiles = {}
@@ -266,10 +301,10 @@ def handle_send_message():
     try:
         if not (session["loggedin"] and session["verified"]):
             return redirect(url_for("serve_index", error="malicious_user"))
-        with open("messages.json", "r") as f:
+        with open("data/messages.json", "r") as f:
             message_data = json.load(f)
 
-        with open("users.json", "r") as f:
+        with open("data/users.json", "r") as f:
             user_data = json.load(f)
 
         sent_from = session.get("username")
@@ -288,7 +323,7 @@ def handle_send_message():
         else:
             message_data[send_to][sent_from].append(message)
 
-        with open("messages.json", "w") as f:
+        with open("data/messages.json", "w") as f:
             json.dump(message_data, f, indent=4)
 
         return url_for("serve_main", sent_message="true")
@@ -298,7 +333,7 @@ def handle_send_message():
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
     try:
-        with open("messages.json", "r") as f:
+        with open("data/messages.json", "r") as f:
             data = json.load(f)[session.get("uuid")]
         return jsonify(data)
     except:
@@ -309,7 +344,7 @@ def handle_get_uuids_sentto():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
 
-    with open("messages.json", "r") as f:
+    with open("data/messages.json", "r") as f:
         data = json.load(f)
 
     uuids_sentto = []
@@ -325,7 +360,7 @@ def handle_view_profile():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
     try:
-        with open("users.json", "r") as f:
+        with open("data/users.json", "r") as f:
             data = json.load(f)
             return jsonify(data[request.args.get("uuid")])
     except:
@@ -335,13 +370,13 @@ def handle_view_profile():
 def handle_edit_password():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         data = json.load(f)
 
     try:
         if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
             data[session.get("uuid")]["password"] = sha256_crypt.hash(request.form.get("newpassword"))
-            with open("users.json", "w") as f:
+            with open("data/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
@@ -355,13 +390,13 @@ def handle_edit_password():
 def handle_edit_quote():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         data = json.load(f)
     try:
         quote = request.form.get("quote")
         if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
             data[session.get("uuid")]["bio"] = quote
-            with open("users.json", "w") as f:
+            with open("data/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
@@ -382,7 +417,7 @@ def handle_edit_picture():
 
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         data = json.load(f)
 
     try:
@@ -413,13 +448,13 @@ def handle_edit_picture():
 def handle_edit_college():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious_user"))
-    with open("users.json", "r") as f:
+    with open("data/users.json", "r") as f:
         data = json.load(f)
     try:
         college = request.form.get("institution")
         if sha256_crypt.verify(request.form.get("password"), data[session.get("uuid")]["password"]):
             data[session.get("uuid")]["institution"] = college
-            with open("users.json", "w") as f:
+            with open("data/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:

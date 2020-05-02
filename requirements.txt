@@ -3,3 +3,4 @@ flask_mail
 passlib
 uuid
 Pillow
+flask.ext

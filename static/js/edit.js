@@ -1,4 +1,8 @@
 
+if(urlParams.get("error")){
+  $.notify(urlParams.get("error"));
+}
+
 document.getElementById("profilepic").onchange = function() {
     if(this.files[0].size > 2097152){
        alert("File is too big!");

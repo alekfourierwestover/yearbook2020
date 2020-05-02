@@ -1,24 +1,18 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style>
-  #content{
-    height: 0% !important;
-  }
-</style>
-
+<link rel="stylesheet" href="{{url_for('static', filename='css/map.css')}}" type="text/css">
 {% endblock %}
 
 {% block uncontained_content %}
-<div style="height: 5em;">
-</div>
+<div style="height: 5em;"> </div>
   {% include "header.html" %}
 
 <div class="card">
   <br>
   <div id="mauraders">
-    <img id="left-maurader-map" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
-    <img id="right-maurader-map" alt="marauder" src="{{url_for('static', filename='marauder.png')}}" height="100px" width="100px"/>
+    <img id="left-maurader-map" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}" height="100px" width="100px"/>
+    <img id="right-maurader-map" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}" height="100px" width="100px"/>
   </div>
 <div style="clear: right">
   <br>

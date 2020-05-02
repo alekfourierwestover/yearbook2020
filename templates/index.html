@@ -1,27 +1,10 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<style type="text/css" media="screen">
-.column {
-  flex: 48%;
-  padding:2%;
-  margin: 1%;
-}
-@media screen and (max-width: 600px) {
-  .column {
-    flex: 100%;
-  }
-}
-</style>
+<link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}" type="text/css" charset="utf-8">
 {% endblock %}
 
 {% block content %}
-
-<script charset="utf-8">
-  if(urlParams.get("error")){
-    $.notify(urlParams.get("error"));
-  }
-</script>
 
 <div class="row">
   <div class="column bg-light">
@@ -60,7 +43,7 @@
       <div class="form-group">
         <label for="img">Select profile picture:</label>
         <input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*"/>
-        <img form="register-form" name="realpfp" src="{{url_for('static', filename='pfps/panda.png')}}" id="profilepic_display" alt="profilepic">
+        <img form="register-form" name="realpfp" src="{{url_for('static', filename='assets/panda.png')}}" id="profilepic_display" alt="profilepic">
       </div>
 
       <div class="form-group">
@@ -86,10 +69,12 @@
         <input type="submit" value="submit" name="submit" id="submit" class="btn btn-primary form-control"/>
       </div>
     </form>
-    <img width="100%" src="{{url_for('static', filename='marauder.png')}}" alt="maurader" class="center"/>
+    <img width="100%" src="{{url_for('static', filename='assets/marauder.png')}}" alt="maurader" class="center"/>
   </div>
 
 </div>
 
+
+<script src="{{url_for('static', filename='js/index.js')}}" charset="utf-8"></script>
 
 {% endblock %}

@@ -1,10 +1,11 @@
 cd static 
 npm i
 cd ..
-echo "{}" > users.json
-echo "{}" > messages.json
+echo "{}" > data/users.json
+echo "{}" > data/messages.json
 
 virtualenv venv
-. venv/bin/activate
+source venv/bin/activate
 
-pip install requirements.txt
+pip install -r requirements.txt
+

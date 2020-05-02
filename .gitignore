@@ -3,6 +3,7 @@ users.json
 messages.json
 static/pfps/
 nohup.out
+*.swp
 
 # js
 node_modules/
