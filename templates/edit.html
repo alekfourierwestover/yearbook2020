@@ -14,23 +14,23 @@
 
 <div class="card">
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary active">
-      <input onclick="showEdit('#edit_pwd')" type="radio" name="options" id="option1" autocomplete="off" checked> Passsword
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_pwd')" type="radio" name="options" autocomplete="off"> Change Passsword
     </label>
     <label class="btn btn-secondary">
-      <input onclick="showEdit('#edit_pfp')" type="radio" name="options" id="option2" autocomplete="off"> Profile Picture
+      <input onclick="showEdit('#edit_pfp')" type="radio" name="options" autocomplete="off" checked> Profile Picture
     </label>
     <label class="btn btn-secondary">
-      <input onclick="showEdit('#edit_quote')" type="radio" name="options" id="option3" autocomplete="off"> Quote
+      <input onclick="showEdit('#edit_quote')" type="radio" name="options" autocomplete="off"> Quote
     </label>
     <label class="btn btn-secondary">
-      <input onclick="showEdit('#edit_college')" type="radio" name="options" id="option3" autocomplete="off"> Where I'm going next
+      <input onclick="showEdit('#edit_college')" type="radio" name="options" autocomplete="off"> Where I'm going next
     </label>
   </div>
 </div>
 
 <div id="container-card-edit" class="card">
-  <div id="edit_pwd" class="cardleon"><!--class="bg-light"-->
+  <div id="edit_pwd" class="cardleon">
     <form action="edit_password" method="post" id="edit_password_form">
     <label> Password </label>
     <input type="password" class="form-control myform-passsword" name="password" placeholder="Current Password" >

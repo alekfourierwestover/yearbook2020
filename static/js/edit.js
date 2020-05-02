@@ -56,5 +56,5 @@ function showEdit(which_edit){
   }
   $(which_edit).css("display", "block");
 }
-showEdit("#edit_pwd");
+showEdit("#edit_pfp");
 

@@ -8,14 +8,6 @@ a, a:visited, a:hover {
   text-decoration: none;
 }
 
-#content {
-  margin: 4vw;
-}
-
-.container{
-  padding: 1%;
-}
-
 @font-face {
   font-family: BernardMTCondensed;
   src: url(/static/assets/BernardMTCondensed.ttf);
@@ -58,20 +50,6 @@ body {
     text-align:center;
 }
 
-#left {
-    float:right;
-}
-
-#center {
-    display: inline-block;
-    margin:0 auto;
-    width:200px;
-}
-
-#right {
-    float:right;
-}
-
 #picturediv {
 	max-width: 100%;
 	height: auto;
@@ -105,10 +83,10 @@ footer{
     box-shadow: 0 3px 6px rgba(0,0,0,0.2);
     background-color: white;
     color: black;
-    border-radius: 0.5
-    padding: 20px;
-    margin-top: 20px;
-    margin-left: 10px;
+    border-radius: 0.5;
+    /* padding: 20px; */
+    /* margin-top: 20px; */
+    /* margin-left: 10px; */
 }
 
 .card-search{

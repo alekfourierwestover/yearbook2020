@@ -73,6 +73,25 @@
         <input type="submit" value="submit" name="submit" id="submit" class="btn btn-primary form-control"/>
       </div>
     </form>
+    <div style="height: 100px">
+    </div>
+    <form action="reset_password" method="post" id="reset_pwd_form">
+      <h2>Reset Password</h2>
+      <p>If you forgot your password you can request a new password to be sent to
+      your email. After getting the new password please change your password to
+      something you can remember!</p>
+      <div class="form-group">
+        <label>(Full) Name</label>
+        <input required type="text" class="form-control" name="name" namearia-describedby="name" placeholder="Brandon Sanderson">
+      </div>
+      <div class="form-group">
+        <label>Email (belmontschools)</label>
+        <input required type="email" class="form-control" name="email" id="email_reset" placeholder="youremail20@belmontschools.net">
+      </div>
+      <div class="form-group">
+        <input type="submit" value="reset password" name="submit" class="btn btn-primary form-control myform-submit" />
+      </div>
+    </form>
     <img width="100%" src="{{url_for('static', filename='assets/marauder.png')}}" alt="maurader" class="center"/>
   </div>
 

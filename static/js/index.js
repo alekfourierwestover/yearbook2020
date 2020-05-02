@@ -21,6 +21,13 @@ document.getElementById("email").onchange = function() {
     }
 };
 
+document.getElementById("email_reset").onchange = function() {
+    if(this.value.indexOf("@belmontschools.net") == -1 && this.value.indexOf("@belmont.k12.ma.us") == -1){
+    	alert("Please input your belmont schools email");
+      this.value = "";
+    }
+};
+
 let uploadCrop;
 function readURL(input) {
   if (input.files && input.files[0]) {

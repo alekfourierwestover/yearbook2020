@@ -25,6 +25,47 @@ mail = Mail(app)
 def safestr(bad_txt):
     return str(uuid.uuid5(uuid.NAMESPACE_URL, bad_txt))
 
+@app.route("/reset_password", methods=("POST",))
+def reset_pwd():
+    with open("data/users.json", "r") as f:
+        data = json.load(f)
+    with open("data/passwords.json", "r") as f:
+        passwords = json.load(f)
+    new_pwd = safestr(str(random.random()))[:8]
+
+    user_name = request.form.get("name")
+    if " " not in user_name:
+        return redirect(url_for("serve_index", error="full name must contain a space character"))
+
+    first_name, last_name = user_name.split(" ")
+    if len(first_name) < 2 or len(last_name) < 2:
+        return redirect(url_for("serve_index", error="name_too_short"))
+    first_name = first_name[0].upper() + first_name[1:]
+    last_name = last_name[0].upper() + last_name[1:]
+    user_name = first_name + " " + last_name
+
+    safe_user_name = safestr(user_name)
+    if safe_user_name not in data:
+        return redirect(url_for("serve_index", error="user_doesnt_exist"))
+
+    data[safe_user_name]["verified"] = True
+    passwords[safe_user_name] = sha256_crypt.hash(new_pwd)
+
+    try:
+        msg = Message("Password Reset", sender=app.config.get("MAIL_USERNAME"), recipients=[session["email"]])
+        msg.html = f"Hey {user_name}, <br>Your new password is <strong>{new_pwd}</strong>.<br>Thanks!"
+        mail.send(msg)
+
+        with open("data/users.json", "w") as f:
+            json.dump(data, f, indent=4)
+
+        with open("data/passwords.json", "w") as f:
+            json.dump(passwords, f, indent=4)
+
+        return redirect(url_for("serve_index"))
+    except Exception as e:
+        return redirect(url_for("serve_index", error=str(e)))
+
 @app.route('/send_verification_code/', methods=("GET","POST"))
 def session_send_verification_code():
     try:
@@ -72,7 +113,6 @@ def get_colleges_csv():
         if data[uuid]["senior"] and data[uuid]["verified"]:
             if data[uuid]["institution"] in institutions:
                 names[institutions.index(data[uuid]["institution"])] += ", " +data[uuid]["name"]
-
             else:
                 names.append(data[uuid]["name"])
                 institutions.append(data[uuid]["institution"])
@@ -200,42 +240,47 @@ def handle_login():
         passwords = json.load(f)
 
     user_name = request.form.get("name")
+
+    if " " not in user_name:
+        return redirect(url_for("serve_index", error="full name must contain a space character"))
+
     first_name, last_name = user_name.split(" ")
     if len(first_name) < 2 or len(last_name) < 2:
-        return redirect(url_for("serve_index", error="name_too_short"))
+        return redirect(url_for("serve_index", error="name is too short"))
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
     user_name = first_name + " " + last_name
 
     safe_user_name = safestr(user_name)
-    try:
-        if sha256_crypt.verify(request.form.get("password"), passwords[safe_user_name]):
-            session["username"] = user_name
-            session["uuid"] = safe_user_name
-            session["loggedin"] = True
-            session["verified"] = data[safe_user_name]["verified"]
-            session["verification_code"] = verification_codes[safe_user_name]
-            session["senior"] = data[safe_user_name]["senior"]
-            return redirect(url_for("serve_main"))
-        else:
-            return redirect(url_for("serve_index", error="password_wrong"))
-    except:
-        return redirect(url_for("serve_index", error="user_not_found"))
+
+    if safe_user_name not in data:
+        return redirect(url_for("serve_index", error="user doesnt exist"))
+
+    if sha256_crypt.verify(request.form.get("password"), passwords[safe_user_name]):
+        session["username"] = user_name
+        session["uuid"] = safe_user_name
+        session["loggedin"] = True
+        session["verified"] = data[safe_user_name]["verified"]
+        session["verification_code"] = verification_codes[safe_user_name]
+        session["senior"] = data[safe_user_name]["senior"]
+        return redirect(url_for("serve_main"))
+    else:
+        return redirect(url_for("serve_index", error="password wrong"))
 
 @app.route("/register", methods=("POST",))
 def handle_register():
     # request.form["key"] extracts a value from the js form
     with open("data/users.json", "r") as f:
-        x = json.load(f)
+        data = json.load(f)
 
     first_name = request.form["firstname"].strip()
     last_name = request.form["lastname"].strip()
 
     if len(last_name) < 2 or len(first_name) < 2:
-        return redirect(url_for("serve_index", error="name_is_too_short"))
+        return redirect(url_for("serve_index", error="name is too short"))
 
     if request.form["password"] != request.form["confirm"]:
-        return redirect(url_for("serve_index", error="passwords_do_not_match"))
+        return redirect(url_for("serve_index", error="passwords dont match"))
 
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
@@ -245,10 +290,10 @@ def handle_register():
     user_email = request.form["email"].lower()
 
     if last_name.lower().replace("-", "") not in user_email:
-        return redirect(url_for("serve_index", error="email_does_not_contain_your_lastname"))
+        return redirect(url_for("serve_index", error="email does not contain your lastname"))
 
-    if safe_user_name in x:
-        return redirect(url_for("serve_index", error="username_taken"))
+    if safe_user_name in data:
+        return redirect(url_for("serve_index", error="username taken"))
 
     session["username"] = user_name
     session["uuid"] = safe_user_name
@@ -265,13 +310,13 @@ def handle_register():
         with open(img_file, "wb") as f:
             f.write(img_stream.read())
         im = Image.open(img_file)
-        im_cropped = im.crop([int(x) for x in crop_info["points"]])
+        im_cropped = im.crop([int(p) for p in crop_info["points"]])
         im_cropped.save(img_file, "PNG")
 
     except:
         pass
 
-    x[safe_user_name] = {
+    data[safe_user_name] = {
         "name": user_name,
         "email": request.form["email"],
         "institution": request.form["institution"],
@@ -280,7 +325,7 @@ def handle_register():
         "senior": session["senior"]
     }
     with open("data/users.json", "w") as f:
-        json.dump(x, f, indent=4)
+        json.dump(data, f, indent=4)
 
     with open("data/passwords.json", "r") as f:
         passwords = json.load(f)
@@ -302,7 +347,7 @@ def getProfiles():
     print("GETTING PROFILES")
 
     if not(session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
 
 
     with open("data/users.json", "r") as f:
@@ -319,7 +364,7 @@ def getProfiles():
 def handle_send_message():
     try:
         if not (session["loggedin"] and session["verified"]):
-            return redirect(url_for("serve_index", error="malicious_user"))
+            return redirect(url_for("serve_index", error="malicious user"))
         with open("data/messages.json", "r") as f:
             message_data = json.load(f)
 
@@ -333,7 +378,7 @@ def handle_send_message():
 
         if send_to not in user_data.keys():
             session["loggedin"] = False
-            return url_for("serve_index", error="malicious_user")
+            return url_for("serve_index", error="malicious user")
 
         if not send_to in message_data.keys():
             message_data[send_to] = { sent_from: [message] }
@@ -347,7 +392,7 @@ def handle_send_message():
 
         return url_for("serve_main", sent_message="true")
     except:
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
@@ -361,7 +406,7 @@ def handle_view_my_messages():
 @app.route("/get_uuids_sentto", methods=("GET",))
 def handle_get_uuids_sentto():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
 
     with open("data/messages.json", "r") as f:
         data = json.load(f)
@@ -377,18 +422,18 @@ def handle_get_uuids_sentto():
 # returns name and bio
 def handle_view_profile():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
     try:
         with open("data/users.json", "r") as f:
             data = json.load(f)
             return jsonify(data[request.args.get("uuid")])
     except:
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
 
 @app.route("/edit_password", methods=("POST", ))
 def handle_edit_password():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
     with open("data/passwords.json", "r") as f:
         passwords = json.load(f)
 
@@ -399,7 +444,7 @@ def handle_edit_password():
                 json.dump(passwords, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
-            return redirect(url_for("serve_edit", error="password_wrong"))
+            return redirect(url_for("serve_edit", error="password wrong"))
     except:
         session["loggedin"] = False
         session["verified"] = False
@@ -408,7 +453,7 @@ def handle_edit_password():
 @app.route("/edit_quote", methods=("POST", ))
 def handle_edit_quote():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
     with open("data/users.json", "r") as f:
         data = json.load(f)
     with open("data/passwords.json", "r") as f:
@@ -421,16 +466,16 @@ def handle_edit_quote():
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
-            return redirect(url_for("serve_edit", error="password_wrong"))
+            return redirect(url_for("serve_edit", error="password wrong"))
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="user_not_found"))
+        return redirect(url_for("serve_index", error="user not found"))
 
 @app.route("/edit_picture", methods=("POST", ))
 def handle_edit_picture():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
     with open("data/users.json", "r") as f:
         data = json.load(f)
     with open("data/passwords.json", "r") as f:
@@ -453,16 +498,16 @@ def handle_edit_picture():
 
             return redirect(url_for("serve_main"))   
         else:
-            return redirect(url_for("serve_edit", error="password_wrong"))
+            return redirect(url_for("serve_edit", error="password wrong"))
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="user_not_found"))
+        return redirect(url_for("serve_index", error="user not found"))
 
 @app.route("/edit_college", methods=("POST", ))
 def handle_edit_college():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious_user"))
+        return redirect(url_for("serve_index", error="malicious user"))
     with open("data/users.json", "r") as f:
         data = json.load(f)
     with open("data/passwords.json", "r") as f:
@@ -475,11 +520,11 @@ def handle_edit_college():
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
-            return redirect(url_for("serve_edit", error="password_wrong"))
+            return redirect(url_for("serve_edit", error="password wrong"))
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="user_not_found"))
+        return redirect(url_for("serve_index", error="user not found"))
 
 
 if __name__ == "__main__":
