@@ -152,6 +152,7 @@ footer{
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
+  width: 23vw;
 
 }
 
@@ -169,13 +170,15 @@ footer{
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
+  width: 23vw;
+
 }
 
 .carda{
   position: relative;
   display: inline-block;
   vertical-align: top;
-  left: 8%;
+  left: 6.5vw;
   box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   background-color: white;
   color: black;
@@ -187,7 +190,8 @@ footer{
   border: 1px;
   max-height: 65vw;
   line-height: 2vw;
-  
+  width: 23vw;
+
 }
 
 
