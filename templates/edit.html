@@ -64,6 +64,22 @@
 
 
 
+
+
+
+<div class = "card">
+	<form action="edit_college" method="post" id="edit_college_form">
+		<label> Password </label>
+		<input type="password" class="form-control" name="password" placeholder="Current Password" style="font-size: 2vw; width: 20vw; height: auto;">
+		<br>
+		<label>Where I'm Going Next</label>
+        <input type="text" class="form-control" name="institution" placeholder="cool university">
+
+
+		<input type="submit" value="change institution" name="submit" class="btn btn-primary form-control" style="font-size: 2vw; width: 20vw; height: auto;"/>
+	</form>
+</div>
+
 <script>
 document.getElementById("profilepic").onchange = function() {
     if(this.files[0].size > 2097152){
