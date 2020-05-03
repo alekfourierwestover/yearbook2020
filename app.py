@@ -9,10 +9,10 @@ import os
 import random
 from PIL import Image
 
-with open("data/registered_schools.json") as f:
+with open("data/registered_schools.json", "r") as f:
     REGISTERED_SCHOOLS = json.load(f)
 
-with open("data/school_email_patterns.json", "r"):
+with open("data/school_email_patterns.json", "r") as f:
     SCHOOL_EMAIL_PATTERNS = json.load(f)
 
 app = Flask(__name__)
@@ -159,7 +159,7 @@ def get_senior():
 @app.route("/<string:school>/")
 def serve_index(school="belmonthigh"):
     if school not in REGISTERED_SCHOOLS:
-        return f"{school} does not exist"
+        return redirect(url_for("serve_schoolnotfound"))
     if session.get("loggedin"):
         if session.get("verified"):
             return redirect(url_for("serve_main"))
@@ -208,7 +208,7 @@ def serve_edit():
     else:
         return redirect(url_for("serve_index"))
 
-@app.route("/schoolnotfound")
+@app.route("/schoolnotfound", methods=("GET",))
 def serve_schoolnotfound():
     return render_template("schoolnotfound.html")
 
@@ -245,6 +245,8 @@ def handle_logout():
 @app.route("/<string:school>/login", methods=("POST",))
 def handle_login(school="belmonthigh"):
     session["school"] = school
+    if school not in REGISTERED_SCHOOLS:
+        return redirect(url_for("serve_schoolnotfound"))
 
     # request.form["key"] extracts a value from the js form
     with open(f"data/{session['school']}/users.json", "r") as f:
@@ -434,12 +436,7 @@ def handle_view_my_messages():
 
 @app.route("/get_registered_schools", methods=("GET",))
 def handle_get_registered_schools():
-    try:
-        with open("data/registeredschools.json", "r") as f:
-            data = json.load(f)
-        return jsonify(data)
-    except:
-        return "no schools"
+    return jsonify(REGISTERED_SCHOOLS)
 
 @app.route("/get_uuids_sentto", methods=("GET",))
 def handle_get_uuids_sentto():
