@@ -6,6 +6,7 @@ colleges.csv
 passwords.json
 users.json
 verification_codes.json
+data/
 
 nohup.out
 *.swp
