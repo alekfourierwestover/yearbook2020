@@ -25,10 +25,13 @@
     flex: 100%;
     max-width: 100%;
   }
-} 
+}
 
 /* Special card styles */
 #card_1d00c955-96d5-5516-ba6a-675f223b000c { /* Alek */
   background: #20bbd6;
 }
 
+#card_9afa518a-c161-5d21-b501-4408174fccaa { /* David Leigh */
+  background: #20bbd6;
+}
