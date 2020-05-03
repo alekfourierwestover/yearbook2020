@@ -239,7 +239,7 @@ def handle_logout():
     session["verified"] = False
     session["username"] = ""
     session["uuid"] = ""
-    return redirect(url_for("serve_index"))
+    return redirect(url_for("serve_index", school=session.get('school')))
 
 @app.route("/login", methods=("POST",))
 @app.route("/<string:school>/login", methods=("POST",))
@@ -288,7 +288,8 @@ def handle_login(school="belmonthigh"):
 @app.route("/<string:school>/register", methods=("POST",))
 def handle_register(school="belmonthigh"):
     if school not in REGISTERED_SCHOOLS:
-        return f"{school} does not exist"
+        return redirect(url_for("serve_schoolnotfound"))
+    print(session.get("school"))
 
     # request.form["key"] extracts a value from the js form
     with open(f"data/{school}/users.json", "r") as f:
@@ -316,6 +317,12 @@ def handle_register(school="belmonthigh"):
             email_good = True
             break
 
+    email_is_seniors = False
+    for possible_email_pattern in SCHOOL_EMAIL_PATTERNS[school]["senior"]:
+        if possible_email_pattern in user_email:
+            email_is_seniors = True
+            break
+
     if not email_good:
         return redirect(url_for("serve_index", error="email is no good"))
 
@@ -331,7 +338,7 @@ def handle_register(school="belmonthigh"):
     session["loggedin"] = True
     session["verified"] = False
     session["email"] = user_email
-    session["senior"] = SCHOOL_EMAIL_PATTERNS[school]["senior"] in user_email
+    session["senior"] = email_is_seniors 
     session["verification_code"] = safestr(str(random.random()))[:8]
 
     try:
@@ -375,12 +382,10 @@ def handle_register(school="belmonthigh"):
 
 @app.route("/getProfiles", methods=("GET",))
 def getProfiles():
-    print("GETTING PROFILES")
-
     if not(session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
 
-
+    print(session['school'])
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
 
@@ -520,7 +525,6 @@ def handle_edit_picture():
         if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             try:
                 crop_info = json.loads(request.form.get("crop_info"))
-                print(crop_info)
                 img_stream = request.files.get("profilepic").stream
                 img_file = f"static/pfps/{session.get('uuid')}.png"
                 with open(img_file, "wb") as f:
@@ -564,3 +568,4 @@ def handle_edit_college():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port='80', debug=True)
+
