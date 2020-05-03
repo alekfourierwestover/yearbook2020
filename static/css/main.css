@@ -25,13 +25,16 @@
     flex: 100%;
     max-width: 100%;
   }
-} 
+}
 
 /* Special card styles */
 #card_1d00c955-96d5-5516-ba6a-675f223b000c { /* Alek */
   background: #20bbd6;
 }
 
-#card_146aed34-970e-5dec-9a5d-9e4a045a6a38": {
+#card_146aed34-970e-5dec-9a5d-9e4a045a6a38 {
+  background:#20bbd6;
+}
+#card_aeaab296-cef2-59c9-9d73-bbbf0dd05f15 { /* Alek */
   background: #20bbd6;
 }
