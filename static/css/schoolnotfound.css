@@ -1,0 +1,24 @@
+#left-maurader-map {
+  position: absolute;
+  left: 6%;
+  width: 9vw;
+  height:9vw;
+  line-height: 2vw;
+}
+
+#right-maurader-map {
+  position: absolute;
+  width: 9vw;
+  height:9vw;
+  right: 6%;
+  transform: scaleX(-1);
+  line-height: 2vw;
+}
+
+#content{
+  height: 0% !important;
+}
+
+#notfound{
+  text-decoration-color: black;
+}
