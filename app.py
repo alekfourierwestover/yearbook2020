@@ -222,6 +222,10 @@ def serve_map():
     else:
         return redirect(url_for("serve_index"))
 
+@app.route("/error")
+def serve_error():
+    return render_template("error.html")
+
 @app.route("/verify")
 def serve_verify():
     if not session.get("verified"):
