@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, make_response
 from flask_mail import Message, Mail
 import json
-import io 
+import io
 import csv
 from passlib.hash import sha256_crypt
 import uuid
@@ -210,6 +210,10 @@ def serve_map():
     else:
         return redirect(url_for("serve_index"))
 
+@app.route("/error")
+def serve_error():
+    return render_template("error.html")
+
 @app.route("/verify")
 def serve_verify():
     if not session.get("verified"):
@@ -285,7 +289,7 @@ def handle_register():
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
 
-    user_name = first_name + " " + last_name 
+    user_name = first_name + " " + last_name
     safe_user_name = safestr(user_name)
     user_email = request.form["email"].lower()
 
@@ -352,7 +356,7 @@ def getProfiles():
 
     with open("data/users.json", "r") as f:
         data = json.load(f)
-    
+
     verified_senior_profiles = {}
     for uuid in data:
         if data[uuid]["verified"] and data[uuid]["senior"]:
@@ -496,7 +500,7 @@ def handle_edit_picture():
             except:
                 pass
 
-            return redirect(url_for("serve_main"))   
+            return redirect(url_for("serve_main"))
         else:
             return redirect(url_for("serve_edit", error="password wrong"))
     except:
@@ -529,4 +533,3 @@ def handle_edit_college():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port='80', debug=True)
-
