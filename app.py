@@ -168,6 +168,10 @@ def serve_index(school="belmonthigh"):
     else:
         return render_template("index.html")
 
+@app.route("/test_confetti")
+def serve_test_confetti():
+    return render_template("confetti.html")
+
 @app.route("/main")
 def serve_main():
     if session.get("loggedin"):
