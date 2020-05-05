@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/howto.css')}}" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <br>
+  <div id="mauraders">
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+  </div>
+<div style="clear: right">
+  <h1 style="font-size: 3vw">CONGRATULATIONS!<br> Graduating Class Of 2020</h1>
+</div>
+
+</div>
+
+{% endblock %}

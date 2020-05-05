@@ -178,6 +178,16 @@ def serve_main():
     else:
         return redirect(url_for("serve_index"))
 
+@app.route("/howto")
+def serve_howto():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("howto.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
 @app.route("/mymessages")
 def serve_mymessages():
     if session.get("loggedin"):
@@ -352,7 +362,7 @@ def handle_register(school="belmonthigh"):
     session["loggedin"] = True
     session["verified"] = False
     session["email"] = user_email
-    session["senior"] = email_is_seniors 
+    session["senior"] = email_is_seniors
     session["verification_code"] = safestr(str(random.random()))[:8]
 
     try:
@@ -464,7 +474,7 @@ def handle_send_request():
         print(sent_from_uuid)
         print(send_to)
         """
-        
+
         if send_to not in user_data.keys():
             session["loggedin"] = False
             return url_for("serve_index", error="malicious user")
@@ -641,4 +651,3 @@ def handle_edit_college():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port='80', debug=True)
-
