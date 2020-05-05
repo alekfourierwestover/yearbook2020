@@ -1,19 +1,12 @@
-function send_request(){
-  $.post("/send_request", {
-  "sendto": urlParams.get("sendto")}, (data)=>{
-    window.location.href = data;
-  });
-}
-
 $.get("/view_my_request", function(data){
   if(data == "no requests"){
     $.notify("no requests yet");
   }
   else{
-	for(let i in data){
-		person = data[i];
-		$("#request").append(`<center>${person}<br></center>`);
-	}
+  	for(let i in data){
+  		person = data[i];
+  		$("#request").append(`<center>${person}<br></center>`);
+  	}
   }
 });
 

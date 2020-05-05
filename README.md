@@ -12,6 +12,7 @@ mkdir data
 echo "{}" > data/users.json
 echo "{}" > data/messages.json
 echo "{}" > data/passwords.json
+echo "{}" > data/request.json
 echo "{}" > data/verification_codes.json
 
 virtualenv venv

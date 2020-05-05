@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/schoolnotfound.css')}}" type="text/css">
+{% endblock %}
+
+{% block uncontained_content %}
+<div style="height: 5em;"> </div>
+
+
+<div class="card">
+  <br>
+  <div id="mauraders">
+    <img id="left-maurader-map" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}" height="100px" width="100px"/>
+    <img id="right-maurader-map" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}" height="100px" width="100px"/>
+  </div>
+<div style="clear: right">
+  <br>
+  <h1 style="font-size: 6vw">School Not Found</h1>
+  <br>
+</div>
+</div>
+<br>
+
+<div class="card">
+  <div id="notfound">
+  <h3><center>Did you mean these schools? </center></h3>
+  </div>
+</div>
+
+<div style="height: 80em;"> </div>
+
+<script src="{{url_for('static', filename='js/schoolnotfound.js')}}" charset="utf-8"></script>
+
+{% endblock %}

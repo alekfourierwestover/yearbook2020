@@ -1,13 +1,19 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session, make_response
 from flask_mail import Message, Mail
 import json
-import io 
+import io
 import csv
 from passlib.hash import sha256_crypt
 import uuid
 import os
 import random
 from PIL import Image
+
+with open("data/registered_schools.json", "r") as f:
+    REGISTERED_SCHOOLS = json.load(f)
+
+with open("data/school_email_patterns.json", "r") as f:
+    SCHOOL_EMAIL_PATTERNS = json.load(f)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRETKEY")
@@ -27,9 +33,9 @@ def safestr(bad_txt):
 
 @app.route("/reset_password", methods=("POST",))
 def reset_pwd():
-    with open("data/users.json", "r") as f:
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
     new_pwd = safestr(str(random.random()))[:8]
 
@@ -56,10 +62,10 @@ def reset_pwd():
         msg.html = f"Hey {user_name}, <br>Your new password is <strong>{new_pwd}</strong>.<br>Thanks!"
         mail.send(msg)
 
-        with open("data/users.json", "w") as f:
+        with open(f"data/{session['school']}/users.json", "w") as f:
             json.dump(data, f, indent=4)
 
-        with open("data/passwords.json", "w") as f:
+        with open(f"data/{session['school']}/passwords.json", "w") as f:
             json.dump(passwords, f, indent=4)
 
         return redirect(url_for("serve_index", success="password successfully reset"))
@@ -87,10 +93,10 @@ def check_verification_code():
 
             if session["verification_code"] == verification_code:
                 session["verified"] = True
-                with open("data/users.json", "r") as f:
+                with open(f"data/{session['school']}/users.json", "r") as f:
                     data = json.load(f)
                 data[session.get("uuid")]["verified"] = True
-                with open("data/users.json", "w") as f:
+                with open(f"data/{session['school']}/users.json", "w") as f:
                     json.dump(data,f, indent=4)
                 return redirect(url_for("serve_main"))
             else:
@@ -103,7 +109,7 @@ def check_verification_code():
 
 @app.route("/get_colleges_csv", methods=("GET",))
 def get_colleges_csv():
-    with open("data/users.json", "r") as f:
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
 
     names = []
@@ -149,9 +155,11 @@ def get_senior():
     return jsonify(session.get("senior"))
 
 # website page routes, note: you must be logged in to view this
-@app.route("/index")
 @app.route("/")
-def serve_index():
+@app.route("/<string:school>/")
+def serve_index(school="belmonthigh"):
+    if school not in REGISTERED_SCHOOLS:
+        return redirect(url_for("serve_schoolnotfound"))
     if session.get("loggedin"):
         if session.get("verified"):
             return redirect(url_for("serve_main"))
@@ -200,7 +208,6 @@ def serve_edit():
     else:
         return redirect(url_for("serve_index"))
 
-
 @app.route("/request")
 def serve_request():
     if session.get("loggedin"):
@@ -211,6 +218,10 @@ def serve_request():
     else:
         return redirect(url_for("serve_index"))
 
+@app.route("/schoolnotfound", methods=("GET",))
+def serve_schoolnotfound():
+    return render_template("schoolnotfound.html")
+
 @app.route("/map")
 def serve_map():
     if session.get("loggedin"):
@@ -220,6 +231,10 @@ def serve_map():
             return redirect(url_for("serve_verify"))
     else:
         return redirect(url_for("serve_index"))
+
+@app.route("/error")
+def serve_error():
+    return render_template("error.html")
 
 @app.route("/verify")
 def serve_verify():
@@ -238,16 +253,21 @@ def handle_logout():
     session["verified"] = False
     session["username"] = ""
     session["uuid"] = ""
-    return redirect(url_for("serve_index"))
+    return redirect(url_for("serve_index", school=session.get('school')))
 
 @app.route("/login", methods=("POST",))
-def handle_login():
+@app.route("/<string:school>/login", methods=("POST",))
+def handle_login(school="belmonthigh"):
+    session["school"] = school
+    if school not in REGISTERED_SCHOOLS:
+        return redirect(url_for("serve_schoolnotfound"))
+
     # request.form["key"] extracts a value from the js form
-    with open("data/users.json", "r") as f:
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
-    with open("data/verification_codes.json", "r") as f:
+    with open(f"data/{session['school']}/verification_codes.json", "r") as f:
         verification_codes = json.load(f)
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
 
     user_name = request.form.get("name")
@@ -279,9 +299,14 @@ def handle_login():
         return redirect(url_for("serve_index", error="password wrong"))
 
 @app.route("/register", methods=("POST",))
-def handle_register():
+@app.route("/<string:school>/register", methods=("POST",))
+def handle_register(school="belmonthigh"):
+    if school not in REGISTERED_SCHOOLS:
+        return redirect(url_for("serve_schoolnotfound"))
+    print(session.get("school"))
+
     # request.form["key"] extracts a value from the js form
-    with open("data/users.json", "r") as f:
+    with open(f"data/{school}/users.json", "r") as f:
         data = json.load(f)
 
     first_name = request.form["firstname"].strip()
@@ -296,9 +321,24 @@ def handle_register():
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
 
-    user_name = first_name + " " + last_name 
+    user_name = first_name + " " + last_name
     safe_user_name = safestr(user_name)
     user_email = request.form["email"].lower()
+
+    email_good = False
+    for possible_email_pattern in SCHOOL_EMAIL_PATTERNS[school]["all"]:
+        if possible_email_pattern in user_email:
+            email_good = True
+            break
+
+    email_is_seniors = False
+    for possible_email_pattern in SCHOOL_EMAIL_PATTERNS[school]["senior"]:
+        if possible_email_pattern in user_email:
+            email_is_seniors = True
+            break
+
+    if not email_good:
+        return redirect(url_for("serve_index", error="email is no good"))
 
     if last_name.lower().replace("-", "") not in user_email:
         return redirect(url_for("serve_index", error="email does not contain your lastname"))
@@ -306,12 +346,13 @@ def handle_register():
     if safe_user_name in data:
         return redirect(url_for("serve_index", error="username taken"))
 
+    session["school"] = school
     session["username"] = user_name
     session["uuid"] = safe_user_name
     session["loggedin"] = True
     session["verified"] = False
     session["email"] = user_email
-    session["senior"] = "20@belmontschools.net" in user_email
+    session["senior"] = email_is_seniors 
     session["verification_code"] = safestr(str(random.random()))[:8]
 
     try:
@@ -335,19 +376,19 @@ def handle_register():
         "verified": False,
         "senior": session["senior"]
     }
-    with open("data/users.json", "w") as f:
+    with open(f"data/{session['school']}/users.json", "w") as f:
         json.dump(data, f, indent=4)
 
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
     passwords[session["uuid"]] = sha256_crypt.hash(request.form["password"])
-    with open("data/passwords.json", "w") as f:
+    with open(f"data/{session['school']}/passwords.json", "w") as f:
         json.dump(passwords, f, indent=4)
 
-    with open("data/verification_codes.json", "r") as f:
+    with open(f"data/{session['school']}/verification_codes.json", "r") as f:
         verification_codes = json.load(f)
     verification_codes[session["uuid"]] = session["verification_code"]
-    with open("data/verification_codes.json", "w") as f:
+    with open(f"data/{session['school']}/verification_codes.json", "w") as f:
         json.dump(verification_codes, f, indent=4)
 
     session_send_verification_code()
@@ -355,15 +396,13 @@ def handle_register():
 
 @app.route("/getProfiles", methods=("GET",))
 def getProfiles():
-    print("GETTING PROFILES")
-
     if not(session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
 
-
-    with open("data/users.json", "r") as f:
+    print(session['school'])
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
-    
+
     verified_senior_profiles = {}
     for uuid in data:
         if data[uuid]["verified"] and data[uuid]["senior"]:
@@ -376,10 +415,10 @@ def handle_send_message():
     try:
         if not (session["loggedin"] and session["verified"]):
             return redirect(url_for("serve_index", error="malicious user"))
-        with open("data/messages.json", "r") as f:
+        with open(f"data/{session['school']}/messages.json", "r") as f:
             message_data = json.load(f)
 
-        with open("data/users.json", "r") as f:
+        with open(f"data/{session['school']}/users.json", "r") as f:
             user_data = json.load(f)
 
         sent_from = session.get("username")
@@ -398,7 +437,7 @@ def handle_send_message():
         else:
             message_data[send_to][sent_from].append(message)
 
-        with open("data/messages.json", "w") as f:
+        with open(f"data/{session['school']}/messages.json", "w") as f:
             json.dump(message_data, f, indent=4)
 
         return url_for("serve_main", sent_message="true")
@@ -410,15 +449,21 @@ def handle_send_request():
     try:
         if not (session["loggedin"] and session["verified"]):
             return redirect(url_for("serve_index", error="malicious user"))
-        with open("data/request.json", "r") as f:
+        with open(f"data/{session['school']}/request.json", "r") as f:
             message_data = json.load(f)
 
-        with open("data/users.json", "r") as f:
+        with open(f"data/{session['school']}/users.json", "r") as f:
             user_data = json.load(f)
 
         sent_from = session.get("username")
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
+
+        """
+        print(sent_from)
+        print(sent_from_uuid)
+        print(send_to)
+        """
         
         if send_to not in user_data.keys():
             session["loggedin"] = False
@@ -427,7 +472,7 @@ def handle_send_request():
         if not send_to in message_data.keys():
             message_data[send_to] = [sent_from]
         elif sent_from in message_data[send_to]:
-            return redirect(url_for("serve_main", error="already request this user!"))
+            return url_for("serve_main", error="already requested this user")
         else:
             message_data[send_to].append(sent_from)
         """
@@ -439,7 +484,7 @@ def handle_send_request():
             message_data[send_to][sent_from].append(message)
         """
 
-        with open("data/request.json", "w") as f:
+        with open(f"data/{session['school']}/request.json", "w") as f:
             json.dump(message_data, f, indent=4)
 
         return url_for("serve_main", sent_request="true")
@@ -451,7 +496,7 @@ def handle_send_request():
 @app.route("/view_my_request", methods=("GET",))
 def handle_view_my_request():
     try:
-        with open("data/request.json", "r") as f:
+        with open(f"data/{session['school']}/request.json", "r") as f:
             data = json.load(f)[session.get("uuid")]
         return jsonify(data)
     except:
@@ -461,18 +506,22 @@ def handle_view_my_request():
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
     try:
-        with open("data/messages.json", "r") as f:
+        with open(f"data/{session['school']}/messages.json", "r") as f:
             data = json.load(f)[session.get("uuid")]
         return jsonify(data)
     except:
         return "no messages"
+
+@app.route("/get_registered_schools", methods=("GET",))
+def handle_get_registered_schools():
+    return jsonify(REGISTERED_SCHOOLS)
 
 @app.route("/get_uuids_sentto", methods=("GET",))
 def handle_get_uuids_sentto():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
 
-    with open("data/messages.json", "r") as f:
+    with open(f"data/{session['school']}/messages.json", "r") as f:
         data = json.load(f)
 
     uuids_sentto = []
@@ -488,7 +537,7 @@ def handle_view_profile():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
     try:
-        with open("data/users.json", "r") as f:
+        with open(f"data/{session['school']}/users.json", "r") as f:
             data = json.load(f)
             return jsonify(data[request.args.get("uuid")])
     except:
@@ -498,13 +547,13 @@ def handle_view_profile():
 def handle_edit_password():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
 
     try:
         if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             passwords[session.get("uuid")] = sha256_crypt.hash(request.form.get("newpassword"))
-            with open("data/passwords.json", "w") as f:
+            with open(f"data/{session['school']}/passwords.json", "w") as f:
                 json.dump(passwords, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
@@ -518,15 +567,15 @@ def handle_edit_password():
 def handle_edit_quote():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
-    with open("data/users.json", "r") as f:
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
     try:
         quote = request.form.get("quote")
         if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             data[session.get("uuid")]["bio"] = quote
-            with open("data/users.json", "w") as f:
+            with open(f"data/{session['school']}/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:
@@ -540,16 +589,15 @@ def handle_edit_quote():
 def handle_edit_picture():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
-    with open("data/users.json", "r") as f:
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
 
     try:
         if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             try:
                 crop_info = json.loads(request.form.get("crop_info"))
-                print(crop_info)
                 img_stream = request.files.get("profilepic").stream
                 img_file = f"static/pfps/{session.get('uuid')}.png"
                 with open(img_file, "wb") as f:
@@ -560,7 +608,7 @@ def handle_edit_picture():
             except:
                 pass
 
-            return redirect(url_for("serve_main"))   
+            return redirect(url_for("serve_main"))
         else:
             return redirect(url_for("serve_edit", error="password wrong"))
     except:
@@ -572,15 +620,15 @@ def handle_edit_picture():
 def handle_edit_college():
     if not (session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
-    with open("data/users.json", "r") as f:
+    with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
-    with open("data/passwords.json", "r") as f:
+    with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
     try:
         college = request.form.get("institution")
         if sha256_crypt.verify(request.form.get("password"), passwords[session.get("uuid")]):
             data[session.get("uuid")]["institution"] = college
-            with open("data/users.json", "w") as f:
+            with open(f"data/{session['school']}/users.json", "w") as f:
                 json.dump(data, f, indent = 4)
                 return redirect(url_for("serve_main"))
         else:

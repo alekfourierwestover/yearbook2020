@@ -1,0 +1,27 @@
+@font-face {
+  font-family: BernardMTCondensed;
+  src: url(/static/assets/BernardMTCondensed.ttf);
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+  font-family: BernardMTCondensed;
+  letter-spacing: 0.045em;
+  font-size: 20vw;
+}
+
+h2 {
+  text-align: center;
+  font-size: 3vw;
+}
+
+#four-o-four {
+  height: 80em;
+}
+
+p {
+  text-align: center;
+  font-size: 100%;
+
+}
