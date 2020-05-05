@@ -218,6 +218,18 @@ def serve_request():
     else:
         return redirect(url_for("serve_index"))
 
+
+@app.route("/teacher")
+def serve_teacher():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("teacher.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
+
 @app.route("/schoolnotfound", methods=("GET",))
 def serve_schoolnotfound():
     return render_template("schoolnotfound.html")
