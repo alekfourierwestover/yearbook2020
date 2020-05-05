@@ -1,22 +1,11 @@
 const MAX_NUM_COLUMNS = 4;
 
-if(urlParams.get("sent_message")){
-  $.notify("You successfully sent a message", "success");
-}
-
-if(urlParams.get("sent_request")){
-  $.notify("You successfully requested a user!", "success");
-}
-
-if(urlParams.get("error")) {
-  $.notify(urlParams.get("error"), "error");
-}
 
 function afterSpace(full_name){
   return full_name.substring(full_name.indexOf(" ")+1);
 }
 
-$.get("/getProfiles", function(data){
+$.get("/getTeacherProfiles", function(data){
     let allRows = [];
 
     let currentRow = [];
@@ -69,14 +58,11 @@ $(".face-card").css({
     'height': cw + 'px'
 });
 
-setTimeout(()=>{
-  $.get("/get_uuids_sentto", (uuids_sentto)=>{
+$.get("/get_uuids_sentto", (uuids_sentto)=>{
     for(let i in uuids_sentto){
         document.getElementById("my" + uuids_sentto[i]).innerHTML += "&#x2713"; // checkmark
     }
-  });
-}, 2000);
-
+});
 
 function search_name(){
   let name = $("#search").val();
@@ -86,13 +72,3 @@ function search_name(){
       img_elt.scrollIntoView();
   }
 }
-
-/*
-//temporarily diable search bar
-document.getElementById("search").addEventListener("keyup", function(event){
-  if(event.keyCode=== 13){
-    event.preventDefault();
-    search_name();
-  }
-});
-*/

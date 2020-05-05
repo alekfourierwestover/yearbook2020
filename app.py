@@ -212,6 +212,28 @@ def serve_edit():
     else:
         return redirect(url_for("serve_index"))
 
+@app.route("/request")
+def serve_request():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("request.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
+
+@app.route("/teacher")
+def serve_teacher():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("teacher.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
+
 @app.route("/schoolnotfound", methods=("GET",))
 def serve_schoolnotfound():
     return render_template("schoolnotfound.html")
@@ -404,6 +426,23 @@ def getProfiles():
 
     return jsonify(verified_senior_profiles)
 
+@app.route("/getTeacherProfiles", methods=("GET",))
+def getTeacherProfiles():
+    if not(session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious user"))
+
+    print(session['school'])
+    with open(f"data/{session['school']}/users.json", "r") as f:
+        data = json.load(f)
+
+    verified_senior_profiles = {}
+    for uuid in data:
+        if data[uuid]["verified"] and not(data[uuid]["senior"]):
+            verified_senior_profiles[uuid] = data[uuid]
+
+    return jsonify(verified_senior_profiles)
+
+
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
     try:
@@ -437,6 +476,65 @@ def handle_send_message():
         return url_for("serve_main", sent_message="true")
     except:
         return redirect(url_for("serve_index", error="malicious user"))
+
+@app.route("/send_request", methods=("POST",))
+def handle_send_request():
+    try:
+        if not (session["loggedin"] and session["verified"]):
+            return redirect(url_for("serve_index", error="malicious user"))
+        with open(f"data/{session['school']}/request.json", "r") as f:
+            message_data = json.load(f)
+
+        with open(f"data/{session['school']}/users.json", "r") as f:
+            user_data = json.load(f)
+
+        sent_from = session.get("username")
+        sent_from_uuid = session.get("uuid")
+        send_to = request.form.get("sendto")
+
+        """
+        print(sent_from)
+        print(sent_from_uuid)
+        print(send_to)
+        """
+        
+        if send_to not in user_data.keys():
+            session["loggedin"] = False
+            return url_for("serve_index", error="malicious user")
+
+        if not send_to in message_data.keys():
+            message_data[send_to] = [sent_from]
+        elif sent_from in message_data[send_to]:
+            return url_for("serve_main", error="already requested this user")
+        else:
+            message_data[send_to].append(sent_from)
+        """
+        if not send_to in message_data.keys():
+            message_data[send_to] = { sent_from: [message] }
+        elif sent_from not in message_data[send_to].keys():
+            message_data[send_to][sent_from] = [message]
+        else:
+            message_data[send_to][sent_from].append(message)
+        """
+
+        with open(f"data/{session['school']}/request.json", "w") as f:
+            json.dump(message_data, f, indent=4)
+
+        return url_for("serve_main", sent_request="true")
+
+    except:
+        return redirect(url_for("serve_index", error="malicious user"))
+
+
+@app.route("/view_my_request", methods=("GET",))
+def handle_view_my_request():
+    try:
+        with open(f"data/{session['school']}/request.json", "r") as f:
+            data = json.load(f)[session.get("uuid")]
+        return jsonify(data)
+    except:
+        return "no requests"
+
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():

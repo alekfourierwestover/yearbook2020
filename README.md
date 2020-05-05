@@ -8,11 +8,36 @@ git clone https://github.com/alekfourierwestover/yearbook2020.git
 cd static 
 npm i
 cd ..
+
 mkdir data
-echo "{}" > data/users.json
-echo "{}" > data/messages.json
-echo "{}" > data/passwords.json
-echo "{}" > data/verification_codes.json
+cd data
+
+mkdir belmonthigh
+cd belmonthigh
+
+echo "{}" > users.json
+echo "{}" > messages.json
+echo "{}" > passwords.json
+echo "{}" > request.json
+echo "{}" > verification_codes.json
+
+cd ..
+
+echo "["belmonthigh"]" > registered_schools.json
+
+echo "{
+  "belmonthigh": {
+    "senior": ["20@belmontschools.net"],
+    "all": ["@belmontschools.net", "@belmont.k12.ma.us"]
+  }
+}" > school_email_patterns.json
+
+cd .. (get to the yearbook directory)
+
+python3 app.py 
+
+
+
 
 virtualenv venv
 source venv/bin/activate
@@ -26,6 +51,15 @@ then to run:
 nohup python app.py &
 ```
 
+#TODO 5/5/20
+- cleo card  [all]
+- make the request menu better [leon]
+- teacher menu [leon]
+- how to use page [david]
+- encrypting messages [dr. westover md phd mba jd]
+- make edit pfp not require hard reload for img to change [all]
+- make check marks work and work beautifully [alek]
+- confetti? [madeline]
 
 
 # Bugs 4/27/20 
