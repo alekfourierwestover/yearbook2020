@@ -8,12 +8,36 @@ git clone https://github.com/alekfourierwestover/yearbook2020.git
 cd static 
 npm i
 cd ..
+
 mkdir data
+cd data
+
+mkdir belmonthigh
+cd belmonthigh
+
 echo "{}" > data/users.json
 echo "{}" > data/messages.json
 echo "{}" > data/passwords.json
 echo "{}" > data/request.json
 echo "{}" > data/verification_codes.json
+
+cd ..
+
+echo "['belmonthigh']" > registered_schools.json
+
+echo "{
+  'belmonthigh': {
+    'senior': ['20@belmontschools.net'],
+    'all': ['@belmontschools.net', '@belmont.k12.ma.us']
+  }
+}" > school_email_patterns.json
+
+cd .. (get to the yearbook directory)
+
+python3 app.py 
+
+
+
 
 virtualenv venv
 source venv/bin/activate
