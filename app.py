@@ -319,7 +319,6 @@ def handle_login(school="belmonthigh"):
 def handle_register(school="belmonthigh"):
     if school not in REGISTERED_SCHOOLS:
         return redirect(url_for("serve_schoolnotfound"))
-    print(session.get("school"))
 
     # request.form["key"] extracts a value from the js form
     with open(f"data/{school}/users.json", "r") as f:
@@ -415,7 +414,6 @@ def getProfiles():
     if not(session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
 
-    print(session['school'])
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
 
@@ -431,7 +429,6 @@ def getTeacherProfiles():
     if not(session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
 
-    print(session['school'])
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
 
@@ -492,12 +489,6 @@ def handle_send_request():
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
 
-        """
-        print(sent_from)
-        print(sent_from_uuid)
-        print(send_to)
-        """
-        
         if send_to not in user_data.keys():
             session["loggedin"] = False
             return url_for("serve_index", error="malicious user")
