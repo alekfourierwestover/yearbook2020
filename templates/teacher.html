@@ -9,5 +9,27 @@
 
 {% block content %}
 
+<div class="card">
+	<br>
+	<div id="mauraders">
+		<img id="left-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+		<img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+	</div>
+	<div style="clear: right">
+		<h1 style="font-size: 3vw">THANK YOU FACULTY!!!<br> WE WOULDN'T BE HERE WITHOUT YOU! </h1>
+	</div>
+</div>
+
+<br>
+
+<div id="faces" class="row">
+</div>
+
+<br>
+<br>
+<br>
+
+
+<script src="{{url_for('static', filename='js/teacher.js')}}" charset="utf-8"></script>
 
 {% endblock %}

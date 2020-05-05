@@ -422,6 +422,23 @@ def getProfiles():
 
     return jsonify(verified_senior_profiles)
 
+@app.route("/getTeacherProfiles", methods=("GET",))
+def getTeacherProfiles():
+    if not(session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious user"))
+
+    print(session['school'])
+    with open(f"data/{session['school']}/users.json", "r") as f:
+        data = json.load(f)
+
+    verified_senior_profiles = {}
+    for uuid in data:
+        if data[uuid]["verified"] and not(data[uuid]["senior"]):
+            verified_senior_profiles[uuid] = data[uuid]
+
+    return jsonify(verified_senior_profiles)
+
+
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
     try:
