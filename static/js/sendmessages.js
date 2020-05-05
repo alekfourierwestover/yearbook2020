@@ -20,3 +20,4 @@ function send_message(){
     window.location.href = data;
   });
 }
+

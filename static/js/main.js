@@ -4,6 +4,10 @@ if(urlParams.get("sent_message")){
   $.notify("You successfully sent a message", "success");
 }
 
+if(urlParams.get("sent_request")){
+  $.notify("You successfully requested a user!", "success");
+}
+
 function afterSpace(full_name){
   return full_name.substring(full_name.indexOf(" ")+1);
 }

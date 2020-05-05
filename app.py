@@ -200,6 +200,17 @@ def serve_edit():
     else:
         return redirect(url_for("serve_index"))
 
+
+@app.route("/request")
+def serve_request():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("request.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
 @app.route("/map")
 def serve_map():
     if session.get("loggedin"):
@@ -393,6 +404,59 @@ def handle_send_message():
         return url_for("serve_main", sent_message="true")
     except:
         return redirect(url_for("serve_index", error="malicious user"))
+
+@app.route("/send_request", methods=("POST",))
+def handle_send_request():
+    try:
+        if not (session["loggedin"] and session["verified"]):
+            return redirect(url_for("serve_index", error="malicious user"))
+        with open("data/request.json", "r") as f:
+            message_data = json.load(f)
+
+        with open("data/users.json", "r") as f:
+            user_data = json.load(f)
+
+        sent_from = session.get("username")
+        sent_from_uuid = session.get("uuid")
+        send_to = request.form.get("sendto")
+        
+        if send_to not in user_data.keys():
+            session["loggedin"] = False
+            return url_for("serve_index", error="malicious user")
+
+        if not send_to in message_data.keys():
+            message_data[send_to] = [sent_from]
+        elif sent_from in message_data[send_to]:
+            return redirect(url_for("serve_main", error="already request this user!"))
+        else:
+            message_data[send_to].append(sent_from)
+        """
+        if not send_to in message_data.keys():
+            message_data[send_to] = { sent_from: [message] }
+        elif sent_from not in message_data[send_to].keys():
+            message_data[send_to][sent_from] = [message]
+        else:
+            message_data[send_to][sent_from].append(message)
+        """
+
+        with open("data/request.json", "w") as f:
+            json.dump(message_data, f, indent=4)
+
+        return url_for("serve_main", sent_request="true")
+
+    except:
+        return redirect(url_for("serve_index", error="malicious user"))
+
+
+@app.route("/view_my_request", methods=("GET",))
+def handle_view_my_request():
+    try:
+        with open("data/request.json", "r") as f:
+            data = json.load(f)[session.get("uuid")]
+        return jsonify(data)
+    except:
+        return "no requests"
+
 
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
