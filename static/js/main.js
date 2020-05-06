@@ -73,15 +73,6 @@ $(".face-card").css({
     'height': cw + 'px'
 });
 
-setTimeout(()=>{
-  $.get("/get_uuids_sentto", (uuids_sentto)=>{
-    for(let i in uuids_sentto){
-        document.getElementById("my" + uuids_sentto[i]).innerHTML += "&#x2713"; // checkmark
-    }
-  });
-}, 2000);
-
-
 function search_name(){
   let name = $("#search").val();
   if(name){
@@ -91,6 +82,21 @@ function search_name(){
   }
 }
 
+
+function drawCheckmarkOnload(div_id){
+	let div_elt = document.getElementById(div_id);
+	if(div_elt){
+		div_elt.innerHTML += "&#x2713"; // checkmark
+	}
+	else{
+		setTimeout(()=>{drawCheckmarkOnload(div_id)}, 1000);
+	}
+}
+$.get("/get_uuids_sentto", (uuids_sentto)=>{
+	for(let i in uuids_sentto){
+		drawCheckmarkOnload("my" + uuids_sentto[i]);
+	}
+});
 /*
 //temporarily diable search bar
 document.getElementById("search").addEventListener("keyup", function(event){
@@ -100,3 +106,4 @@ document.getElementById("search").addEventListener("keyup", function(event){
   }
 });
 */
+
