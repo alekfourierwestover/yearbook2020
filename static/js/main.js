@@ -1,5 +1,9 @@
 const MAX_NUM_COLUMNS = 4;
 
+$.get("/get_school", function(school){
+    $("#school").text(school);
+});
+
 if(urlParams.get("sent_message")){
   $.notify("You successfully sent a message", "success");
 }
@@ -67,7 +71,7 @@ $.get("/getProfiles", function(data){
       
 
       let currentCard = $(`<div class='face-card' id="card_${uuid}" onclick='window.location.href="${link}"'></div>`);
-      currentCard.append($(`<img id="img_${uuid}" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null; this.src='${assets_path}/panda.png';"></img>`));
+      currentCard.append($(`<img id="img_${uuid}" class="pfp-image" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null; this.src='${assets_path}/panda.png';"></img>`));
       let nameText = $(`<h2 id="my${uuid}" style="font-size:2.5vw"></h2>`);
       nameText.text(data[uuid].name);
       currentCard.append(nameText);
@@ -102,15 +106,6 @@ $(".face-card").css({
     'height': cw + 'px'
 });
 
-setTimeout(()=>{
-  $.get("/get_uuids_sentto", (uuids_sentto)=>{
-    for(let i in uuids_sentto){
-        document.getElementById("my" + uuids_sentto[i]).innerHTML += "&#x2713"; // checkmark
-    }
-  });
-}, 2000);
-
-
 function search_name(){
   let name = $("#search").val();
   if(name){
@@ -120,6 +115,21 @@ function search_name(){
   }
 }
 
+
+function drawCheckmarkOnload(div_id){
+	let div_elt = document.getElementById(div_id);
+	if(div_elt){
+		div_elt.innerHTML += "&#x2713"; // checkmark
+	}
+	else{
+		setTimeout(()=>{drawCheckmarkOnload(div_id)}, 1000);
+	}
+}
+$.get("/get_uuids_sentto", (uuids_sentto)=>{
+	for(let i in uuids_sentto){
+		drawCheckmarkOnload("my" + uuids_sentto[i]);
+	}
+});
 /*
 //temporarily diable search bar
 document.getElementById("search").addEventListener("keyup", function(event){
@@ -129,3 +139,4 @@ document.getElementById("search").addEventListener("keyup", function(event){
   }
 });
 */
+

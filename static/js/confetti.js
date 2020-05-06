@@ -2,8 +2,8 @@
 const numconfettis = 1000;
 const numcolors = 7;
 let confettis = [];
-const ww = window.innerWidth;
-const wh = window.innerHeight;
+let ww = window.innerWidth;
+let wh = window.innerHeight;
 
 let pos = [];
 let vels = [];
@@ -21,6 +21,8 @@ setTimeout(()=>{
 for (var i = 0; i < numconfettis; i++) {
   let color_i = Math.floor(Math.random()*numcolors);
   let size_i = 5*Math.random()+5;
+
+  wh = Math.max($(document).height(), wh);
 
   confettis.push($(`<div class="confetti confetti${color_i}"></div>`));
 
