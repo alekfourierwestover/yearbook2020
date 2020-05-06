@@ -31,6 +31,10 @@ mail = Mail(app)
 def safestr(bad_txt):
     return str(uuid.uuid5(uuid.NAMESPACE_URL, bad_txt))
 
+@app.route("/get_school", methods=("GET",))
+def get_school():
+    return session.get("school")
+
 @app.route("/reset_password", methods=("POST",))
 def reset_pwd():
     with open(f"data/{session['school']}/users.json", "r") as f:
@@ -571,5 +575,5 @@ def handle_edit_college():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port='80', debug=True)
+    app.run(host="0.0.0.0", port='5000', debug=True)
 

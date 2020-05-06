@@ -1,5 +1,9 @@
 const MAX_NUM_COLUMNS = 4;
 
+$.get("/get_school", function(school){
+    $("#school").text(school);
+});
+
 if(urlParams.get("sent_message")){
   $.notify("You successfully sent a message", "success");
 }
