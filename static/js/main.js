@@ -73,11 +73,14 @@ $(".face-card").css({
     'height': cw + 'px'
 });
 
-$.get("/get_uuids_sentto", (uuids_sentto)=>{
+setTimeout(()=>{
+  $.get("/get_uuids_sentto", (uuids_sentto)=>{
     for(let i in uuids_sentto){
         document.getElementById("my" + uuids_sentto[i]).innerHTML += "&#x2713"; // checkmark
     }
-});
+  });
+}, 2000);
+
 
 function search_name(){
   let name = $("#search").val();
