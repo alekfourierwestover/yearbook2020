@@ -5,7 +5,8 @@ $.get("/view_my_request", function(data){
   else{
   	for(let i in data){
   		person = data[i];
-  		$("#request").append(`<center>${person}<br></center>`);
+      let link = `/sendmessages?sendto=${person}`;
+  		$("#request").append(`<center onclick='window.location.href="${link}"'>${person}<br></center>`);
   	}
   }
 });
