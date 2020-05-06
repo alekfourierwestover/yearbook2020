@@ -1,3 +1,7 @@
+.pfp-image {
+    background: url('/static/assets/panda.png') no-repeat center;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -43,4 +47,6 @@
 #card_9afa518a-c161-5d21-b501-4408174fccaa { 
   background: #c7d6d9;
 }
+
+
 
