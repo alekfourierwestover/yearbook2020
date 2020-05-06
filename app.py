@@ -8,6 +8,7 @@ import uuid
 import os
 import random
 from PIL import Image
+from cryptography.fernet import Fernet
 
 with open("data/registered_schools.json", "r") as f:
     REGISTERED_SCHOOLS = json.load(f)
@@ -17,6 +18,9 @@ with open("data/school_email_patterns.json", "r") as f:
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRETKEY")
+
+ENCRPTION_SECRET_KEY = os.environ.get("ENCRYPTIONSECRETKEY").encode()
+message_encrypter = Fernet(ENCRPTION_SECRET_KEY)
 
 app.config.update(
     DEBUG=False,
@@ -172,6 +176,10 @@ def serve_index(school="belmonthigh"):
     else:
         return render_template("index.html")
 
+@app.route("/test_confetti")
+def serve_test_confetti():
+    return render_template("confetti.html")
+
 @app.route("/main")
 def serve_main():
     if session.get("loggedin"):
@@ -211,6 +219,28 @@ def serve_edit():
             return redirect(url_for("serve_verify"))
     else:
         return redirect(url_for("serve_index"))
+
+@app.route("/request")
+def serve_request():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("request.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
+
+@app.route("/teacher")
+def serve_teacher():
+    if session.get("loggedin"):
+        if session.get("verified"):
+            return render_template("teacher.html")
+        else:
+            return redirect(url_for("serve_verify"))
+    else:
+        return redirect(url_for("serve_index"))
+
 
 @app.route("/schoolnotfound", methods=("GET",))
 def serve_schoolnotfound():
@@ -297,7 +327,6 @@ def handle_login(school="belmonthigh"):
 def handle_register(school="belmonthigh"):
     if school not in REGISTERED_SCHOOLS:
         return redirect(url_for("serve_schoolnotfound"))
-    print(session.get("school"))
 
     # request.form["key"] extracts a value from the js form
     with open(f"data/{school}/users.json", "r") as f:
@@ -393,13 +422,27 @@ def getProfiles():
     if not(session["loggedin"] and session["verified"]):
         return redirect(url_for("serve_index", error="malicious user"))
 
-    print(session['school'])
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
 
     verified_senior_profiles = {}
     for uuid in data:
         if data[uuid]["verified"] and data[uuid]["senior"]:
+            verified_senior_profiles[uuid] = data[uuid]
+
+    return jsonify(verified_senior_profiles)
+
+@app.route("/getTeacherProfiles", methods=("GET",))
+def getTeacherProfiles():
+    if not(session["loggedin"] and session["verified"]):
+        return redirect(url_for("serve_index", error="malicious user"))
+
+    with open(f"data/{session['school']}/users.json", "r") as f:
+        data = json.load(f)
+
+    verified_senior_profiles = {}
+    for uuid in data:
+        if data[uuid]["verified"] and not(data[uuid]["senior"]):
             verified_senior_profiles[uuid] = data[uuid]
 
     return jsonify(verified_senior_profiles)
@@ -418,7 +461,7 @@ def handle_send_message():
         sent_from = session.get("username")
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
-        message = request.form.get("message")
+        message = message_encrypter.encrypt(request.form.get("message").encode()).decode("utf-8")
 
         if send_to not in user_data.keys():
             session["loggedin"] = False
@@ -438,12 +481,64 @@ def handle_send_message():
     except:
         return redirect(url_for("serve_index", error="malicious user"))
 
+@app.route("/send_request", methods=("POST",))
+def handle_send_request():
+    try:
+        if not (session["loggedin"] and session["verified"]):
+            return redirect(url_for("serve_index", error="malicious user"))
+        with open(f"data/{session['school']}/request.json", "r") as f:
+            message_data = json.load(f)
+
+        with open(f"data/{session['school']}/users.json", "r") as f:
+            user_data = json.load(f)
+
+        sent_from = session.get("username")
+        sent_from_uuid = session.get("uuid")
+        send_to = request.form.get("sendto")
+
+        if send_to not in user_data.keys():
+            session["loggedin"] = False
+            return url_for("serve_index", error="malicious user")
+
+        if not send_to in message_data.keys():
+            message_data[send_to] = [sent_from]
+        elif sent_from in message_data[send_to]:
+            return url_for("serve_main", error="already requested this user")
+        else:
+            message_data[send_to].append(sent_from)
+
+        with open(f"data/{session['school']}/request.json", "w") as f:
+            json.dump(message_data, f, indent=4)
+
+        return url_for("serve_main", sent_request="true")
+
+    except:
+        return redirect(url_for("serve_index", error="malicious user"))
+
+
+@app.route("/view_my_request", methods=("GET",))
+def handle_view_my_request():
+    try:
+        with open(f"data/{session['school']}/request.json", "r") as f:
+            data = json.load(f)[session.get("uuid")]
+        return jsonify(data)
+    except:
+        return "no requests"
+
+
 @app.route("/view_my_messages", methods=("GET",))
 def handle_view_my_messages():
     try:
         with open(f"data/{session['school']}/messages.json", "r") as f:
             data = json.load(f)[session.get("uuid")]
-        return jsonify(data)
+
+        unencrypted_my_messages = {}
+        for sender in data:
+            unencrypted_my_messages[sender] = []
+            for message in data[sender]:
+                unencrypted_my_messages[sender].append(message_encrypter.decrypt(message.encode()).decode("utf-8"))
+
+        return jsonify(unencrypted_my_messages)
     except:
         return "no messages"
 

@@ -1,5 +1,4 @@
 
-
 $.get("/get_uuid", function(uuid){
   $.get("/view_profile", {"uuid": uuid}, function(data){
     let currentCard = $("<div class='face-card' style='height:auto'></div>");

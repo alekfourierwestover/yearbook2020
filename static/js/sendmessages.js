@@ -20,3 +20,12 @@ function send_message(){
     window.location.href = data;
   });
 }
+
+function send_request(){
+  $.post("/send_request", { 
+    "sendto": urlParams.get("sendto")
+  }, (data)=>{
+    window.location.href = data;
+  });
+}
+
