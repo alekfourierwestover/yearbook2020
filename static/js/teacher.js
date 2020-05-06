@@ -58,6 +58,8 @@ $(".face-card").css({
     'height': cw + 'px'
 });
 
+
+// THIS IS BROKEN! / WRONG!!!!! needs to send non-senior ppl
 $.get("/get_uuids_sentto", (uuids_sentto)=>{
     for(let i in uuids_sentto){
         document.getElementById("my" + uuids_sentto[i]).innerHTML += "&#x2713"; // checkmark
