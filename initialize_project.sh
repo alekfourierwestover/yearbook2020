@@ -12,6 +12,6 @@ echo "{}" > verification_codes.json
 echo "{}" > passwords.json
 echo "{}" > request.json
 
-echo "[\"belmonthigh\"] "
-echo "{ \"belmonthigh\": { \"senior\": [\"20@belmontschools.net\"], \"all\": [\"@belmontschools.net\", \"@belmont.k12.ma.us\"] } }
+echo "[\"belmonthigh\"] " > registered_schools.json
+echo "{ \"belmonthigh\": { \"senior\": [\"20@belmontschools.net\"], \"all\": [\"@belmontschools.net\", \"@belmont.k12.ma.us\"] } }" > school_email_patterns.json
 
