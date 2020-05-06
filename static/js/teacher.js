@@ -20,6 +20,8 @@ $.get("/getTeacherProfiles", function(data){
 	    return 1;
 	}
     });
+
+    
     for(let i in ppl_uuids){
 	uuid = ppl_uuids[i];
       if(ct % MAX_NUM_COLUMNS == 0 && ct != 0){

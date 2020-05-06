@@ -24,15 +24,17 @@ $.get("/getProfiles", function(data){
 
     let ppl_uuids = Object.keys(data);
     ppl_uuids.sort((a,b)=>{
-        if( afterSpace(data[a].name) < afterSpace(data[b].name) ){
-	    return -1;
-	}
-	else {
-	    return 1;
-	}
+      if( afterSpace(data[a].name) < afterSpace(data[b].name) ){
+        return -1;
+      }
+      else {
+        return 1;
+      }
     });
+
+
     for(let i in ppl_uuids){
-	uuid = ppl_uuids[i];
+      uuid = ppl_uuids[i];
       if(ct % MAX_NUM_COLUMNS == 0 && ct != 0){
         allRows.push(currentRow);
         currentRow = [];
@@ -49,6 +51,8 @@ $.get("/getProfiles", function(data){
       currentRow.push(currentCard);
       ct++;
     }
+
+
     while(ct % MAX_NUM_COLUMNS != 0){
       ct++;
       currentRow.push($("<div class='col-sm face-card'></div>"));
