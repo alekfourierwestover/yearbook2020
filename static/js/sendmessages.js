@@ -22,8 +22,9 @@ function send_message(){
 }
 
 function send_request(){
-  $.post("/send_request", {
-  "sendto": urlParams.get("sendto")}, (data)=>{
+  $.post("/send_request", { 
+    "sendto": urlParams.get("sendto")
+  }, (data)=>{
     window.location.href = data;
   });
 }

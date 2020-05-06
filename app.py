@@ -8,6 +8,7 @@ import uuid
 import os
 import random
 from PIL import Image
+from cryptography.fernet import Fernet
 
 with open("data/registered_schools.json", "r") as f:
     REGISTERED_SCHOOLS = json.load(f)
@@ -17,6 +18,9 @@ with open("data/school_email_patterns.json", "r") as f:
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRETKEY")
+
+ENCRPTION_SECRET_KEY = os.environ.get("ENCRYPTIONSECRETKEY").encode()
+message_encrypter = Fernet(ENCRPTION_SECRET_KEY)
 
 app.config.update(
     DEBUG=False,
@@ -439,7 +443,6 @@ def getTeacherProfiles():
 
     return jsonify(verified_senior_profiles)
 
-
 @app.route("/send_message", methods=("POST",))
 def handle_send_message():
     try:
@@ -454,7 +457,7 @@ def handle_send_message():
         sent_from = session.get("username")
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
-        message = request.form.get("message")
+        message = message_encrypter.encrypt(request.form.get("message").encode()).decode("utf-8")
 
         if send_to not in user_data.keys():
             session["loggedin"] = False
@@ -499,14 +502,6 @@ def handle_send_request():
             return url_for("serve_main", error="already requested this user")
         else:
             message_data[send_to].append(sent_from)
-        """
-        if not send_to in message_data.keys():
-            message_data[send_to] = { sent_from: [message] }
-        elif sent_from not in message_data[send_to].keys():
-            message_data[send_to][sent_from] = [message]
-        else:
-            message_data[send_to][sent_from].append(message)
-        """
 
         with open(f"data/{session['school']}/request.json", "w") as f:
             json.dump(message_data, f, indent=4)
@@ -532,7 +527,14 @@ def handle_view_my_messages():
     try:
         with open(f"data/{session['school']}/messages.json", "r") as f:
             data = json.load(f)[session.get("uuid")]
-        return jsonify(data)
+
+        unencrypted_my_messages = {}
+        for sender in data:
+            unencrypted_my_messages[sender] = []
+            for message in data[sender]:
+                unencrypted_my_messages[sender].append(message_encrypter.decrypt(message.encode()).decode("utf-8"))
+
+        return jsonify(unencrypted_my_messages)
     except:
         return "no messages"
 
