@@ -15,7 +15,7 @@ $.get("/getTeacherProfiles", function(data){
     ppl_uuids.sort((a,b)=>{
         if( afterSpace(data[a].name) < afterSpace(data[b].name) ){
 	    return -1;
-	}
+	 }
 	else {
 	    return 1;
 	}

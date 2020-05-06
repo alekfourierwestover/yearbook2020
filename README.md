@@ -53,6 +53,8 @@ nohup python app.py &
 
 #TODO 5/5/20
 - cleo card  [all]
+  - send messages feature that is public
+  - link to go fund me
 - make the request menu better [leon]
 - teacher menu [leon]
 - how to use page [david]
