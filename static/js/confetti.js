@@ -11,7 +11,7 @@ let vels = [];
 let wind_force = {"x": 0, "y": 0};
 
 const gravity = .0001;
-const dt = 60;
+const dt = 6;
 const wind_period = 0.2;
 let tick_ct = 0;
 let wind_xoff = wind_period*Math.PI*2 *Math.random();
