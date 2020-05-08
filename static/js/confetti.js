@@ -1,6 +1,6 @@
 
 const numconfettis = 1000;
-const numcolors = 7;
+const numcolors = 5;
 let confettis = [];
 let ww = window.innerWidth;
 let wh = window.innerHeight;
@@ -63,4 +63,3 @@ function update(){
     setTimeout(update, dt);
   }
 }
-
