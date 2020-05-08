@@ -12,6 +12,7 @@
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 
 <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" type="text/css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/confetti.css')}}" type="text/css" >
 {% endblock %}
 
 {% block content %}
@@ -22,9 +23,12 @@
     <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
   </div>
 <div style="clear: right">
+<<<<<<< HEAD
   <h1 style="font-size: 3vw">CONGRATULATIONS!<br>Graduating Class Of 2020</h1>
+=======
+	<h1 style="font-size: 3vw">CONGRATULATIONS!<br> <strong id="school">Graduating</strong> Class Of 2020</h1>
+>>>>>>> 0c1d526d08457edc6c7a939862c6bb7789881932
 </div>
-
 </div>
 
 <!-- temporarily disable search bar -->
@@ -61,10 +65,13 @@
 
 <div id="faces" class="row">
 </div>
+<div id="confetti-place">
+</div>
 
 <br>
 <br>
 <br>
 <script src="{{url_for('static', filename='js/main.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static', filename='js/confetti.js')}}" charset="utf-8"></script>
 
 {% endblock %}
