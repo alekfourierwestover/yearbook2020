@@ -512,7 +512,7 @@ def handle_send_request():
 
         with open(f"data/{session['school']}/users.json", "r") as f:
             user_data = json.load(f)
-
+            
         sent_from = session.get("username")
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
@@ -522,11 +522,11 @@ def handle_send_request():
             return url_for("serve_index", school=session.get("school"), error="malicious user")
 
         if not send_to in message_data.keys():
-            message_data[send_to] = [sent_from]
+            message_data[send_to] = [{"name":sent_from, "uuid":sent_from_uuid}]
         elif sent_from in message_data[send_to]:
             return url_for("serve_main", error="already requested this user")
         else:
-            message_data[send_to].append(sent_from)
+            message_data[send_to].append({"name":sent_from, "uuid":sent_from_uuid})
 
         with open(f"data/{session['school']}/request.json", "w") as f:
             json.dump(message_data, f, indent=4)
