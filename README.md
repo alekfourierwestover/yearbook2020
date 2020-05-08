@@ -1,11 +1,11 @@
 # yearbook2020
-Yearbook for BHS 2020 
+Yearbook for BHS 2020
 
 # project installation
 
 ```
 git clone https://github.com/alekfourierwestover/yearbook2020.git
-cd static 
+cd static
 npm i
 cd ..
 
@@ -17,9 +17,9 @@ cd belmonthigh
 
 echo "{}" > data/users.json
 echo "{}" > data/messages.json
-echo "{}" > data/passwords.json
-echo "{}" > data/request.json
-echo "{}" > data/verification_codes.json
+echo "{}" > passwords.json
+echo "{}" > request.json
+echo "{}" > verification_codes.json
 
 cd ..
 
@@ -34,7 +34,7 @@ echo "{
 
 cd .. (get to the yearbook directory)
 
-python3 app.py 
+python3 app.py
 
 
 
@@ -45,7 +45,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-then to run: 
+then to run:
 
 ```
 nohup python app.py &
@@ -55,7 +55,7 @@ nohup python app.py &
 
 # Bugs 4/27/20 
 
-# unresolved 
+# unresolved
 - password resets
 - outside emails?  - keep the 20@belmontschools.net => if not, look through teacher email list   
 
@@ -63,7 +63,7 @@ nohup python app.py &
 	- maurader head map stuff is squished
 	- dumb blank space at the bottom
 
-- misc: 
+- misc:
 	- static pages
 
 # resolved

@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 
+{% block uncontained_content %}
+	{% include "header.html" %}
+{% endblock %}
+
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/howto.css')}}" type="text/css">
 {% endblock %}
+
 
 {% block content %}
 <div class="card">
@@ -12,9 +17,18 @@
     <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
   </div>
 <div style="clear: right">
-  <h1 style="font-size: 3vw">CONGRATULATIONS!<br> Graduating Class Of 2020</h1>
+  <br><h1 style="font-size: 3vw">How to Use This Yearbook!</h1><br>
+</div>
 </div>
 
+<br>
+
+<div class="card">
+  <img id="left-pic" alt="Main Page" src="{{url_for('static', filename='assets/main.png')}}"/>
+  <span><h2 style="font-size: 2vw">This is the Home Page!</h2></span>
 </div>
+
+
+
 
 {% endblock %}
