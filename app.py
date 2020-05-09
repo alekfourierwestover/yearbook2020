@@ -294,7 +294,7 @@ def handle_login(school="belmonthigh"):
     with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
 
-    user_name = request.form.get("name")
+    user_name = request.form.get("name").strip()
 
     if " " not in user_name:
         return redirect(url_for("serve_index", error="full name must contain a space character"))
