@@ -49,18 +49,18 @@ def reset_pwd():
 
     user_name = request.form.get("name")
     if " " not in user_name:
-        return redirect(url_for("serve_index", error="full name must contain a space character"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="full name must contain a space character"))
 
     first_name, last_name = user_name.split(" ")
     if len(first_name) < 2 or len(last_name) < 2:
-        return redirect(url_for("serve_index", error="name_too_short"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="name_too_short"))
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
     user_name = first_name + " " + last_name
 
     safe_user_name = safestr(user_name)
     if safe_user_name not in data:
-        return redirect(url_for("serve_index", error="user_doesnt_exist"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="user_doesnt_exist"))
 
     data[safe_user_name]["verified"] = True
     passwords[safe_user_name] = sha256_crypt.hash(new_pwd)
@@ -76,9 +76,9 @@ def reset_pwd():
         with open(f"data/{session['school']}/passwords.json", "w") as f:
             json.dump(passwords, f, indent=4)
 
-        return redirect(url_for("serve_index", success="password successfully reset"))
+        return redirect(url_for("serve_index", school=session.get("school"), success="password successfully reset"))
     except Exception as e:
-        return redirect(url_for("serve_index", error=str(e)))
+        return redirect(url_for("serve_index", school=session.get("school"), error=str(e)))
 
 @app.route('/send_verification_code/', methods=("GET","POST"))
 def session_send_verification_code():
@@ -88,7 +88,7 @@ def session_send_verification_code():
         mail.send(msg)
         return redirect(url_for("serve_verify"))
     except Exception as e:
-        return redirect(url_for("serve_index", error=str(e)))
+        return redirect(url_for("serve_index", school=session.get("school"), error=str(e)))
 
 @app.route("/check_verification_code", methods=("POST","GET"))
 def check_verification_code():
@@ -110,9 +110,9 @@ def check_verification_code():
             else:
                 return redirect(url_for("serve_verified", error="code_wrong"))
         else:
-            return redirect(url_for("serve_index"))
+            return redirect(url_for("serve_index", school=session.get("school")))
     except:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 
 @app.route("/get_colleges_csv", methods=("GET",))
@@ -188,7 +188,7 @@ def serve_main():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 @app.route("/mymessages")
 def serve_mymessages():
@@ -198,7 +198,7 @@ def serve_mymessages():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 @app.route("/sendmessages")
 def serve_sendmessages():
@@ -208,7 +208,7 @@ def serve_sendmessages():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 @app.route("/edit")
 def serve_edit():
@@ -218,7 +218,7 @@ def serve_edit():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 @app.route("/request")
 def serve_request():
@@ -228,7 +228,7 @@ def serve_request():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 
 @app.route("/teacher")
@@ -239,7 +239,7 @@ def serve_teacher():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 
 @app.route("/schoolnotfound", methods=("GET",))
@@ -254,7 +254,7 @@ def serve_map():
         else:
             return redirect(url_for("serve_verify"))
     else:
-        return redirect(url_for("serve_index"))
+        return redirect(url_for("serve_index", school=session.get("school")))
 
 @app.route("/error")
 def serve_error():
@@ -266,7 +266,7 @@ def serve_verify():
         if session.get("loggedin"):
             return render_template("verify.html")
         else:
-            return redirect(url_for("serve_index", error="malicious_user"))
+            return redirect(url_for("serve_index", school=session.get("school"), error="malicious_user"))
     else:
         return redirect(url_for("serve_main"))
 
@@ -297,11 +297,11 @@ def handle_login(school="belmonthigh"):
     user_name = request.form.get("name").strip()
 
     if " " not in user_name:
-        return redirect(url_for("serve_index", error="full name must contain a space character"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="full name must contain a space character"))
 
     first_name, last_name = user_name.split(" ")
     if len(first_name) < 2 or len(last_name) < 2:
-        return redirect(url_for("serve_index", error="name is too short"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="name is too short"))
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
     user_name = first_name + " " + last_name
@@ -309,7 +309,7 @@ def handle_login(school="belmonthigh"):
     safe_user_name = safestr(user_name)
 
     if safe_user_name not in data:
-        return redirect(url_for("serve_index", error="user doesnt exist"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="user doesnt exist"))
 
     if sha256_crypt.verify(request.form.get("password"), passwords[safe_user_name]):
         session["username"] = user_name
@@ -320,7 +320,7 @@ def handle_login(school="belmonthigh"):
         session["senior"] = data[safe_user_name]["senior"]
         return redirect(url_for("serve_main"))
     else:
-        return redirect(url_for("serve_index", error="password wrong"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="password wrong"))
 
 @app.route("/register", methods=("POST",))
 @app.route("/<string:school>/register", methods=("POST",))
@@ -336,10 +336,10 @@ def handle_register(school="belmonthigh"):
     last_name = request.form["lastname"].strip()
 
     if len(last_name) < 2 or len(first_name) < 2:
-        return redirect(url_for("serve_index", error="name is too short"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="name is too short"))
 
     if request.form["password"] != request.form["confirm"]:
-        return redirect(url_for("serve_index", error="passwords dont match"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="passwords dont match"))
 
     first_name = first_name[0].upper() + first_name[1:]
     last_name = last_name[0].upper() + last_name[1:]
@@ -361,13 +361,13 @@ def handle_register(school="belmonthigh"):
             break
 
     if not email_good:
-        return redirect(url_for("serve_index", error="email is no good"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="email is no good"))
 
     if last_name.lower().replace("-", "") not in user_email:
-        return redirect(url_for("serve_index", error="email does not contain your lastname"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="email does not contain your lastname"))
 
     if safe_user_name in data:
-        return redirect(url_for("serve_index", error="username taken"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="username taken"))
 
     session["school"] = school
     session["username"] = user_name
@@ -375,7 +375,7 @@ def handle_register(school="belmonthigh"):
     session["loggedin"] = True
     session["verified"] = False
     session["email"] = user_email
-    session["senior"] = email_is_seniors 
+    session["senior"] = email_is_seniors
     session["verification_code"] = safestr(str(random.random()))[:8]
 
     try:
@@ -420,7 +420,7 @@ def handle_register(school="belmonthigh"):
 @app.route("/getProfiles", methods=("GET",))
 def getProfiles():
     if not(session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
 
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
@@ -435,7 +435,7 @@ def getProfiles():
 @app.route("/getTeacherProfiles", methods=("GET",))
 def getTeacherProfiles():
     if not(session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
 
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
@@ -451,7 +451,7 @@ def getTeacherProfiles():
 def handle_send_message():
     try:
         if not (session["loggedin"] and session["verified"]):
-            return redirect(url_for("serve_index", error="malicious user"))
+            return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
         with open(f"data/{session['school']}/messages.json", "r") as f:
             message_data = json.load(f)
 
@@ -465,7 +465,7 @@ def handle_send_message():
 
         if send_to not in user_data.keys():
             session["loggedin"] = False
-            return url_for("serve_index", error="malicious user")
+            return url_for("serve_index", school=session.get("school"), error="malicious user")
 
         if not send_to in message_data.keys():
             message_data[send_to] = { sent_from: [message] }
@@ -479,33 +479,33 @@ def handle_send_message():
 
         return url_for("serve_main", sent_message="true")
     except:
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
 
 @app.route("/send_request", methods=("POST",))
 def handle_send_request():
     try:
         if not (session["loggedin"] and session["verified"]):
-            return redirect(url_for("serve_index", error="malicious user"))
+            return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
         with open(f"data/{session['school']}/request.json", "r") as f:
             message_data = json.load(f)
 
         with open(f"data/{session['school']}/users.json", "r") as f:
             user_data = json.load(f)
-
+            
         sent_from = session.get("username")
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
 
         if send_to not in user_data.keys():
             session["loggedin"] = False
-            return url_for("serve_index", error="malicious user")
+            return url_for("serve_index", school=session.get("school"), error="malicious user")
 
         if not send_to in message_data.keys():
-            message_data[send_to] = [sent_from]
+            message_data[send_to] = [{"name":sent_from, "uuid":sent_from_uuid}]
         elif sent_from in message_data[send_to]:
             return url_for("serve_main", error="already requested this user")
         else:
-            message_data[send_to].append(sent_from)
+            message_data[send_to].append({"name":sent_from, "uuid":sent_from_uuid})
 
         with open(f"data/{session['school']}/request.json", "w") as f:
             json.dump(message_data, f, indent=4)
@@ -513,7 +513,7 @@ def handle_send_request():
         return url_for("serve_main", sent_request="true")
 
     except:
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
 
 
 @app.route("/view_my_request", methods=("GET",))
@@ -549,7 +549,7 @@ def handle_get_registered_schools():
 @app.route("/get_uuids_sentto", methods=("GET",))
 def handle_get_uuids_sentto():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"),error="malicious user"))
 
     with open(f"data/{session['school']}/messages.json", "r") as f:
         data = json.load(f)
@@ -565,18 +565,18 @@ def handle_get_uuids_sentto():
 # returns name and bio
 def handle_view_profile():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
     try:
         with open(f"data/{session['school']}/users.json", "r") as f:
             data = json.load(f)
             return jsonify(data[request.args.get("uuid")])
     except:
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
 
 @app.route("/edit_password", methods=("POST", ))
 def handle_edit_password():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
     with open(f"data/{session['school']}/passwords.json", "r") as f:
         passwords = json.load(f)
 
@@ -591,12 +591,12 @@ def handle_edit_password():
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="error"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="error"))
 
 @app.route("/edit_quote", methods=("POST", ))
 def handle_edit_quote():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
     with open(f"data/{session['school']}/passwords.json", "r") as f:
@@ -613,12 +613,12 @@ def handle_edit_quote():
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="user not found"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="user not found"))
 
 @app.route("/edit_picture", methods=("POST", ))
 def handle_edit_picture():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
     with open(f"data/{session['school']}/passwords.json", "r") as f:
@@ -644,12 +644,12 @@ def handle_edit_picture():
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="user not found"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="user not found"))
 
 @app.route("/edit_college", methods=("POST", ))
 def handle_edit_college():
     if not (session["loggedin"] and session["verified"]):
-        return redirect(url_for("serve_index", error="malicious user"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="malicious user"))
     with open(f"data/{session['school']}/users.json", "r") as f:
         data = json.load(f)
     with open(f"data/{session['school']}/passwords.json", "r") as f:
@@ -666,9 +666,8 @@ def handle_edit_college():
     except:
         session["loggedin"] = False
         session["verified"] = False
-        return redirect(url_for("serve_index", error="user not found"))
+        return redirect(url_for("serve_index", school=session.get("school"), error="user not found"))
 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port='80') # debug=True
-
