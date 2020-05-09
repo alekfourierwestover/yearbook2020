@@ -4,8 +4,8 @@ $.get("/view_my_request", function(data){
   }
   else{
   	for(let i in data){
-  		person = data[i];
-      let link = `/sendmessages?sendto=${person}`;
+  		let person = data[i].name;
+      let link = `/sendmessages?sendto=${data[i].uuid}`;
   		$("#request").append(`<center onclick='window.location.href="${link}"'>${person}<br></center>`);
   	}
   }
