@@ -467,11 +467,8 @@ def handle_send_message():
         message = message_encrypter.encrypt(request.form.get("message").encode()).decode("utf-8")
 
         #if Leon sends to Ziyong || Leon=sent_from, Ziyong=send_to
-        #in request.json, it would be like key Leon: Ziyong
-        print(sent_from, "hi")
-
-        print(send_to, "ff")
-
+        #in request.json, it would be like key Leon.uuid: name:Ziyong uuid:Ziyong.uuid
+        
         if sent_from_uuid in request_data.keys():
             if send_to in request_data[sent_from_uuid]:
                 request_data[sent_from_uuid].remove(send_to)
