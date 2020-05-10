@@ -1,4 +1,4 @@
-#left-pic {
+/*.left-pic {
   display: flex;
   left: 3%;
   max-width:47%;
@@ -6,7 +6,7 @@
   vertical-align: middle;
 }
 
-#right-pic {
+.right-pic {
   display: flex;
   max-width:47%;
   height:47%;
@@ -14,10 +14,65 @@
   align-items: center;
 }
 
+.left-text {
+  display: flex;
+  left: 3%;
+  max-width:47%;
+  max-height:47%;
+  vertical-align: middle;
+}
+
+.right-text {
+  display: flex;
+  max-width:47%;
+  height:47%;
+  right: 3%;
+  align-items: center;
+}
+*/
+
+.right-pic {
+  width: 49%;
+  float: left;
+}
+
+.left-pic {
+  width: 49%;
+  float: right;
+}
+
+.right-text {
+  width: 49%;
+  float: left;
+}
+
+.left-text {
+  width: 49%;
+  float: right;
+}
+
+.centerDiv {
+  width: auto;
+  margin: 0 auto;
+}
+
+hr {
+  width: 50%;
+  border-top: 1px solid #0D244C;
+}
+
 .card {
   padding: 2%;
 }
 
+h4 {
+  font-size: 1.4vw;
+}
+
 .widget h2 {
+  display: inline-block;
+}
+
+.widget h4 {
   display: inline-block;
 }

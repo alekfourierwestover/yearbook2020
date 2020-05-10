@@ -480,7 +480,7 @@ def handle_send_message():
         #sendto is in the form of the hashed uuid
         #if Leon sends to Ziyong || Leon=sent_from, Ziyong=send_to
         #in request.json, it would be like key Leon.uuid:  name:Ziyong uuid:Ziyong.uuid
-        
+
         if sent_from_uuid in request_data.keys():
             #print("a")
             #print(send_to)
@@ -523,20 +523,11 @@ def handle_send_request():
 
         with open(f"data/{session['school']}/users.json", "r") as f:
             user_data = json.load(f)
-            
+
         sent_from = session.get("username")
         sent_from_uuid = session.get("uuid")
         send_to = request.form.get("sendto")
 
-<<<<<<< HEAD
-        """
-        print(sent_from)
-        print(sent_from_uuid)
-        print(send_to)
-        """
-
-=======
->>>>>>> 0c1d526d08457edc6c7a939862c6bb7789881932
         if send_to not in user_data.keys():
             session["loggedin"] = False
             return url_for("serve_index", school=session.get("school"), error="malicious user")
@@ -711,8 +702,4 @@ def handle_edit_college():
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    app.run(host="0.0.0.0", port='80', debug=True)
-=======
     app.run(host="0.0.0.0", port='80') # debug=True
->>>>>>> 0c1d526d08457edc6c7a939862c6bb7789881932

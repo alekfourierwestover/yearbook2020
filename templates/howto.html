@@ -17,18 +17,111 @@
     <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
   </div>
 <div style="clear: right">
-  <br><h1 style="font-size: 3vw">How to Use This Yearbook!</h1><br>
+  <br><h1 style="font-size: 3vw">How To Use This Yearbook!</h1><br>
 </div>
 </div>
-
-<br>
-
+<hr>
 <div class="card">
-  <img id="left-pic" alt="Main Page" src="{{url_for('static', filename='assets/main.png')}}"/>
-  <span><h2 style="font-size: 2vw">This is the Home Page!</h2></span>
+  <div class ="centerDiv">
+  <div class="right-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/main.png')}}"/>
+  </div>
+  <div class="left-text"
+    <h2 style="font-size: 2vw">This is the Home Page!</h2>
+    <br>
+    <h4>Welcome to the Virtual Yearbook! The home page shows all Senior profiles. Use the navbar at the top to explore the Virtual Yearbook's other pages, and click on "Belmont High School Yearbook" to come back to this page.<br><br>To sign someone's yearbook, click on their profile!</h4>
+  </div>
+  </div>
 </div>
-
-
+<br>
+<div class="card">
+  <div class ="centerDiv">
+  <div class="left-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/sendmessage.png')}}"/>
+  </div>
+  <div class="right-text"
+    <h2 style="font-size: 2vw">Sending A Message</h2>
+    <br>
+    <h4>Enter a message in the space provided below to compose a heartfelt note. Once you hit "Sign Yearbook", you will not be able to view what you sent. A checkmark (&#x2713) will appear next to the recipient's name<br><br>If you would someone to sign your yearbook, click "Request Signing"!</h4>
+  </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class ="centerDiv">
+  <div class="right-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/mymessages.png')}}"/>
+  </div>
+  <div class="left-text"
+    <h2 style="font-size: 2vw">My Messages!</h2>
+    <br>
+    <h4>Click on My Messages in the navbar to view the messages that people send you! Each person's messages will be displayed on a sticky note.<br><br>Scroll on the stickynote to view older messages or rest of a long heartfelt message!</h4>
+  </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class ="centerDiv">
+  <div class="left-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/edit.png')}}"/>
+  </div>
+  <div class="right-text"
+    <h2 style="font-size: 2vw">Edit Profile!</h2>
+    <br>
+    <h4>Change your password, profile picture, quote, and future location in Edit Profile!<br><br>If your changes do not show up on the website, don't panic! The easist way to resolve this issue is log out and log back in.</h4>
+  </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class ="centerDiv">
+  <div class="right-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/requests.png')}}"/>
+  </div>
+  <div class="left-text"
+    <h2 style="font-size: 2vw">My Requests!</h2>
+    <br>
+    <h4>View your yearbook signing requests here.<br><br>If someone requests, please make the effort to be a nice and compassionate person!</h4>
+  </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class ="centerDiv">
+  <div class="left-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/teachers.png')}}"/>
+  </div>
+  <div class="right-text"
+    <h2 style="font-size: 2vw">Teachers!</h2>
+    <br>
+    <h4>Show some love for the wonderful people who helped grow our minds!<br><br>Each teacher's bio is a thoughtful message for all their students, past and present, who are graduating this year. Click on their profile to send them a personal note of gratitude!</h4>
+  </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class ="centerDiv">
+  <div class="right-pic">
+    <img alt="Main Page" src="{{url_for('static', filename='assets/map.png')}}"/>
+  </div>
+  <div class="left-text"
+    <h2 style="font-size: 2vw">Map!</h2>
+    <br>
+    <h4>Want to see where your class is off to next year? Check out the map! Each location mark shows the name of the place and which people are going there.<br><br>Disclaimer: people with no listed plans will most likely be pursiuing their futures on dry land, not in the middle of the Atlantic Ocean.</h4>
+  </div>
+  </div>
+</div>
+<br>
+<div class="card">
+  <br>
+  <div id="mauraders">
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+  </div>
+<div style="clear: right">
+    <h1 style="font-size: 3vw">I Hope This Was Helpful!<br>Go Sign Some Yearbooks :')</h1>
+  </div>
+</div>
 
 
 {% endblock %}
