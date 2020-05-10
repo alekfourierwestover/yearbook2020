@@ -465,6 +465,9 @@ def handle_send_message():
         with open(f"data/{session['school']}/messages.json", "r") as f:
             message_data = json.load(f)
 
+        with open(f"data/{session['school']}/request.json", "r") as f:
+            request_data = json.load(f)
+
         with open(f"data/{session['school']}/users.json", "r") as f:
             user_data = json.load(f)
 
@@ -473,12 +476,28 @@ def handle_send_message():
         send_to = request.form.get("sendto")
         message = message_encrypter.encrypt(request.form.get("message").encode()).decode("utf-8")
 
+
+        #sendto is in the form of the hashed uuid
+        #if Leon sends to Ziyong || Leon=sent_from, Ziyong=send_to
+        #in request.json, it would be like key Leon.uuid:  name:Ziyong uuid:Ziyong.uuid
+        
+        if sent_from_uuid in request_data.keys():
+            #print("a")
+            #print(send_to)
+
+            for trump in request_data[sent_from_uuid]:
+                if trump["uuid"] == send_to:
+                    request_data[sent_from_uuid].remove(trump)
+                    #print("removed")
+                    break
+
         if send_to not in user_data.keys():
             session["loggedin"] = False
             return url_for("serve_index", school=session.get("school"), error="malicious user")
 
         if not send_to in message_data.keys():
             message_data[send_to] = { sent_from: [message] }
+
         elif sent_from not in message_data[send_to].keys():
             message_data[send_to][sent_from] = [message]
         else:
@@ -486,6 +505,9 @@ def handle_send_message():
 
         with open(f"data/{session['school']}/messages.json", "w") as f:
             json.dump(message_data, f, indent=4)
+
+        with open(f"data/{session['school']}/request.json", "w") as f:
+            json.dump(request_data, f, indent=4)
 
         return url_for("serve_main", sent_message="true")
     except:

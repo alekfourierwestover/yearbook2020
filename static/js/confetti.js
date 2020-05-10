@@ -10,9 +10,11 @@ let vels = [];
 
 let wind_force = {"x": 0, "y": 0};
 
-const gravity = .0001;
-const dt = 6;
+const gravity = 0.0001;
+const dt = 60;
 const wind_period = 0.2;
+
+const initial_down_vel = 2;
 let tick_ct = 0;
 let wind_xoff = wind_period*Math.PI*2 *Math.random();
 let wind_yoff = wind_period*Math.PI*2 *Math.random();
@@ -28,7 +30,7 @@ for (var i = 0; i < numconfettis; i++) {
 
   confettis[i].width(size_i);
   confettis[i].height(size_i);
-  vels.push({"x": .6*(Math.random()-0.5), "y": 1*Math.random()});
+  vels.push({"x": .6*(Math.random()-0.5), "y": initial_down_vel*Math.random()});
   $("#confetti-place").append(confettis[i]);
   pos.push({"x": Math.random()*ww, "y": Math.random()*wh*0.01});
   $(confettis[i]).css({top: pos[i].y, left: pos[i].x});
