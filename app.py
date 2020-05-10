@@ -466,16 +466,20 @@ def handle_send_message():
         send_to = request.form.get("sendto")
         message = message_encrypter.encrypt(request.form.get("message").encode()).decode("utf-8")
 
+
+        #sendto is in the form of the hashed uuid
         #if Leon sends to Ziyong || Leon=sent_from, Ziyong=send_to
-        #in request.json, it would be like key Leon.uuid: name:Ziyong uuid:Ziyong.uuid
+        #in request.json, it would be like key Leon.uuid:  name:Ziyong uuid:Ziyong.uuid
         
         if sent_from_uuid in request_data.keys():
-            if send_to in request_data[sent_from_uuid]:
-                request_data[sent_from_uuid].remove(send_to)
-                #fix this later
-                print(sent_from)
-                print(send_to)
-                #request_data[Leon].remove(ziyong)
+            #print("a")
+            #print(send_to)
+
+            for trump in request_data[sent_from_uuid]:
+                if trump["uuid"] == send_to:
+                    request_data[sent_from_uuid].remove(trump)
+                    #print("removed")
+                    break
 
         if send_to not in user_data.keys():
             session["loggedin"] = False
