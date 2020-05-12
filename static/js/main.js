@@ -57,6 +57,7 @@ $.get("/getProfiles", function(data){
       currentCard.append(bioText);
       currentRow.push(currentCard);
       ct++;
+
     }
 
 
@@ -75,6 +76,9 @@ $.get("/getProfiles", function(data){
     }
     setTimeout(()=>{ $("#card_f37155b4-0613-5f9d-a7d4-c0b85f4794a6").attr("onclick", 'window.location.href="https://www.gofundme.com/f/in-loving-memory-of-cleo-athena-theodoropulos"');
 }, 1000);
+
+
+      $("#img_9a7280d1-fce2-579d-8551-32de0ccdfadf61295").css("background-image", 'url("static/assets/vortex.gif")');
 
 });
 
@@ -107,6 +111,7 @@ $.get("/get_uuids_sentto", (uuids_sentto)=>{
 		drawCheckmarkOnload("my" + uuids_sentto[i]);
 	}
 });
+
 /*
 //temporarily diable search bar
 document.getElementById("search").addEventListener("keyup", function(event){
