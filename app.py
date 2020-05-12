@@ -16,6 +16,9 @@ with open("data/registered_schools.json", "r") as f:
 with open("data/school_email_patterns.json", "r") as f:
     SCHOOL_EMAIL_PATTERNS = json.load(f)
 
+with open("data/school_names.json", "r") as f:
+    SCHOOL_NAMES = json.load(f)
+
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRETKEY")
 
@@ -38,6 +41,13 @@ def safestr(bad_txt):
 @app.route("/get_school", methods=("GET",))
 def get_school():
     return session.get("school")
+
+@app.route("/get_school_name", methods=("GET",))
+def get_school_name():
+    try:
+        return SCHOOL_NAMES[session.get("school")]
+    except:
+        return "Unknown School"
 
 @app.route("/reset_password", methods=("POST",))
 def reset_pwd():
@@ -168,6 +178,7 @@ def get_senior():
 def serve_index(school="belmonthigh"):
     if school not in REGISTERED_SCHOOLS:
         return redirect(url_for("serve_schoolnotfound"))
+    session["school"] = school
     if session.get("loggedin"):
         if session.get("verified"):
             return redirect(url_for("serve_main"))

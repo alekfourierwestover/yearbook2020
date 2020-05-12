@@ -1,6 +1,10 @@
 
 setTimeout(alertURLErrors, 1000);
 
+$.get("/get_school_name", (data)=>{
+  $("#schoolname").text(data);
+});
+
 function alertURLErrors(){
   if(urlParams.get("error")){
     $.notify(urlParams.get("error"));

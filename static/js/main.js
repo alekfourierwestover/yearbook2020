@@ -1,6 +1,6 @@
 const MAX_NUM_COLUMNS = 4;
 
-$.get("/get_school", function(school){
+$.get("/get_school_name", function(school){
     $("#school").text(school);
 });
 
@@ -37,10 +37,6 @@ $.get("/getProfiles", function(data){
       }
     });
 
-    /*
-    let index = ppl_uuids.indexOf("f37155b4-0613-5f9d-a7d4-c0b85f4794a6");
-    ppl_uuids.unshift(ppl_uuids.splice(index,1)[0]);
-    */
     let blah = 0
     for(let i in ppl_uuids){
       uuid = ppl_uuids[i];
@@ -49,26 +45,7 @@ $.get("/getProfiles", function(data){
         currentRow = [];
       }
 
-      /*
       let link = `/sendmessages?sendto=${uuid}`;
-      if(blah == 0) {
-        link = `https://www.gofundme.com/f/in-loving-memory-of-cleo-athena-theodoropulos`;
-        blah++;
-      } else {
-        link = `/sendmessages?sendto=${uuid}`;
-      }
-      */
-
-      let link = `/sendmessages?sendto=${uuid}`;
-
-      /*
-      if(i.localeCompare("f37155b4-0613-5f9d-a7d4-c0b85f4794a6") == 0) {
-        link = `https://www.gofundme.com/f/in-loving-memory-of-cleo-athena-theodoropulos`;
-      } else {
-        link = `/sendmessages?sendto=${uuid}`;
-      }
-      */
-      
 
       let currentCard = $(`<div class='face-card' id="card_${uuid}" onclick='window.location.href="${link}"'></div>`);
       currentCard.append($(`<img id="img_${uuid}" class="pfp-image" alt="profile picture missing" src="${pfp_path}/${uuid}.png" height="50%" onerror="this.onerror=null; this.src='${assets_path}/panda.png';"></img>`));
