@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/map.css')}}" type="text/css">
+{% endblock %}
+
+{% block uncontained_content %}
+<div style="height: 5em;"> </div>
+  {% include "header.html" %}
+
+<div class="card">
+  <br>
+  <div id="mauraders">
+    <img id="left-maurader-map" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}" height="100px" width="100px"/>
+    <img id="right-maurader-map" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}" height="100px" width="100px"/>
+  </div>
+<div style="clear: right">
+  <br>
+  <h1 style="font-size: 6vw">&#x1f5fa Map &#x1f5fa</h1>
+  <br>
+</div>
+</div>
+<br>
+<iframe id="google-map-iframe" style="width: 100%; height: 100%;" src="https://www.google.ie/gwt/x?u=https://www.google.com/maps/d/u/0/embed?mid=10FkHBiP8Ac65gt6rViWoyvX3IKQeiTus" align="middle" scrolling="no" frameborder="0"></iframe>
+
+
+{% endblock %}

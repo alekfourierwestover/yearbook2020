@@ -1,0 +1,26 @@
+.confetti0 {
+  background-color: #69354C;
+}
+
+.confetti1 {
+    background-color: #0D244C;
+}
+
+.confetti2 {
+  background-color: #00ffff;
+}
+
+.confetti3 {
+  background-color: white;
+}
+
+.confetti4 {
+  background-color: #FFF200;
+}
+
+
+.confetti {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+}

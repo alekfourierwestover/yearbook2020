@@ -1,3 +1,19 @@
+.DS_Store
+static/pfps/
+
+messages.json
+colleges.csv
+passwords.json
+users.json
+verification_codes.json
+data/
+
+nohup.out
+*.swp
+
+# js
+node_modules/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

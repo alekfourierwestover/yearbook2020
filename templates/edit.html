@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block uncontained_content %}
+	{% include "header.html" %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/edit.css')}}" type="text/css" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+<br>
+
+<div class="card"> <h1 id="edit_profile_head"> EDIT PROFILE</h1> </div>
+
+<div class="card">
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_pwd')" type="radio" name="options" autocomplete="off"> Change Passsword
+    </label>
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_pfp')" type="radio" name="options" autocomplete="off" checked> Profile Picture
+    </label>
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_quote')" type="radio" name="options" autocomplete="off"> Quote
+    </label>
+    <label class="btn btn-secondary">
+      <input onclick="showEdit('#edit_college')" type="radio" name="options" autocomplete="off"> Where I'm going next
+    </label>
+  </div>
+</div>
+
+<div id="container-card-edit" class="card">
+  <div id="edit_pwd" class="cardleon">
+    <form action="edit_password" method="post" id="edit_password_form">
+    <label> Password </label>
+    <input type="password" class="form-control myform-passsword" name="password" placeholder="Current Password" >
+    <br>
+    <label> New Password </label>
+    <input type="password" class="form-control myform-passsword" name="newpassword" placeholder="New password" >
+    <br> <br>
+    <input type="submit" value="change password" name="submit" class="btn btn-primary form-control myform-submit" />
+    </form>
+  </div>
+  <div id="edit_quote" class="cardleon">
+    <form action="edit_quote" method="post" id="edit_quote_form">
+    <label> Password </label>
+    <input type="password" class="form-control myform-password" name="password" placeholder="Current Password">
+    <br>
+    <label>Edit Quote</label>
+    <textarea maxlength="200" class="form-control" name="quote" form="edit_quote_form" rows="3" placeholder="I am a generic student at BHS graduating in 2020."></textarea>
+    <br>
+    <br>
+    <input type="submit" value="change quote" name="submit" class="btn btn-primary form-control myform-submit"/>
+    </form>
+  </div>
+
+  <div id="edit_pfp" class = "cardleon">
+    <form action="edit_picture" method="post" id="edit_picture" enctype="multipart/form-data">
+    <label > Password </label>
+    <input type="password" class="form-control myform-password" name="password" placeholder="Current Password"/>
+
+    <br>
+
+    <label for="img" >Select profile picture:</label>
+    <input type="file" value="profilepic" name="profilepic" class="form-control" id="profilepic" accept="image/*"/>
+
+    <img form="edit_picture" name="realpfp" src="{{url_for('static', filename='assets/panda.png')}}" id="profilepic_display" alt="profilepic">
+    <br> <br> <br> <br>
+    <input type="submit" value="change picture" name="submit" class="btn btn-primary form-control myform-submit"/>
+    </form>
+  </div>
+
+  <div id="edit_college" class = "cardleon">
+    <form action="edit_college" method="post" id="edit_college_form">
+      <label> Password </label>
+      <input type="password" class="form-control myform-password" name="password" placeholder="Current Password" >
+      <br>
+      <label>Where I'm Going Next</label>
+          <input type="text" class="form-control" name="institution" placeholder="cool university">
+          <br>
+          <br>
+      <input type="submit" value="change institution" name="submit" class="btn btn-primary form-control myform-submit"/>
+    </form>
+  </div>
+</div>
+
+
+<script src="{{url_for('static', filename='js/edit.js')}}" charset="utf-8"></script>
+
+{% endblock %}

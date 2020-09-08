@@ -1,0 +1,6 @@
+flask
+flask_mail
+passlib
+uuid
+Pillow
+cryptography

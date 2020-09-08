@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block uncontained_content %}
+  {% include "header.html" %}
+{% endblock %}
+
+{% block head %}
+<!--
+<link rel="stylesheet" href="{{url_for('static', filename='css/search_bar.css')}}" type="text/css" >
+<script src="{{url_for('static', filename='js/search_bar.js')}}" charset="utf-8"></script>
+-->
+<link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome-font-awesome.min.css">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
+<link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" type="text/css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/confetti.css')}}" type="text/css" >
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <br>
+  <div id="mauraders">
+    <img id="left-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+    <img id="right-maurader" alt="marauder" src="{{url_for('static', filename='assets/marauder.png')}}"/>
+  </div>
+<div style="clear: right">
+	<h1 style="font-size: 3vw">CONGRATULATIONS!<br> <strong id="school">Graduating</strong> Class Of 2020</h1>
+</div>
+</div>
+
+<!-- temporarily disable search bar -->
+
+<!--
+<div class="card-search">
+  <div class="search-container">
+    <div class="search-box">
+      <div class="search-icon"><i class="fa fa-search search-icon"></i></div>
+      <input type="text" placeholder="Search" id="search" autocomplete="off">
+      <svg class="search-border" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" viewBox="0 0 671 111" style="enable-background:new 0 0 671 111;"
+       xml:space="preserve">
+          <path class="border" d="M335.5,108.5h-280c-29.3,0-53-23.7-53-53v0c0-29.3,23.7-53,53-53h280"/>
+          <path class="border" d="M335.5,108.5h280c29.3,0,53-23.7,53-53v0c0-29.3-23.7-53-53-53h-280"/>
+        </svg>
+      <div class="go-icon"><i class="fa fa-arrow-right" onclick="search_name()"></i></div>
+    </div>
+    <br>
+    <br>
+  </div>
+</div>
+-->
+<!--
+<div class="card">
+  <ul style= "list-style-type: none">
+  <li><a style="color: black; font-size:200%" href="/mymessages">my messages</a></li>
+  <li><a style="color: black; font-size:200%" href="/map">see where everyone's going!</a></li>
+  <li><a style="color: black; font-size:200%" href="/edit">edit profile</a></li>
+  <ul>
+</div>
+-->
+
+<br>
+
+<div id="faces" class="row">
+</div>
+<div id="confetti-place">
+</div>
+
+<br>
+<br>
+<br>
+<script src="{{url_for('static', filename='js/main.js')}}" charset="utf-8"></script>
+<script src="{{url_for('static', filename='js/confetti.js')}}" charset="utf-8"></script>
+
+{% endblock %}

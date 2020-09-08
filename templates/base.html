@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" name="description" content="Digital yearbook website. A better, free, version of the classic yearbook. You can't lose it, you can send an unlimited number of messages. You don't have to wait for someone's yearbook to sign it. And most importantly, you can actually use it from quarantine! "/>
+    <link rel="shortcut icon" href="{{url_for('static', filename='assets/favicon.ico')}}">
+    <title>Yearbook 2020</title>
+    <script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.min.js')}}" charset="utf-8"></script>
+    <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.min.js')}}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}">
+    <script src="{{ url_for('static', filename='notify.js')}}" charset="utf-8"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <script src="{{url_for('static', filename='node_modules/croppie/croppie.min.js')}}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='node_modules/croppie/croppie.css')}}">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css" >
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+
+    <script charset="utf-8">
+      // this has to be in HTML, because it has url_for
+      const pfp_path= "{{url_for('static', filename='pfps')}}";
+      const assets_path = "{{url_for('static', filename='assets')}}";
+    </script>
+    <script src="{{url_for('static', filename='js/base.js')}}" charset="utf-8"></script>
+    {% block uncontained_content %}{% endblock %}
+    <div style="height: 5em;"> </div>
+    <div id="content" class="container">
+      <div id="content-inside">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-copyright text-center py-3">
+        <p>
+          © 2020 Copyright: <br><a href="https://awestover.github.io">Alek Westover</a> <br>2020STRONG
+        </p>
+
+      </div>
+    </footer>
+  </body>
+</html>

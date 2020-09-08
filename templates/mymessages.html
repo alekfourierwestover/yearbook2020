@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block uncontained_content %}
+  {% include "header.html" %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/stickies.css')}}" type="text/css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/mymessages.css')}}" type="text/css" >
+{% endblock %}
+
+{% block content %}
+<div id="myprofile">
+
+</div>
+
+<div class="card">
+  <h1>messages:</h1>
+</div>
+<div id="messages" style="font-size: 2vw;">
+  <ul id="stick">
+
+  </ul>
+</div>
+
+
+<script src="{{url_for('static', filename='js/mymessages.js')}}" charset="utf-8"></script>
+
+{% endblock %}

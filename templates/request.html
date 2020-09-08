@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block uncontained_content %}
+	{% include "header.html" %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/request.css')}}" type="text/css" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+
+<div class="card"> <h1 id="edit_profile_head"> YEARBOOK SIGNING REQUESTS </h1> </div>
+<br>
+
+
+<div class="card">
+	<h3><center>The following users requested that you sign their yearbook: </center></h3> 
+	<div id="request">
+
+	</div>
+</div>
+
+<script src="{{url_for('static', filename='js/request.js')}}" charset="utf-8"></script>
+
+
+{% endblock %}

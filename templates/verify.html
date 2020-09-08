@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block uncontained_content %}
+  {% include "header.html" %}
+{% endblock %}
+
+{% block head %}
+<style>
+	#maincontainer {
+		padding: 1%;
+		margin: 1%;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="maincontainer" class="container bg-light">
+<h3>It may take a minute to send you the email. If you don't get it after a minute please check your spam folder, or try resending the code. </h3>
+<div class="card">
+<div class="col">
+  <div class="bg-light">
+    <form action="check_verification_code" method="post">
+      <h2>Verify</h2>
+      <div class="form-group">
+        <label>Verification Code</label>
+        <input type="text" class="form-control" name="verification" placeholder="Look in your school email">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control">Submit</button>
+      </div>
+    </form>
+    <form action="send_verification_code" method="post">
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary form-control">Resend Verification Code</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+.column {
+  flex: 48%;
+  padding:2%;
+  margin: 1%;
+}
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+  }
+}
+
+#register-form-div {
+  /* width: 40%; */
+  border-radius: 0.5em;
+  /* padding: 20px; */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  float: left;
+}
+
+#register-form-div .form-group {
+  padding-bottom: 50px;
+}
+
+#login-form-div {
+  /* width: 30%; */
+  border-radius: 0.5em;
+  /* padding: 20px; */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+  float: right;
+}
+
+#register-form input {
+  float: right;
+}
+

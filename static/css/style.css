@@ -1,0 +1,152 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+a, a:visited, a:hover {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+}
+
+@font-face {
+  font-family: BernardMTCondensed;
+  src: url(/static/assets/BernardMTCondensed.ttf);
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+  font-family: BernardMTCondensed;
+  letter-spacing: 0.045em;
+}
+
+body {
+  background-image: url(/static/assets/blueBg.png);
+  color: #000000;
+  background-color: #dfe8e1;
+  font-size: 150%;
+  font-family: 'Nunito', sans-serif;
+  font-size: small;
+}
+
+#navbar {
+  box-shadow: 0 0px 10px rgba(0,0,0,1);
+}
+
+#mainNav{
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-family: BernardMTCondensed;
+  src: url(BernardMTCondensed.ttf);
+}
+
+#container {
+    width:100%;
+    text-align:center;
+}
+
+#picturediv {
+	max-width: 100%;
+	height: auto;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+footer{
+  position: relative;
+  font-size: 12px;
+  background-color: #464646;
+  color: rgb(255, 255, 255);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#content-inside {
+  padding-bottom: 100px;
+}
+
+#bio{
+  font-size: min(3vw, 15px);
+}
+
+.card{
+    position: relative;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    background-color: white;
+    color: black;
+    border-radius: 0.5;
+    /* padding: 20px; */
+    /* margin-top: 20px; */
+    /* margin-left: 10px; */
+}
+
+.card-search{
+  border-radius: 0.5em;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  padding: 1px;
+  margin-top: 5%;
+  margin-left: 5%;
+  background-color: #3f3f3f;
+}
+
+#faces a {
+  color: black;
+}
+
+#left-maurader {
+  position: absolute;
+  left: 6%;
+  max-width:57%;
+  height:57%;
+  line-height: 2vw;
+}
+
+#right-maurader {
+  position: absolute;
+  max-width:57%;
+  height:57%;
+  right: 6%;
+  transform: scaleX(-1);
+  line-height: 2vw;
+}
+
+#mauraders {
+  align-items: center;
+}
+
+
+.face-card{
+  /* position: relative; */
+  justify-content: center;
+  background-color:white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  color: black;
+  border-radius: 0.5em;
+  padding: 2%;
+  margin-bottom: 1vh;
+  height: 43vh;
+  text-align: center;
+}
+
+.face-card img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+li {
+  display: inline;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: white;
+}
+
