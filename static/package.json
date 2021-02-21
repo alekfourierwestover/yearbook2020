@@ -11,6 +11,6 @@
   "dependencies": {
     "bootstrap": "^4.4.1",
     "croppie": "^2.6.4",
-    "jquery": "3.4.1"
+    "jquery": "3.5.0"
   }
 }
